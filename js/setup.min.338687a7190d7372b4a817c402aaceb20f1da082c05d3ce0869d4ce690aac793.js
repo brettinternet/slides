@@ -1,0 +1,1 @@
+(function(){contentSetup();function contentSetup(){var dataContentEl=document.getElementById("markdown-content-string");if(dataContentEl&&dataContentEl.dataset.content){var revealScriptEl=document.getElementById("reveal-markdown");revealScriptEl.innerHTML=dataContentEl.dataset.content;dataContentEl.remove();}}})();
