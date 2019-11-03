@@ -1,0 +1,15 @@
+baseURL: "https://brettinternet.com/slides/"
+title: "slides"
+description: "my talks and slides"
+theme: "hugo-slides"
+
+params:
+  repo: "https://github.com/brettinternet/slides"
+  author:
+    name: "@brettinternet"
+    homepage: "https://brettinternet.com"
+  highlightjs:
+    theme: "github"
+  revealjs:
+    hash: true
+    theme: "dark"
