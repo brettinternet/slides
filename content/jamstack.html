@@ -1,0 +1,270 @@
++++
+title = "Jamstack"
+date = 2019-11-14T10:10:15-07:00
+description = "An overview"
+tags = ["frontend", "dev"]
+
+[revealjs]
+theme = "black"
+hash = true
++++
+
+<section>
+  <h1>JAMstack</h1>
+
+  <aside class="notes">
+    <p>Fast, secure sites & dynamic apps</p>
+    <p>Served without webservers</p>
+    <p>
+      The JAMstack is not about specific technologies (about operating systems,
+      specific web servers, backend programming languages, or databases). It’s
+      about following some paradigms with building the web that delivers better
+      performance, higher security, lower cost of scaling, and a better
+      developer experience.
+    </p>
+  </aside>
+</section>
+
+<section>
+  <section style="text-align: left;">
+    <h1 style="font-family: monospace;">
+      <span style="color: red;">J</span><span class="fragment">avaScript</span>
+    </h1>
+    <h1 style="font-family: monospace;">
+      <span style="color: red;">A</span><span class="fragment">PIs</span>
+    </h1>
+    <h1 style="font-family: monospace;">
+      <span style="color: red;">M</span><span class="fragment">arkup</span>
+    </h1>
+
+    <aside class="notes">
+      <h1>JAM</h1>
+      <p>
+        A site made with the JAMstack doesn't have to include all of these
+        attributes
+      </p>
+      <ul>
+        <li>
+          J: Any dynamic programming during the request/response cycle is
+          handled by JavaScript, running entirely on the client. This could be
+          any frontend framework, library, or even vanilla JavaScript.
+        </li>
+        <li>
+          A: All server-side processes or database actions are abstracted into
+          reusable APIs, accessed over HTTPS with JavaScript. These can be
+          <b>custom-built</b> or leverage <b>third-party</b> services.
+        </li>
+        <li>
+          M: Templated markup should be prebuilt at deploy time, usually using a
+          site generator for content sites, or a build tool for web apps.
+        </li>
+      </ul>
+    </aside>
+  </section>
+
+  <section>
+    <h2>🚫 Not JAM 🍇</h2>
+    <div style="text-align: left;">
+      <p class="fragment">❌ Site built with a server-side CMS.</p>
+      <p class="fragment">
+        ❌ SPA that uses isomorphic rendering to build views on the server at
+        runtime.
+      </p>
+      <p class="fragment">❌ Monolithic server-run web app.</p>
+    </div>
+    <aside class="notes">
+      <p style="color: red">
+        Not bashing WordPress or any of these technologies. There is
+        <i>absolutely</i> a place for these technologies, just not in the
+        JAMstack.
+      </p>
+      <p>1. Server-side CMS: WordPress, Drupal, Joomla, or Squarespace</p>
+      <p>
+        2. Isomorphic (that is, a similar form) rendering like SSR React -
+        initial request processed by server, subsequent requests processed by
+        the client.
+      </p>
+      <p>3. ASP.NET, Ruby on Rails, Node, or another backend language.</p>
+    </aside>
+  </section>
+</section>
+
+<section>
+  <section>
+    <h2>Why?</h2>
+
+    <aside class="notes">
+      <p>Why the JAMstack?</p>
+    </aside>
+  </section>
+
+  <section style="text-align: left;">
+    <h3>Performance</h3>
+    <p>Pre-built and served over a CDN</p>
+
+    <aside class="notes">
+      <p>
+        Why wait for pages to build on the fly when you can generate them at
+        deploy time? When it comes to minimizing the time to first byte, nothing
+        beats pre-built files served over a CDN.
+      </p>
+    </aside>
+  </section>
+
+  <section style="text-align: left;">
+    <h3>Higher Security</h3>
+    <p>Reduce surface area, leverage third-party services</p>
+
+    <aside class="notes">
+      <p>
+        With server-side processes abstracted into microservice APIs, surface
+        areas for attacks are reduced. You can also leverage the domain
+        expertise of specialist third-party services.
+      </p>
+    </aside>
+  </section>
+
+  <section style="text-align: left;">
+    <h3>Cheaper, Easier Scaling</h3>
+    <p>Deploying a stack of files</p>
+
+    <aside class="notes">
+      <p>
+        When your deployment amounts to a stack of files that can be served
+        anywhere, scaling is a matter of serving those files in more places.
+        CDNs are perfect for this, and often include scaling in all of their
+        plans.
+      </p>
+    </aside>
+  </section>
+
+  <section style="text-align: left;">
+    <h3>Better Developer Experience</h3>
+    <p>Loose coupling and separation of controls</p>
+
+    <aside class="notes">
+      <p>
+        Loose coupling and separation of controls allow for more targeted
+        development and debugging, and the expanding selection of CMS options
+        for site generators remove the need to maintain a separate stack for
+        content and marketing.
+      </p>
+    </aside>
+  </section>
+</section>
+
+<section>
+  <section>
+    <h2>Best Practices</h2>
+  </section>
+
+  <section>
+    <h3>Entire Project on a CDN</h3>
+    <p>
+      Distributed (instead of living on a single server) and pushed to the edge
+    </p>
+
+    <aside class="notes">
+      <p>
+        Because JAMstack projects don’t rely on server-side code, they can be
+        distributed instead of living on a single server. Serving directly from
+        a CDN unlocks speeds and performance that can’t be beat. The more of
+        your app you can push to the edge, the better the user experience.
+      </p>
+    </aside>
+  </section>
+
+  <section>
+    <h3>Everything Lives in Git</h3>
+    <p>
+      <code>git clone</code>
+    </p>
+    <p>
+      Install deps with a standard procedure
+    </p>
+    <p>
+      (No databases to clone, no complex installs)
+    </p>
+
+    <aside class="notes">
+      <p>
+        With a JAMstack project, anyone should be able to do a git clone,
+        install any needed dependencies with a standard procedure (like npm
+        install), and be ready to run the full project locally. No databases to
+        clone, no complex installs. This reduces contributor friction, and also
+        simplifies staging and testing workflows.
+      </p>
+    </aside>
+  </section>
+
+  <section>
+    <h3>Modern Build Tools</h3>
+
+    <aside class="notes">
+      <p>
+        Take advantage of the world of modern build tools. It can be a jungle to
+        get oriented in and it’s a fast moving space, but you’ll want to be able
+        to use tomorrow’s web standards today without waiting for tomorrow’s
+        browsers. And that currently means Babel, PostCSS, Webpack, and friends.
+      </p>
+    </aside>
+  </section>
+
+  <section>
+    <h3>Automated Builds</h3>
+    <p>
+      Markup is prebuilt, content changes won’t go live until you run another
+      build
+    </p>
+
+    <aside class="notes">
+      <p>
+        Because JAMstack markup is prebuilt, content changes won’t go live until
+        you run another build. Automating this process will save you lots of
+        frustration. You can do this yourself with webhooks, or use a publishing
+        platform that includes the service automatically.
+      </p>
+    </aside>
+  </section>
+
+  <section>
+    <h3>Atomic Deploys</h3>
+    <p>Re-deploy hundreds of files (all or nothing changes)</p>
+
+    <aside class="notes">
+      <p>
+        As JAMstack projects grow really large, new changes might require
+        re-deploying hundreds of files. Uploading these one at a time can cause
+        inconsistent state while the process completes. You can avoid this with
+        a system that lets you do “atomic deploys,” where no changes go live
+        until all changed files have been uploaded.
+      </p>
+    </aside>
+  </section>
+
+  <section>
+    <h3>Instant Cache Invalidation</h3>
+    <p>Ensure all changes are live</p>
+
+    <aside class="notes">
+      <p>
+        When the build-to-deploy cycle becomes a regular occurrence, you need to
+        know that when a deploy goes live, it really goes live. Eliminate any
+        doubt by making sure your CDN can handle instant cache purges.
+      </p>
+    </aside>
+  </section>
+</section>
+
+<section
+  data-background-iframe="https://jamstack.org/"
+  data-background-interactive
+  data-background="#FFF"
+>
+  <div
+    style="position: absolute; width: 40%; right: 0; box-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 5px 25px rgba(0,0,0,0.2); background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px; font-size: 20px; text-align: left;"
+  >
+    <h3 style="color: white;">Learn more</h3>
+    <p>jamstack.org</p>
+  </div>
+</section>
