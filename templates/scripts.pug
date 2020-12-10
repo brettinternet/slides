@@ -1,0 +1,49 @@
+script.
+  window.app = {};
+  window.app.firebase = {
+    config: !{JSON.stringify(firebase || {})}
+  };
+  window.app.reveal = {
+    notesHtml: '',
+    config: !{JSON.stringify(reveal || {})},
+    theme: !{JSON.stringify(theme || "")} || undefined,
+    highlightTheme: !{JSON.stringify(highlightTheme || "")} || undefined
+  };
+  //- hugoPayload.baseUrl = {{ .Site.BaseURL }};
+  //- hugoPayload.slideId = {{ .Page.UniqueID }}; // {{ .Page.File.Path }};
+  //- hugoPayload.presenterUids = {{ .Site.Params.presenter_uids }};
+
+
+//- {{ $default_highlight_site_theme := default .Site.Params.highlightjs.theme "a11y-dark" }}
+//- {{ $higlight_theme := default .Page.Params.highlightjs.theme $default_highlight_site_theme }}
+//- {{ $default_reveal_site_theme := default .Site.Params.revealjs.theme "white" }}
+//- {{ $reveal_theme := default .Page.Params.revealjs.theme $default_reveal_site_theme }}
+//- {{ $notes_html := partial "slides/notes" . }}
+
+//- <script type="text/javascript">
+//-   var hugoPayload = {};
+//-   hugoPayload.firebase = {
+//-     config: JSON.parse({{ .Site.Params.Firebase | jsonify }})
+//-   };
+//-   hugoPayload.reveal = {
+//-     notesHtml: {{ $notes_html }},
+//-   config: {
+//-     siteParams: JSON.parse({{ .Site.Params.revealjs | jsonify }}),
+//-   pageParams: JSON.parse({{ .Page.Params.revealjs | jsonify }})
+//-     }
+//-   };
+//-   hugoPayload.baseUrl = {{ .Site.BaseURL }};
+//-   hugoPayload.slideId = {{ .Page.UniqueID }}; // {{ .Page.File.Path }};
+//-   hugoPayload.presenterUids = {{ .Site.Params.presenter_uids }};
+//- </script>
+
+//- {{ $reveal_js := resources.Get "bundle/js/reveal.js" | fingerprint }}
+//- <script type="text/javascript" src="{{ $reveal_js.RelPermalink }}"></script>
+
+//- {{ $main_js := resources.Get "bundle/js/main.js" | fingerprint }}
+//- <script type="text/javascript" src="{{ $main_js.RelPermalink }}"></script>
+
+//- {{ with .Site.Params.Firebase }}
+//- {{ $firebase_js := resources.Get "bundle/js/firebase.js" | fingerprint }}
+//- <script type="text/javascript" src="{{ $firebase_js.RelPermalink }}"></script>
+//- {{ end }}

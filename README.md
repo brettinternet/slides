@@ -1,17 +1,24 @@
 # Slides
 
-[![Build Status](https://travis-ci.org/brettinternet/slides.svg?branch=master)](https://travis-ci.org/brettinternet/slides)
-
-My slides for talks and show-and-tell.
-
 [View slides](https://brettinternet.github.io/slides/)
 
-### Hugo-Slides
+## Usage
 
-Created with [hugo-slides](https://github.com/brettinternet/hugo-slides) which uses a static site generator called [Hugo](https://gohugo.io/), a JavaScript presentation library [Reveal.js](https://github.com/hakimel/reveal.js/), and Firebase for real-time client actions.
+### Create Slides
 
-###### Update theme submodule
+Copy your slides into [/slides](./slides).
 
-```sh
-git submodule foreach git pull origin master
-```
+[Pandoc](https://pandoc.org/installing.html) converts between markup formats and can [convert to Reveal.js a markup](https://pandoc.org/MANUAL.html#slide-shows) from various markup sources.
+
+### Frontmatter
+
+| key            | type    | default    | description                                                                                                               |
+| -------------- | ------- | ---------- | ------------------------------------------------------------------------------------------------------------------------- |
+| title          | string  | [filename] | A title for meta information in the `<head />`                                                                            |
+| description    | string  |            | A description for meta information in the `<head />`                                                                      |
+| draft          | boolean | false      | Used to omit compiling                                                                                                    |
+| theme          | string  | 'black'    | A stock Reveal.js theme. View available theme names in [themes.json](./scripts/utils/themes.json)                         |
+| highlightTheme | string  | 'agate'    | A stock Highlight.js theme. View available theme names in [themes.json](./scripts/utils/themes.json)                      |
+| reveal         | object  |            | Reveal.js options. View [available options](https://revealjs.com/config/). By default, all plugins are already available. |
+
+Other values may be included but will be ignored except for in the aggregated frontmatter JSON in `build/feed.json`.
