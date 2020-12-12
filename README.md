@@ -2,13 +2,28 @@
 
 [View demo](https://brettinternet.github.io/slides/markup-demo)
 
-## Setup
+## Usage
 
 ### Create Slides
 
-Copy your slides into [/slides](./slides).
+Copy your [markup](./slides/markup-demo.html) or [markdown](./slides/markdown-demo.md) slides into [/slides](./slides).
 
 [Pandoc](https://pandoc.org/installing.html) converts between markup formats and can [convert to Reveal.js markup](https://pandoc.org/MANUAL.html#slide-shows) from various markup sources.
+
+### Features
+
+- <kbd>ctrl</kbd> + click to zoom
+- [Render math equations](https://revealjs.com/math/)
+- <kbd>s</kbd> to view speaker notes
+- <kbd>ctrl</kbd> + <kbd>shift</kbd> + <kbd>F</kbd> to search slide content
+- open the shortcut help menu with <kbd>shift</kbd> + <kbd>?</kbd>
+- highlighted code syntax
+- select from various slide and highlight [themes](./scripts/utils/themes.json)
+- hover over the top right of the window to sign in with GitHub and sync notes (for authorized presenters only)
+  - participants may sync with the presenter or view slides at their own volition (no authentication required)
+- syncing also allows presenters to use a separate device to control slides
+
+## Setup
 
 ### Frontmatter
 
