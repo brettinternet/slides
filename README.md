@@ -8,7 +8,7 @@
 
 Copy your slides into [/slides](./slides).
 
-[Pandoc](https://pandoc.org/installing.html) converts between markup formats and can [convert to Reveal.js a markup](https://pandoc.org/MANUAL.html#slide-shows) from various markup sources.
+[Pandoc](https://pandoc.org/installing.html) converts between markup formats and can [convert to Reveal.js markup](https://pandoc.org/MANUAL.html#slide-shows) from various markup sources.
 
 ### Frontmatter
 
