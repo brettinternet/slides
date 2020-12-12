@@ -7,7 +7,7 @@
     "prebuild": "npm run clean",
     "build": "cross-env NODE_ENV=production webpack -c config/webpack.prod.js",
     "postbuild": "npm run write-feed",
-    "deploy": "gh-pages -d build -b master",
+    "deploy": "gh-pages -d build",
     "clean": "ts-node -P bin/tsconfig.json bin/clean",
     "write-themes": "ts-node -P bin/tsconfig.json bin/write-themes",
     "write-feed": "ts-node -P bin/tsconfig.json bin/write-feed",
