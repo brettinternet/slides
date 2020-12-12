@@ -8,7 +8,7 @@ const paths = require('./paths')
 
 dotenv.config()
 
-const baseUrl = `https://brettinternet.com/${process.env.PATH_PREFIX || 'slides'}`
+const baseUrl = `https://brettinternet.com${process.env.PATH_PREFIX || 'slides'}`
 /**
  * Can be overridden by frontmatter
  */
