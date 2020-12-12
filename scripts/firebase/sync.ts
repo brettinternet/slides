@@ -56,23 +56,12 @@ class Sync {
       }
     })
 
-    /**
-     * If link is not relative,
-     * open it in a new tab and pause the presentation
-     */
-    reveal.addEventListener('ready', () => {
-      Array.from(document.links).forEach((anchor) => {
-        if (isNewDomain(anchor.href) && this.isAuthorizedPresenter()) {
-          anchor.onclick = () => {
-            if (!reveal.isPaused()) {
-              reveal.togglePause()
-            }
-            window.open(anchor.href, '_blank')
-            return false
-          }
-        }
-      })
-    })
+    const isReady = reveal.getRevealElement().classList.contains('ready')
+    if (isReady) {
+      this.handleRevealReady()
+    } else {
+      reveal.addEventListener('ready', this.handleRevealReady)
+    }
 
     this.db.on('value', this.handleActivePresentationValues)
 
@@ -176,6 +165,26 @@ class Sync {
   }
 
   isSender = (id: string) => id === this.senderId
+
+  /**
+   * If link is not relative,
+   * open it in a new tab and pause the presentation
+   */
+  handleRevealReady = () => {
+    Array.from(document.links).forEach((anchor) => {
+      anchor.onclick = () => {
+        if (isNewDomain(anchor.href) && this.isAuthorizedPresenter()) {
+          if (!this.reveal.isPaused()) {
+            this.reveal.togglePause()
+          }
+          window.open(anchor.href, '_blank')
+          return false
+        }
+
+        return true
+      }
+    })
+  }
 
   killPresentation = () => {
     // event listeners should clean up themselves

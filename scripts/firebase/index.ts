@@ -7,11 +7,12 @@ import 'firebase/analytics'
 import auth from './auth'
 import sync from './sync'
 import header from './header'
+import { inIframe } from '../utils/dom'
 
 export default (reveal: Reveal) => {
   const { config } = window.app.firebase
 
-  if (config && 'apiKey' in config) {
+  if (!inIframe() && config && 'apiKey' in config) {
     const app = firebase.initializeApp(config)
 
     if (config.measurementId) {
