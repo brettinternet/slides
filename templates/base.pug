@@ -1,0 +1,23 @@
+doctype html
+html(
+  lang='en',
+  data-released=(buildTime ? new Date(buildTime) : new Date()).toLocaleString(),
+  data-version=buildVersion
+)
+  include ./head
+
+  body
+    main#reveal.reveal
+      if extension === '.md' || extension === '.markdown'
+        .slides
+          section(data-markdown=true, data-separator="^\r?\n---\r?\n$" data-separator-vertical="^\r?\n--\r?\n$"
+            data-separator-notes="^Note:")
+            textarea(data-template=true) #{content}
+      else if extension === ".html"
+        .slides !{content}
+      else if !isProd
+        div Unsupported slide file format
+
+    include ./header
+
+    include ./scripts

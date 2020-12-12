@@ -1,2 +1,7 @@
-public
-resources
+.idea/
+.vscode/
+logs
+*.log
+.env
+node_modules/
+build

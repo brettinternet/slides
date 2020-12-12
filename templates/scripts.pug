@@ -1,0 +1,18 @@
+script.
+  try {
+    window.app = {
+      slug: !{JSON.stringify(slug || "")} || undefined,
+    };
+    window.app.reveal = {
+      notesHtml: '',
+      config: !{JSON.stringify(reveal || {})},
+      theme: !{JSON.stringify(theme || "")} || undefined,
+      highlightTheme: !{JSON.stringify(highlightTheme || "")} || undefined
+    };
+    window.app.firebase = {
+      config: !{JSON.stringify(firebase || {})},
+      presenterUids: !{JSON.stringify(presenterUids || [])}
+    };
+  } catch (_err) {
+    console.error('Unable to retrieve slide values.')
+  }
