@@ -30,6 +30,8 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      # New syntax for setting environment variables:
+      # https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-commands-for-github-actions#environment-files
       - name: Set build version & time
         run: |
           echo "BUILD_VERSION=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
@@ -42,13 +44,15 @@ jobs:
           PATH_PREFIX: /slides/
           THEME: black
           HIGHLIGHT_THEME: agate
-          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          # These values are not secret: https://stackoverflow.com/a/37484053/6817437
+          # They're already exposed in the client
+          FIREBASE_API_KEY: AIzaSyB_irRP1uSwfjOH0Sa5p_p8w1F38ZHy6qA
           FIREBASE_AUTH_DOMAIN: slides-d5c14.firebaseapp.com
           FIREBASE_DATABASE_URL: https://slides-d5c14.firebaseio.com
           FIREBASE_APP_ID: 1:1085061633013:web:150eec1fbc4727aaf5c6bc
           FIREBASE_PROJECT_ID: slides-d5c14
           FIREBASE_MEASUREMENT_ID: G-Z0MK6965VJ
-          PRESENTER_UIDS: [SjD1ze42kKP7ep9iGeZEqd6dNrv2]
+          PRESENTER_UIDS: SjD1ze42kKP7ep9iGeZEqd6dNrv2
 
       # source: https://github.com/tschaub/gh-pages/issues/345#issuecomment-608243163
       - name: Deploy site
