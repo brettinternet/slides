@@ -118,7 +118,7 @@ const setDisplayName = (user: firebase.User) => {
   let displayName = user.displayName
   if (!displayName) {
     displayName = 'anonymous'
-    user.updateProfile({
+    void user.updateProfile({
       displayName: displayName,
     })
   }
@@ -164,7 +164,7 @@ export const showSyncButton = () => {
 }
 
 export const handleSyncClient = () => {
-  var sync = document.getElementById('sync')
+  const sync = document.getElementById('sync')
   if (sync) {
     sync.classList.add('active')
     sync.title = 'Unsync'

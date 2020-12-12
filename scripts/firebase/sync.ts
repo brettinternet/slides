@@ -9,12 +9,18 @@ import { isNewDomain } from '../utils/url'
 type Indices = {
   h: number
   v: number
-  f?: number
+  f?: number | null
 }
 
 enum State {
   OVERVIEW_SHOWN = 'overviewshown',
   OVERVIEW_HIDDEN = 'overviewhidden',
+}
+
+type Values = {
+  state: State
+  indices: Indices
+  senderId: string
 }
 
 class Sync {
@@ -44,7 +50,7 @@ class Sync {
     reveal.addEventListener('overviewhidden', this.handleRevealEvent)
     reveal.addEventListener('overviewshown', this.handleRevealEvent)
 
-    window.addEventListener('beforeunload', (_event) => {
+    window.addEventListener('beforeunload', () => {
       if (reveal && this.isAuthorizedPresenter()) {
         this.killPresentation()
       }
@@ -54,7 +60,7 @@ class Sync {
      * If link is not relative,
      * open it in a new tab and pause the presentation
      */
-    reveal.addEventListener('ready', (_event) => {
+    reveal.addEventListener('ready', () => {
       Array.from(document.links).forEach((anchor) => {
         if (isNewDomain(anchor.href) && this.isAuthorizedPresenter()) {
           anchor.onclick = () => {
@@ -86,7 +92,7 @@ class Sync {
 
   startSync = () => {
     this.isSynced = true
-    this.db.once('value').then(this.handleActivePresentationValues)
+    void this.db.once('value').then(this.handleActivePresentationValues)
     handleSyncClient()
   }
 
@@ -118,11 +124,11 @@ class Sync {
 
   setSlideLocation = (indices: Indices) => {
     if (!indices) throw Error('Unable to identify indices from sync.')
-    this.reveal.slide(indices.h, indices.v, indices.f)
+    this.reveal.slide(indices.h, indices.v, indices.f || undefined)
   }
 
   emitRevealAction = (state: State, indices: Indices) => {
-    this.db.set({
+    const values: Values = {
       state,
       indices: {
         h: indices.h,
@@ -130,7 +136,8 @@ class Sync {
         f: indices.f || null,
       },
       senderId: this.senderId,
-    })
+    }
+    void this.db.set(values)
   }
 
   userRevealAction = (state: State, indices: Indices) => {
@@ -143,7 +150,7 @@ class Sync {
   }
 
   handleActivePresentationValues = (snapshot: firebase.database.DataSnapshot) => {
-    var values = snapshot.val()
+    const values = snapshot.val() as Values
     if (values) {
       if (!this.isSender(values.senderId)) {
         showSyncButton()
@@ -172,7 +179,7 @@ class Sync {
 
   killPresentation = () => {
     // event listeners should clean up themselves
-    this.db.remove()
+    void this.db.remove()
     this.isActivePresentation = false
   }
 }

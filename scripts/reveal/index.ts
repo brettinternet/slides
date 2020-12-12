@@ -31,7 +31,7 @@ export default async () => {
 
   reveal.initialize()
 
-  reveal.addEventListener('ready', (_event) => {
+  reveal.addEventListener('ready', () => {
     Array.from(document.links).forEach((anchor) => {
       if (isNewDomain(anchor.href)) {
         anchor.target = '_blank'

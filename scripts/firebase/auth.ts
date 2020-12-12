@@ -29,7 +29,7 @@ export default (app: firebase.app.App) => {
   const signOut = document.getElementById('sign-out')
   if (signOut) {
     signOut.onclick = () => {
-      auth.signOut()
+      void auth.signOut()
       window.location.reload()
     }
   }

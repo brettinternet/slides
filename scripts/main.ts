@@ -6,4 +6,4 @@ const main = async () => {
   firebase(revealInstance)
 }
 
-main()
+void main()

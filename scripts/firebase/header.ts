@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import Reveal from 'reveal.js'
 
 import { inIframe } from '../utils/dom'

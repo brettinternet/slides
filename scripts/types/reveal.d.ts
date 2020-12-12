@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Types are unkept https://github.com/hakimel/reveal.js/issues/2496
  */
@@ -280,11 +281,6 @@ declare module 'reveal.js' {
     getSlideNotes(slide?: Element): string
     addEventListener(type: string, listener: (event: any) => void, useCapture?: boolean): void
     removeEventListener(type: string, listener: (event: any) => void, useCapture?: boolean): void
-    isFirstSlide(): boolean
-    isLastSlide(): boolean
-    isPaused(): boolean
-    isOverview(): boolean
-    isAutoSliding(): boolean
     layout(): void
     addEventListeners(): void
     removeEventListeners(): void
