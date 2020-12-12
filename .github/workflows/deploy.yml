@@ -39,7 +39,7 @@ jobs:
         run: npm run build
         env:
           NODE_ENV: production
-          PATH_PREFIX: /slides
+          PATH_PREFIX: /slides/
 
       # source: https://github.com/tschaub/gh-pages/issues/345#issuecomment-608243163
       - name: Deploy site
