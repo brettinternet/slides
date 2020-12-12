@@ -32,8 +32,8 @@ jobs:
 
       - name: Set build version & time
         run: |
-          echo ::set-env name=BUILD_VERSION::$(echo $GITHUB_SHA | cut -c 1-6)
-          echo ::set-env name=BUILD_TIME::$(date --iso-8601=seconds)
+          echo "BUILD_VERSION=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
+          echo "BUILD_TIME=$(date --iso-8601=seconds)" >> $GITHUB_ENV
 
       - name: Build
         run: npm run build
