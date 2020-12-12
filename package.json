@@ -11,7 +11,7 @@
     "clean": "ts-node -P bin/tsconfig.json bin/clean",
     "write-themes": "ts-node -P bin/tsconfig.json bin/write-themes",
     "write-feed": "ts-node -P bin/tsconfig.json bin/write-feed",
-    "lint": "run-s lint:*",
+    "lint": "run-s lint:scripts",
     "lint:scripts": "eslint 'scripts/**/*.{js,ts}' 'bin/**/*.{js,ts}' 'config/**/*.{js,ts}'",
     "lint:styles": "stylelint -s sass 'styles/**/*.sass'",
     "commit": "git-cz"
