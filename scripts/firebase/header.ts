@@ -3,24 +3,23 @@ import Reveal from 'reveal.js'
 
 import { showUserMenu, hideUserMenu, showHeader } from './handlers'
 
-export default (reveal: Reveal) => {
-  const dropdowns = document.getElementsByClassName('dropdown') as HTMLCollectionOf<HTMLElement>
-
-  /**
-   * Set theme colors in header
-   */
-  const setThemeStyles = (color: string, backgroundColor: string) => {
-    const headerRoot = document.getElementById('header')
-    if (headerRoot) {
-      headerRoot.style.color = color
-    }
-
-    Array.from(dropdowns).forEach((el) => {
-      el.style.backgroundColor = backgroundColor
-      el.style.color = color
-    })
+/**
+ * Set theme colors in header
+ */
+const setThemeStyles = (color: string, backgroundColor: string) => {
+  const headerRoot = document.getElementById('header')
+  if (headerRoot) {
+    headerRoot.style.color = color
   }
 
+  const backdrops = document.getElementsByClassName('backdrop') as HTMLCollectionOf<HTMLElement>
+  Array.from(backdrops).forEach((el) => {
+    el.style.backgroundColor = backgroundColor
+    el.style.color = color
+  })
+}
+
+export default (reveal: Reveal) => {
   /**
    * Get theme colors
    */
@@ -36,6 +35,7 @@ export default (reveal: Reveal) => {
   /**
    * Dismiss dropdowns when inner button is selected
    */
+  const dropdowns = document.getElementsByClassName('dropdown') as HTMLCollectionOf<HTMLElement>
   Array.from(dropdowns).forEach((dropdown) => {
     const buttons = dropdown.getElementsByTagName('button')
     Array.from(buttons).forEach((button) => {

@@ -7,7 +7,7 @@ header#header.no-print(style="display:none;")
     button#sign-in.flex.action.dim.spacer-left(title="Sign in")
       include ./icons/user.svg
 
-    #firebase-ui.no-print.dropdown.flex.column(style="display:none;", tabindex="0", aria-hidden="true")
+    #firebase-ui.no-print.backdrop.dropdown.border.flex.column(style="display:none;", tabindex="0", aria-hidden="true")
       div
         button#firebase-ui-close.flex.action.dim.spacer-left(title="Close")
           include ./icons/x.svg
@@ -18,11 +18,12 @@ header#header.no-print(style="display:none;")
         #user-icon.flex
 
       #user-dropdown.dropdown(style="display:none;", aria-hidden="true")
-        button#open-notes.flex.action.dropdown-item(title="Open presentation notes")
-          .spacer-right.nowrap Notes
-          .icon-sm
-            include ./icons/file-text.svg
-        button#sign-out.flex.action.dropdown-item
-          .spacer-right.nowrap Sign out
-          .icon-sm
-            include ./icons/log-out.svg
+        .border.backdrop
+          button#open-notes.flex.action.dropdown-item(title="Open presentation notes")
+            .spacer-right.nowrap Notes
+            .icon-sm
+              include ./icons/file-text.svg
+          button#sign-out.flex.action.dropdown-item
+            .spacer-right.nowrap Sign out
+            .icon-sm
+              include ./icons/log-out.svg
