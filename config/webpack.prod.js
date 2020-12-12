@@ -64,16 +64,5 @@ module.exports = merge(baseConfig, {
   optimization: {
     minimize: true,
     minimizer: ['...', new CssMinimizerPlugin()],
-    // moduleIds: 'deterministic',
-    // runtimeChunk: 'single',
-    // splitChunks: {
-    //   cacheGroups: {
-    //     vendor: {
-    //       test: /[\\/]node_modules[\\/]/, // TODO: exclude reveal.js and highlight.js - move to separate chunker or don't chunk at all?
-    //       name: 'vendors',
-    //       chunks: 'all',
-    //     },
-    //   },
-    // },
   },
 })
