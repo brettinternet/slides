@@ -40,6 +40,15 @@ jobs:
         env:
           NODE_ENV: production
           PATH_PREFIX: /slides/
+          THEME: black
+          HIGHLIGHT_THEME: agate
+          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          FIREBASE_AUTH_DOMAIN: slides-d5c14.firebaseapp.com
+          FIREBASE_DATABASE_URL: https://slides-d5c14.firebaseio.com
+          FIREBASE_APP_ID: 1:1085061633013:web:150eec1fbc4727aaf5c6bc
+          FIREBASE_PROJECT_ID: slides-d5c14
+          FIREBASE_MEASUREMENT_ID: G-Z0MK6965VJ
+          PRESENTER_UIDS: [SjD1ze42kKP7ep9iGeZEqd6dNrv2]
 
       # source: https://github.com/tschaub/gh-pages/issues/345#issuecomment-608243163
       - name: Deploy site
