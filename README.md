@@ -22,3 +22,18 @@ Copy your slides into [/slides](./slides).
 | reveal         | object  |            | Reveal.js options. View [available options](https://revealjs.com/config/). By default, all plugins are already available. |
 
 Other values may be included but will be ignored except for in the aggregated frontmatter JSON in `build/feed.json`.
+
+### Config
+
+Create a new config and copy Firebase values to use slide sync
+
+```sh
+cp example.env .env
+```
+
+<!--
+TODO:
+- [ ] Add D3 with transitions: https://github.com/jlegewie/reveal.js-d3js-plugin (and possibly diagram plugin: https://github.com/teone/reveal.js-diagram-plugin)
+- [ ] chalkboard/drawing: https://github.com/rajgoel/reveal.js-plugins/tree/master/chalkboard
+- [ ] chartjs: https://github.com/rajgoel/reveal.js-plugins/tree/master/chart
+-->

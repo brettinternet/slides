@@ -16,8 +16,8 @@ const getCSSAssetReducer = (dir: string) => (acc: string[], filename: string) =>
 }
 
 const themes = {
-  theme: readdirSync(revealThemes).reduce(getCSSAssetReducer(revealThemes), []),
-  highlightTheme: readdirSync(highlightThemes).reduce(getCSSAssetReducer(highlightThemes), []),
+  themes: readdirSync(revealThemes).reduce(getCSSAssetReducer(revealThemes), []),
+  highlightThemes: readdirSync(highlightThemes).reduce(getCSSAssetReducer(highlightThemes), []),
 }
 
-outputJsonSync(resolve(paths.scripts, 'utils', 'themes.json'), themes)
+outputJsonSync(resolve(paths.scripts, 'reveal', 'themes.json'), themes)

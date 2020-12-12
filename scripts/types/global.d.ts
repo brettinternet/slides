@@ -2,14 +2,17 @@
 interface Window {
   dataLayer?: Record<string, unknown>[]
   app: {
+    slug?: string
     reveal: {
       notesHtml: string
       config: Record<string, unknown>
-      highlightTheme: string
-      theme: string
+      theme?: string
+      highlightTheme?: string
     }
     firebase: {
       config: Record<string, unknown>
+      presenterUids: string[]
     }
   }
+  Reveal?: RevealStatic
 }

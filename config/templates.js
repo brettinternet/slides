@@ -3,15 +3,32 @@ const fs = require('fs')
 const pug = require('pug')
 const fm = require('front-matter')
 const glob = require('glob')
+const dotenv = require('dotenv')
 const paths = require('./paths')
 
+dotenv.config()
+
 const baseUrl = `https://brettinternet.com/${process.env.PATH_PREFIX || 'slides'}`
+/**
+ * Can be overridden by frontmatter
+ */
 const globals = {
   isProd: process.env.NODE_ENV === 'production',
   buildTime: process.env.BUILD_TIME,
   buildVersion: process.env.BUILD_VERSION,
   draft: false,
   twitter: 'brettinternet',
+  theme: process.env.THEME,
+  highlightTheme: process.env.HIGHLIGHT_THEME,
+  firebase: {
+    apiKey: process.env.FIREBASE_API_KEY,
+    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+    databaseURL: process.env.FIREBASE_DATABASE_URL,
+    appId: process.env.FIREBASE_APP_ID,
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    measurementId: process.env.FIREBASE_MEASUREMENT_ID,
+  },
+  presenterUids: process.env.PRESENTER_UIDS,
 }
 
 const removeExtension = (filename) => filename.split('.').slice(0, -1).join('.')

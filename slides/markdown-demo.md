@@ -5,7 +5,7 @@ description: 'These slides demonstrate how markdown can be used'
 highlightTheme: 'brown-paper'
 theme: white
 reveal:
-  controlsTutorial: true
+  transition: concave
 ---
 
 # Markdown Content

@@ -42,6 +42,7 @@ module.exports = merge(baseConfig, {
   devServer: {
     hot: true,
     contentBase: paths.build,
+    host: '0.0.0.0',
     port: process.env.PORT || 3000,
     open: false,
     // It appears HTML files must be written in order for static options to work

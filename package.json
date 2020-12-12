@@ -17,10 +17,13 @@
     "commit": "git-cz"
   },
   "dependencies": {
+    "firebase": "^8.2.0",
+    "firebaseui": "^4.7.1",
     "highlight.js": "^10.4.1",
     "highlightjs-line-numbers.js": "^2.8.0",
     "reveal.js": "^4.1.0",
-    "unfetch": "^4.2.0"
+    "unfetch": "^4.2.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
@@ -35,7 +38,7 @@
     "@types/mozilla-readability": "^0.2.0",
     "@types/node": "^14.14.7",
     "@types/node-fetch": "^2.5.7",
-    "@types/reveal": "^3.3.33",
+    "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.7.0",
     "@typescript-eslint/parser": "^4.7.0",
     "autoprefixer": "^10.0.2",
@@ -48,6 +51,7 @@
     "css-minimizer-webpack-plugin": "^1.1.5",
     "cz-conventional-changelog": "^3.3.0",
     "dompurify": "^2.2.2",
+    "dotenv": "^8.2.0",
     "eslint": "^7.13.0",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-node": "^11.1.0",

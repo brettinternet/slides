@@ -21,7 +21,7 @@ export const isBodyScrollEnabled = () =>
 /**
  * Stop event bubbling
  */
-export const filterEvent = (ev: Event) => {
+export const stopPropagation = (ev: Event) => {
   ev.stopPropagation()
 }
 
@@ -32,4 +32,16 @@ export const filterEvent = (ev: Event) => {
 export const enableFormFieldset = (form: HTMLFormElement) => {
   const fieldset = form.querySelector('fieldset')
   fieldset?.removeAttribute('disabled')
+}
+
+/**
+ * Determine if page is loaded in iFrame (such as notes window)
+ * @source https://stackoverflow.com/a/326076/6817437
+ */
+export const inIframe = () => {
+  try {
+    return window.self !== window.top
+  } catch (e) {
+    return true
+  }
 }
