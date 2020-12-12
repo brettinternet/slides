@@ -53,4 +53,5 @@ TODO:
 - [ ] Add D3 with transitions: https://github.com/jlegewie/reveal.js-d3js-plugin (and possibly diagram plugin: https://github.com/teone/reveal.js-diagram-plugin)
 - [ ] chalkboard/drawing: https://github.com/rajgoel/reveal.js-plugins/tree/master/chalkboard
 - [ ] chartjs: https://github.com/rajgoel/reveal.js-plugins/tree/master/chart
+- [ ] integrate code-surfer? https://github.com/pomber/code-surfer/tree/master/packs/code-surfer
 -->
