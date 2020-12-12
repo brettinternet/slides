@@ -2,7 +2,7 @@
 
 [View slides](https://brettinternet.github.io/slides/)
 
-## Usage
+## Setup
 
 ### Create Slides
 
@@ -25,10 +25,27 @@ Other values may be included but will be ignored except for in the aggregated fr
 
 ### Config
 
-Create a new config and copy Firebase values to use slide sync
+Create a new config and modify default values of the app
 
 ```sh
 cp example.env .env
+```
+
+### Firebase
+
+Create a Google Firebase project. Add Firebase config values to `.env` in order to use slide sync
+
+Add this ruleset to Realtime Database rules where `xxxxx` is your Firebase user UID
+
+```json
+{
+  "rules": {
+    "presentations": {
+      ".read": true,
+      ".write": "auth.uid === 'xxxxx'"
+    }
+  }
+}
 ```
 
 <!--
