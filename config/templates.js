@@ -7,6 +7,14 @@ const dotenv = require('dotenv')
 const paths = require('./paths')
 
 dotenv.config()
+const deserializeArr = (value) => {
+  if (Array.isArray(value)) {
+    return value
+  }
+  if (typeof value === 'string') {
+    return value.split(',')
+  }
+}
 
 const baseUrl = `https://brettinternet.com${process.env.PATH_PREFIX || 'slides'}`
 /**
@@ -28,7 +36,7 @@ const globals = {
     projectId: process.env.FIREBASE_PROJECT_ID,
     measurementId: process.env.FIREBASE_MEASUREMENT_ID,
   },
-  presenterUids: process.env.PRESENTER_UIDS,
+  presenterUids: deserializeArr(process.env.PRESENTER_UIDS),
 }
 
 const removeExtension = (filename) => filename.split('.').slice(0, -1).join('.')
