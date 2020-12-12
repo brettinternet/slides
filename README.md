@@ -1,6 +1,6 @@
 # Slides
 
-[View slides](https://brettinternet.github.io/slides/)
+[View demo](https://brettinternet.github.io/slides/markup-demo)
 
 ## Setup
 
