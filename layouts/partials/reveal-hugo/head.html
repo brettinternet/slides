@@ -1,0 +1,3 @@
+<!-- Before head tag closes -->
+{{ $css := resources.Get "styles/main.sass" | resources.ToCSS }}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}" />
