@@ -1,3 +1,4 @@
 <!-- Before head tag closes -->
+<link rel="icon" type="image/x-icon" href="/favicon.ico" />
 {{ $css := resources.Get "styles/main.sass" | resources.ToCSS }}
 <link rel="stylesheet" href="{{ $css.RelPermalink }}" />

@@ -1,18 +1,19 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access */
+import type Reveal from 'reveal.js'
 import { FirebaseApp } from 'firebase/app'
 import type { DatabaseReference, DataSnapshot } from 'firebase/database'
 import * as firebaseDatabase from 'firebase/database'
-import type Reveal from 'reveal.js'
-import { v4 as uuidv4 } from 'uuid'
 import { getAuth, User } from 'firebase/auth'
 
+import type { DbPaths } from '../firebase'
 import {
   showSyncButton,
   hideSyncButton,
   handleEnableSync,
   handleDisableSync,
+  setViewerCount,
 } from './handlers'
-import { isNewDomain, getSlug } from '../utils/url'
+import { isNewDomain } from '../utils/url'
 
 type RevealEvent = Parameters<Parameters<Reveal['addEventListener']>[1]>[0]
 
@@ -30,36 +31,55 @@ enum State {
 type PresentationStore = {
   state: State
   indices: Indices
-  senderId: string
-  presenterUid: string
+  presenterUid: string | undefined
+}
+
+type Args = {
+  app: FirebaseApp
+  reveal: Reveal
+  clientId: string
+  presenterUids: string[]
+  dbPaths: DbPaths
+  onPresentationStart: (isPresenter: boolean) => void
 }
 
 /**
  * TODO: sync pause state, prevent viewer unpause and remove resume button
  */
-class Sync {
+export class Sync {
   isSynced = false
   isActivePresentation = false
-  senderId = uuidv4()
+  clientId: string
   app: FirebaseApp
   reveal: Reveal
   presenterUids: string[]
-  ref: DatabaseReference
-  presenterValues?: PresentationStore
+  presenterValues?: PresentationStore | null
   explicitUnfollow = false
-  magneticTimeout?: number
-  magneticTimeoutTime = 1000
+  private ref: DatabaseReference
+  private magneticTimeout?: number
+  private magneticTimeoutTime = 1000
+  private onPresentationStart: Args['onPresentationStart']
 
-  constructor(app: FirebaseApp, reveal: Reveal, presenterUids: string[]) {
+  constructor({
+    app,
+    reveal,
+    clientId,
+    presenterUids,
+    dbPaths,
+    onPresentationStart,
+  }: Args) {
     this.app = app
     this.reveal = reveal
     this.presenterUids = presenterUids
-    const parent = firebaseDatabase.getDatabase(app)
-    this.ref = firebaseDatabase.ref(parent, `presentations/${getSlug()}`)
+    this.clientId = clientId
+    this.onPresentationStart = onPresentationStart
+    const db = firebaseDatabase.getDatabase(app)
+    this.ref = firebaseDatabase.ref(db, dbPaths.presentation)
 
     getAuth(app).onAuthStateChanged((user: User | null) => {
       if (user) {
         this.handleRevealEvent()
+        this.onPresentationStart(this.isAuthorizedPresenter())
       }
     })
     reveal.addEventListener('slidechanged', this.handleRevealEvent)
@@ -67,6 +87,10 @@ class Sync {
     reveal.addEventListener('fragmenthidden', this.handleRevealEvent)
     reveal.addEventListener('overviewhidden', this.handleRevealEvent)
     reveal.addEventListener('overviewshown', this.handleRevealEvent)
+    // Upgrade Reveal version - need to fork reveal-hugo
+    // reveal.addEventListener('beforeslidechange', (event) => {
+    //   console.log('BEFORE CHANGE', event)
+    // })
 
     window.addEventListener('beforeunload', () => {
       if (reveal && this.isAuthorizedPresenter()) {
@@ -97,7 +121,12 @@ class Sync {
     this.startSync()
   }
 
-  startSync = () => {
+  public onPresenceCountChange = (count: number) => {
+    console.log('count: ', count)
+    setViewerCount(count)
+  }
+
+  private startSync = () => {
     this.isSynced = true
     this.explicitUnfollow = false
     handleEnableSync()
@@ -106,50 +135,40 @@ class Sync {
   /**
    * Server value change from presenter
    */
-  handleServerChange = (snapshot: DataSnapshot) => {
+  private handleServerChange = (snapshot: DataSnapshot) => {
     const values = this.getSnapshotValues(snapshot)
     this.presenterValues = values
-    if (values && !this.isSender(this.presenterValues.senderId)) {
+    if (this.presenterValues && !this.isAuthorizedPresenter()) {
       if (!this.isActivePresentation) {
         this.initializeViewerPresentation()
       } else if (this.isSynced) {
-        this.updateSlides(values)
+        this.updateSlides(this.presenterValues)
       }
-    } else {
-      this.killPresentation()
+    } else if (!this.isAuthorizedPresenter()) {
+      this.endPresentation()
     }
   }
 
-  syncRemote = (snapshot: DataSnapshot) => {
-    if (snapshot.exists()) {
-      const values = this.getSnapshotValues(snapshot)
-      if (values)
-        if (this.isSynced) {
-          this.updateSlides(values)
-        }
-    }
-  }
-
-  updateSlides = (values: PresentationStore) => {
+  private updateSlides = (values: PresentationStore) => {
     this.setSlideLocation(values.indices)
     this.setSlideState(values.state)
   }
 
-  getSnapshotValues = (
+  private getSnapshotValues = (
     snapshot: DataSnapshot
   ): PresentationStore | null | undefined =>
     snapshot.exists() ? (snapshot.val() as PresentationStore | null) : undefined
 
-  stopSync = (explicit = false) => {
+  private stopSync = (explicit = false) => {
     this.explicitUnfollow = explicit
     this.isSynced = false
     handleDisableSync()
   }
 
-  getState = (): State =>
+  private getState = (): State =>
     this.reveal.isOverview() ? State.OVERVIEW_SHOWN : State.OVERVIEW_HIDDEN
 
-  handleRevealEvent = (event?: RevealEvent) => {
+  private handleRevealEvent = (event?: RevealEvent) => {
     if (this.isAuthorizedPresenter()) {
       this.emitRevealAction(this.getState(), this.reveal.getIndices())
     } else {
@@ -160,20 +179,22 @@ class Sync {
   /**
    * Magnetic follow - allow participants to roam and come back
    */
-  handleRoamingUser = (position?: { indexh: number; indexv: number }) => {
+  private handleRoamingUser = (position?: {
+    indexh: number
+    indexv: number
+  }) => {
     if (this.magneticTimeout) {
       window.clearTimeout(this.magneticTimeout)
     }
-    const user = this.getActiveUser()
     if (
       !this.explicitUnfollow &&
       this.presenterValues &&
-      this.presenterValues.senderId !== this.senderId &&
-      (!user || user.uid !== this.presenterValues.presenterUid)
+      !this.isAuthorizedPresenter()
     ) {
       if (!this.isSynced) {
         this.magneticTimeout = window.setTimeout(() => {
           if (
+            this.presenterValues &&
             this.presenterValues.state === State.OVERVIEW_HIDDEN &&
             position &&
             position.indexh === this.presenterValues.indices.h &&
@@ -193,7 +214,7 @@ class Sync {
     }
   }
 
-  setSlideState = (state: State) => {
+  private setSlideState = (state: State) => {
     switch (state) {
       case State.OVERVIEW_SHOWN:
         if (!this.reveal.isOverview()) {
@@ -208,14 +229,14 @@ class Sync {
     }
   }
 
-  setSlideLocation = (indices: Indices) => {
+  private setSlideLocation = (indices: Indices) => {
     if (!indices) {
       throw Error('Unable to identify indices from sync.')
     }
     this.reveal.slide(indices.h, indices.v, indices.f || undefined)
   }
 
-  emitRevealAction = (state: State, indices: Indices) => {
+  private emitRevealAction = (state: State, indices: Indices) => {
     const values: PresentationStore = {
       state,
       indices: {
@@ -223,42 +244,42 @@ class Sync {
         v: indices.v,
         f: indices.f || null,
       },
-      senderId: this.senderId,
-      presenterUid: this.getActiveUser().uid,
+      presenterUid: this.getActiveUser()?.uid,
     }
     void firebaseDatabase.set(this.ref, values)
   }
 
-  getActiveUser = (): User | null => getAuth(this.app).currentUser
+  private getActiveUser = (): User | null => getAuth(this.app).currentUser
 
-  isAuthorizedPresenter = () => {
+  public isAuthorizedPresenter = (): boolean => {
     const currentUser = this.getActiveUser()
-    return currentUser && this.presenterUids.includes(currentUser.uid)
+    return currentUser ? this.presenterUids.includes(currentUser.uid) : false
   }
 
-  isPresenter = () =>
-    this.presenterValues && this.isSender(this.presenterValues.senderId)
-
-  isSender = (id: string) => id === this.senderId
-
-  initializeViewerPresentation = () => {
-    if (!this.isSender(this.presenterValues.senderId)) {
+  private initializeViewerPresentation = () => {
+    if (!this.isAuthorizedPresenter()) {
       showSyncButton()
       this.isActivePresentation = true
       if (!this.isSynced) {
         this.startSync()
       }
     }
+    this.onPresentationStart(this.isAuthorizedPresenter())
   }
 
-  killPresentation = () => {
+  private killPresentation = () => {
     // event listeners should clean up themselves
-    // void firebaseDatabase.remove(this.ref)
+    void firebaseDatabase.remove(this.ref)
+  }
+
+  private endPresentation = () => {
     this.isActivePresentation = false
+    this.isSynced = false
+    clearTimeout(this.magneticTimeout)
     hideSyncButton()
   }
 
-  handleRevealReady = () => {
+  private handleRevealReady = () => {
     this.modifyExternalPresentationLinks()
   }
 
@@ -266,7 +287,7 @@ class Sync {
    * If link is not relative,
    * open it in a new tab and pause the presentation
    */
-  modifyExternalPresentationLinks = () => {
+  private modifyExternalPresentationLinks = () => {
     Array.from(document.links).forEach((anchor) => {
       anchor.onclick = () => {
         if (isNewDomain(anchor.href) && this.isAuthorizedPresenter()) {
@@ -283,6 +304,4 @@ class Sync {
   }
 }
 
-export default (app: FirebaseApp, reveal: Reveal, presenterUids: string[]) => {
-  new Sync(app, reveal, presenterUids)
-}
+export default (args: Args) => new Sync(args)

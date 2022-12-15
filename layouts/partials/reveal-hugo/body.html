@@ -1,8 +1,13 @@
 <!-- Before body tag closes -->
 
-<header id="header" class="no-print" style="display: none">
-  <div>
-    <button id="sync" class="flex action dim spacer-left" style="display: none">
+<header id="header" class="no-print" style="display:none;">
+  <div class="flex">
+    <div
+      id="viewer-count"
+      class="spacer-right text-center"
+      style="display:none;"
+    ></div>
+    <button id="sync" class="flex action dim" style="display: none">
       <div id="sync-status-icon-active" style="display:none;">
         {{ partial "icons/play.svg" }}
       </div>
@@ -14,7 +19,7 @@
   </div>
 
   <div id="auth" class="hidden">
-    <button id="sign-in" class="flex action dim spacer-left" title="Sign in">
+    <button id="sign-in" class="flex action dim" title="Sign in">
       {{ partial "icons/user.svg" }}
     </button>
 

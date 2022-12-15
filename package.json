@@ -8,6 +8,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fingerprintjs/fingerprintjs": "^3.3.6",
     "firebase": "^9.15.0",
     "firebaseui": "^6.0.2",
     "reveal.js": "^4.4.0",

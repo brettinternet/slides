@@ -32,5 +32,7 @@ export default (reveal: Reveal) => {
   }
 
   const authContainer = document.getElementById('auth')
-  authContainer.addEventListener('mouseleave', hideUserMenu)
+  if (authContainer) {
+    authContainer.addEventListener('mouseleave', hideUserMenu)
+  }
 }

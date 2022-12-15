@@ -15,15 +15,21 @@ export default (reveal: Reveal) => {
       'fa-square'
     ) as HTMLCollectionOf<HTMLElement>
     Array.from(squares).forEach((el) => {
-      el.parentElement.innerHTML = squareSvg
+      if (el.parentElement) {
+        el.parentElement.innerHTML = squareSvg
+      }
     })
     const chevronUps = document.getElementsByClassName('fa-chevron-up')
     Array.from(chevronUps).forEach((el) => {
-      el.parentElement.innerHTML = upSvg
+      if (el.parentElement) {
+        el.parentElement.innerHTML = upSvg
+      }
     })
     const chevronDowns = document.getElementsByClassName('fa-chevron-down')
     Array.from(chevronDowns).forEach((el) => {
-      el.parentElement.innerHTML = downSvg
+      if (el.parentElement) {
+        el.parentElement.innerHTML = downSvg
+      }
     })
   }
 }

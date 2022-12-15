@@ -26,17 +26,17 @@ repos:
       - id: trailing-whitespace
         args: [--markdown-linebreak-ext=md]
       - id: check-toml
-  - repo: https://github.com/pre-commit/mirrors-eslint
-    rev: v8.29.0
-    hooks:
-      - id: eslint
-        additional_dependencies:
-          - eslint@latest
-          - eslint-config-google@latest
-  - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v3.0.0-alpha.4
-    hooks:
-      - id: prettier
+  # - repo: https://github.com/pre-commit/mirrors-eslint
+  #   rev: v8.29.0
+  #   hooks:
+  #     - id: eslint
+  #       additional_dependencies:
+  #         - eslint@latest
+  #         - eslint-config-google@latest
+  # - repo: https://github.com/pre-commit/mirrors-prettier
+  #   rev: v3.0.0-alpha.4
+  #   hooks:
+  #     - id: prettier
   - repo: https://github.com/Lucas-C/pre-commit-hooks
     rev: v1.3.1
     hooks:
@@ -51,10 +51,10 @@ repos:
     rev: v8.15.2
     hooks:
       - id: gitleaks
-  - repo: https://github.com/awebdeveloper/pre-commit-stylelint
-    rev: 0.0.2
-    hooks:
-      - id: stylelint
-        additional_dependencies:
-          - stylelint@14
-          - stylelint-config-standard@29
+  # - repo: https://github.com/awebdeveloper/pre-commit-stylelint
+  #   rev: 0.0.2
+  #   hooks:
+  #     - id: stylelint
+  #       additional_dependencies:
+  #         - stylelint@14
+  #         - stylelint-config-standard@29

@@ -1,7 +1,6 @@
 import Reveal from 'reveal.js'
 
 import styles from './styles'
-import chalkboard from './chalkboard'
 import { isNewDomain } from '../utils/url'
 
 const openLinksInNewTab = () => {
@@ -15,5 +14,4 @@ const openLinksInNewTab = () => {
 export default (reveal: Reveal) => {
   styles(reveal)
   openLinksInNewTab()
-  chalkboard(reveal)
 }
