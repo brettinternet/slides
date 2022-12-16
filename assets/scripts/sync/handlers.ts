@@ -1,3 +1,5 @@
+import Reveal from 'reveal.js'
+
 export const setViewerCount = (count: number) => {
   const viewerCount = document.getElementById('viewer-count')
   if (viewerCount) {
@@ -8,6 +10,35 @@ export const setViewerCount = (count: number) => {
       viewerCount.style.display = 'none'
     }
   }
+}
+
+export const setupViewer = (_reveal: Reveal) => {
+  // toggle pause keycodes and autoslide
+  // https://github.com/hakimel/reveal.js/blob/4fe3946cb43de57f79aaa7b646aee7e78f4bcc75/js/controllers/keyboard.js#L353
+  // NOTE: does not work :(
+  // ;[
+  //   // autoslide
+  //   65,
+  //   // pause
+  //   58, 59, 66, 86, 190, 191,
+  // ].forEach(reveal.removeKeyBinding)
+
+  const resumeButtons = document.getElementsByClassName(
+    'resume-button'
+  ) as HTMLCollectionOf<HTMLElement>
+  Array.from(resumeButtons).forEach((el) => {
+    el.remove()
+  })
+
+  const pauseOverlays = document.getElementsByClassName(
+    'pause-overlay'
+  ) as HTMLCollectionOf<HTMLElement>
+  Array.from(pauseOverlays).forEach((el) => {
+    const clone = el.cloneNode(true)
+    if (el.parentElement) {
+      el.parentElement.replaceChild(clone, el)
+    }
+  })
 }
 
 export const handleEnableSync = () => {

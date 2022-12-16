@@ -7,11 +7,11 @@ import { getAuth, User } from 'firebase/auth'
 
 import type { DbPaths } from '../firebase'
 import {
+  setupViewer,
   showSyncButton,
   hideSyncButton,
   handleEnableSync,
   handleDisableSync,
-  setViewerCount,
 } from './handlers'
 import { isNewDomain } from '../utils/url'
 
@@ -31,6 +31,8 @@ enum State {
 type PresentationStore = {
   state: State
   indices: Indices
+  autoSlide: boolean
+  paused: boolean
   presenterUid: string | undefined
 }
 
@@ -87,6 +89,10 @@ export class Sync {
     reveal.addEventListener('fragmenthidden', this.handleRevealEvent)
     reveal.addEventListener('overviewhidden', this.handleRevealEvent)
     reveal.addEventListener('overviewshown', this.handleRevealEvent)
+    reveal.addEventListener('autoslidepaused', this.handleRevealEvent)
+    reveal.addEventListener('autoslideresumed', this.handleRevealEvent)
+    reveal.addEventListener('paused', this.handleRevealEvent)
+    reveal.addEventListener('resumed', this.handleRevealEvent)
     // Upgrade Reveal version - need to fork reveal-hugo - disallow skipping ahead of Math.max(h/v/f)
     // reveal.addEventListener('beforeslidechange', (event) => {
     //   console.log('BEFORE CHANGE', event)
@@ -121,15 +127,13 @@ export class Sync {
     this.startSync()
   }
 
-  public onPresenceCountChange = (count: number) => {
-    console.log('count: ', count)
-    setViewerCount(count)
-  }
-
   private startSync = () => {
     this.isSynced = true
     this.explicitUnfollow = false
     handleEnableSync()
+    if (!this.isAuthorizedPresenter()) {
+      this.updateSlides()
+    }
   }
 
   /**
@@ -142,16 +146,26 @@ export class Sync {
       if (!this.isActivePresentation) {
         this.initializeViewerPresentation()
       } else if (this.isSynced) {
-        this.updateSlides(this.presenterValues)
+        this.updateSlides()
       }
     } else if (!this.isAuthorizedPresenter()) {
       this.endPresentation()
     }
   }
 
-  private updateSlides = (values: PresentationStore) => {
-    this.setSlideLocation(values.indices)
-    this.setSlideState(values.state)
+  private updateSlides = (values = this.presenterValues) => {
+    if (values && values.paused !== this.reveal.isPaused()) {
+      this.reveal.togglePause(values.paused)
+    }
+
+    if (values && values.autoSlide !== this.reveal.isAutoSliding()) {
+      this.reveal.toggleAutoSlide(values.autoSlide)
+    }
+
+    // if ((values && values.autoSlide && !values.autoSlidePaused) || !values) {
+    this.setSlideLocation(values?.indices)
+    this.setSlideState(values?.state)
+    // }
   }
 
   private getSnapshotValues = (
@@ -170,7 +184,6 @@ export class Sync {
 
   private handleRevealEvent = (_event?: RevealEvent) => {
     if (this.isAuthorizedPresenter()) {
-      console.log(this.reveal.getIndices())
       this.emitRevealAction(this.getState(), this.reveal.getIndices())
     } else {
       this.handleRoamingUser(this.reveal.getIndices())
@@ -218,7 +231,7 @@ export class Sync {
     }
   }
 
-  private setSlideState = (state: State) => {
+  private setSlideState = (state?: State) => {
     switch (state) {
       case State.OVERVIEW_SHOWN:
         if (!this.reveal.isOverview()) {
@@ -226,6 +239,7 @@ export class Sync {
         }
         break
       case State.OVERVIEW_HIDDEN:
+      default:
         if (this.reveal.isOverview()) {
           this.reveal.toggleOverview(false)
         }
@@ -233,11 +247,8 @@ export class Sync {
     }
   }
 
-  private setSlideLocation = (indices: Indices) => {
-    if (!indices) {
-      throw Error('Unable to identify indices from sync.')
-    }
-    this.reveal.slide(indices.h, indices.v, indices.f ?? undefined)
+  private setSlideLocation = (indices: Indices = { h: 0, v: 0 }) => {
+    this.reveal.slide(indices.h ?? 0, indices.v ?? 0, indices.f ?? undefined)
   }
 
   private emitRevealAction = (state: State, indices: Indices) => {
@@ -248,6 +259,8 @@ export class Sync {
         v: indices.v,
         f: indices.f ?? null,
       },
+      autoSlide: this.reveal.isAutoSliding(),
+      paused: this.reveal.isPaused(),
       presenterUid: this.getActiveUser()?.uid,
     }
     void firebaseDatabase.set(this.ref, values)
@@ -262,6 +275,7 @@ export class Sync {
 
   private initializeViewerPresentation = () => {
     if (!this.isAuthorizedPresenter()) {
+      setupViewer(this.reveal)
       showSyncButton()
       this.isActivePresentation = true
       if (!this.isSynced) {

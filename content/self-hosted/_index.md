@@ -15,13 +15,9 @@ plugins = ["plugins/chalkboard.js"]
 
 ---
 
+## Simple
+
 {{% section %}}
-
-{{< slide background-image="./cody.jpg">}}
-
-<div class="backdrop snippet">
-  <a href="https://github.com/cfbender">@young_cody</a>
-</div>
 
 {{% /section %}}
 
@@ -49,4 +45,4 @@ while n < 10:
 
 ---
 
-[Server slideshow](../servers)
+[Homelab slideshow](../homelabs)

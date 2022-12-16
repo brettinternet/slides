@@ -342,6 +342,8 @@ declare module 'reveal.js' {
     getRevealElement(): HTMLDivElement // <div class="reveal">
     getSlidesElement(): HTMLDivElement // <div class="slides">
     getViewportElement(): HTMLDivElement // <div class="reveal-viewport">
+    // https://revealjs.com/keyboard/
+    removeKeyBinding(keyCode: number): void
   }
 
   export default Reveal
