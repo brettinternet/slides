@@ -162,10 +162,8 @@ export class Sync {
       this.reveal.toggleAutoSlide(values.autoSlide)
     }
 
-    // if ((values && values.autoSlide && !values.autoSlidePaused) || !values) {
     this.setSlideLocation(values?.indices)
     this.setSlideState(values?.state)
-    // }
   }
 
   private getSnapshotValues = (
@@ -201,6 +199,8 @@ export class Sync {
     if (this.magneticTimeout) {
       window.clearTimeout(this.magneticTimeout)
     }
+    const autoSlide = this.reveal.isAutoSliding()
+    const paused = this.reveal.isPaused()
     if (
       !this.explicitUnfollow &&
       this.presenterValues &&
@@ -220,11 +220,13 @@ export class Sync {
           }
         }, this.magneticTimeoutTime)
       } else if (
-        this.isSynced &&
-        position &&
-        (position.h !== this.presenterValues.indices.h ||
-          position.v !== this.presenterValues.indices.v ||
-          position.f !== this.presenterValues.indices.f)
+        (this.isSynced &&
+          position &&
+          (position.h !== this.presenterValues.indices.h ||
+            position.v !== this.presenterValues.indices.v ||
+            position.f !== this.presenterValues.indices.f)) ||
+        autoSlide !== this.presenterValues.autoSlide ||
+        paused !== this.presenterValues.paused
       ) {
         this.stopSync()
       }
