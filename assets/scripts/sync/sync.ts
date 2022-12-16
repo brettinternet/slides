@@ -87,7 +87,7 @@ export class Sync {
     reveal.addEventListener('fragmenthidden', this.handleRevealEvent)
     reveal.addEventListener('overviewhidden', this.handleRevealEvent)
     reveal.addEventListener('overviewshown', this.handleRevealEvent)
-    // Upgrade Reveal version - need to fork reveal-hugo
+    // Upgrade Reveal version - need to fork reveal-hugo - disallow skipping ahead of Math.max(h/v/f)
     // reveal.addEventListener('beforeslidechange', (event) => {
     //   console.log('BEFORE CHANGE', event)
     // })
@@ -168,11 +168,12 @@ export class Sync {
   private getState = (): State =>
     this.reveal.isOverview() ? State.OVERVIEW_SHOWN : State.OVERVIEW_HIDDEN
 
-  private handleRevealEvent = (event?: RevealEvent) => {
+  private handleRevealEvent = (_event?: RevealEvent) => {
     if (this.isAuthorizedPresenter()) {
+      console.log(this.reveal.getIndices())
       this.emitRevealAction(this.getState(), this.reveal.getIndices())
     } else {
-      this.handleRoamingUser(event)
+      this.handleRoamingUser(this.reveal.getIndices())
     }
   }
 
@@ -180,8 +181,9 @@ export class Sync {
    * Magnetic follow - allow participants to roam and come back
    */
   private handleRoamingUser = (position?: {
-    indexh: number
-    indexv: number
+    h: number
+    v: number
+    f?: number
   }) => {
     if (this.magneticTimeout) {
       window.clearTimeout(this.magneticTimeout)
@@ -197,8 +199,9 @@ export class Sync {
             this.presenterValues &&
             this.presenterValues.state === State.OVERVIEW_HIDDEN &&
             position &&
-            position.indexh === this.presenterValues.indices.h &&
-            position.indexv === this.presenterValues.indices.v
+            position.h === this.presenterValues.indices.h &&
+            position.v === this.presenterValues.indices.v &&
+            position.f === this.presenterValues.indices.f
           ) {
             this.startSync()
           }
@@ -206,8 +209,9 @@ export class Sync {
       } else if (
         this.isSynced &&
         position &&
-        (position.indexh !== this.presenterValues.indices.h ||
-          position.indexv !== this.presenterValues.indices.v)
+        (position.h !== this.presenterValues.indices.h ||
+          position.v !== this.presenterValues.indices.v ||
+          position.f !== this.presenterValues.indices.f)
       ) {
         this.stopSync()
       }
@@ -233,7 +237,7 @@ export class Sync {
     if (!indices) {
       throw Error('Unable to identify indices from sync.')
     }
-    this.reveal.slide(indices.h, indices.v, indices.f || undefined)
+    this.reveal.slide(indices.h, indices.v, indices.f ?? undefined)
   }
 
   private emitRevealAction = (state: State, indices: Indices) => {
@@ -242,7 +246,7 @@ export class Sync {
       indices: {
         h: indices.h,
         v: indices.v,
-        f: indices.f || null,
+        f: indices.f ?? null,
       },
       presenterUid: this.getActiveUser()?.uid,
     }
