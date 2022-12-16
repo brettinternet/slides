@@ -1,0 +1,24 @@
+---
+version: '3'
+
+vars:
+  CONFIG_DIR: '.'
+
+tasks:
+  default:
+    cmds:
+      - lint
+
+  lint:
+    desc: Lint project
+    cmds:
+      - task: yaml
+
+  yaml:
+    desc: Run yamllint
+    cmds:
+      - yamllint -c {{.CONFIG_DIR}}/.yamllint.yaml .
+    preconditions:
+      - sh: command -v yamllint
+        msg: |
+          Install 'yamllint' with 'pip install -r requirements.txt' or via your package manager (e.g. homebrew).

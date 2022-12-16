@@ -1,0 +1,27 @@
+@charset "UTF-8"
+@import './header'
+@import './slides'
+@import './notes'
+
+@media print
+  .no-print,
+  .no-print *
+    display: none !important
+
+.h-full
+  height: 100%
+  width: auto
+
+.snippet
+  position: absolute
+  right: 0
+  bottom: 0
+  display: flex
+  align-items: center
+  justify-content: center
+  height: 60px
+  padding: 1rem
+
+.icon
+  width: 24px
+  height: 24px

@@ -1,0 +1,113 @@
+<!-- Before body tag closes -->
+
+<header id="header" class="no-print" style="display:none;">
+  <div class="flex">
+    <div
+      id="viewer-count"
+      class="spacer-right text-center"
+      style="display:none;"
+    ></div>
+    <button id="sync" class="flex action dim" style="display: none">
+      <div id="sync-status-icon-active" style="display:none;">
+        {{ partial "icons/play.svg" }}
+      </div>
+      <div id="sync-status-icon-inactive" style="display:none;">
+        {{ partial "icons/pause.svg" }}
+      </div>
+      <div id="sync-status-text" class="spacer-left nowrap"></div>
+    </button>
+  </div>
+
+  <div id="auth" class="hidden">
+    <button id="sign-in" class="flex action dim" title="Sign in">
+      {{ partial "icons/user.svg" }}
+    </button>
+
+    <div
+      id="firebase-ui"
+      class="no-print backdrop dropdown border flex column"
+      style="display:none;"
+      tabindex="0"
+      aria-hidden="true"
+    >
+      <div>
+        <button
+          id="firebase-ui-close"
+          class="flex action dim spacer-left"
+          title="Close"
+        >
+          {{ partial "icons/x.svg" }}
+        </button>
+      </div>
+    </div>
+
+    <div class="relative">
+      <button
+        id="user-menu"
+        class="dim flex action spacer-left"
+        style="display:none;"
+        title="User menu"
+      >
+        <div
+          id="username"
+          class="spacer-right nowrap"
+          style="display:none;"
+        ></div>
+        <div id="user-icon" class="flex"></div>
+      </button>
+
+      <div
+        id="user-dropdown"
+        class="dropdown"
+        style="display:none;"
+        aria-hidden="true"
+      >
+        <div class="border backdrop">
+          <button
+            id="open-notes"
+            class="flex action dropdown-item"
+            title="Open presentation notes"
+          >
+            <div class="spacer-right nowrap">Notes</div>
+            <div class="icon-sm">
+              {{ partial "icons/file-text.svg" }}
+            </div>
+          </button>
+          <button
+            id="sign-out"
+            class="flex action dropdown-item"
+            title="Open presentation notes"
+          >
+            <div class="spacer-right nowrap">Sign out</div>
+            <div class="icon-sm">
+              {{ partial "icons/log-out.svg" }}
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Scripts -->
+{{ $firebase_api_key := getenv "HUGO_FIREBASE_API_KEY" }}
+{{ $firebase_auth_domain := getenv "HUGO_FIREBASE_AUTH_DOMAIN" }}
+{{ $firebase_database_url := getenv "HUGO_FIREBASE_DATABASE_URL" }}
+{{ $firebase_app_id := getenv "HUGO_FIREBASE_APP_ID" }}
+{{ $firebase_project_id := getenv "HUGO_FIREBASE_PROJECT_ID" }}
+{{ $firebase_measurement_id := getenv "HUGO_FIREBASE_MEASUREMENT_ID" }}
+{{ $presenter_uids := getenv "HUGO_PRESENTER_UIDS" }}
+{{ $env_vars := dict
+  "NODE_ENV" hugo.Environment
+  "isProd" hugo.IsProduction
+  "firebaseApiKey" $firebase_api_key
+  "firebaseAuthDomain" $firebase_auth_domain
+  "firebaseDatabaseUrl" $firebase_database_url
+  "firebaseAppId" $firebase_app_id
+  "firebaseProjectId" $firebase_project_id
+  "firebaseMeasurementId" $firebase_measurement_id
+  "presenterUids" $presenter_uids
+}}
+
+{{ $js := resources.Get "scripts/main.ts" | js.Build (dict "params" $env_vars) }}
+<script src="{{ $js.Permalink }}" defer></script>
