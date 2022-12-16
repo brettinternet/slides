@@ -94,6 +94,7 @@ export class Sync {
     reveal.addEventListener('paused', this.handleRevealEvent)
     reveal.addEventListener('resumed', this.handleRevealEvent)
     // Upgrade Reveal version - need to fork reveal-hugo - disallow skipping ahead of Math.max(h/v/f)
+    // https://github.com/dzello/reveal-hugo/pull/115
     // reveal.addEventListener('beforeslidechange', (event) => {
     //   console.log('BEFORE CHANGE', event)
     // })
@@ -145,7 +146,8 @@ export class Sync {
     if (this.presenterValues && !this.isAuthorizedPresenter()) {
       if (!this.isActivePresentation) {
         this.initializeViewerPresentation()
-      } else if (this.isSynced) {
+      }
+      if (this.isSynced) {
         this.updateSlides()
       }
     } else if (!this.isAuthorizedPresenter()) {
