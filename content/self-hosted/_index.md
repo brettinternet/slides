@@ -41,8 +41,9 @@ plugins = ["plugins/chalkboard.js"]
 
 <img src="./optiplex.webp" width="600" alt="dell optiplex" />
 
-{{% note %}}Veteran blood in the room with a few of you being sysadmins - **Has
-anyone self-hosted on _older_ hardware than this?** {{% /note %}}
+{{% note %}}From 2009 I think? Start using it in 2015. There's veteran blood in
+the room with a few of you being sysadmins - **Has anyone self-hosted on _older_
+hardware than this?** {{% /note %}}
 
 ---
 
@@ -56,7 +57,7 @@ anyone self-hosted on _older_ hardware than this?** {{% /note %}}
 
 <!-- Software 1. Simple, 2. Good, 3. Bad -->
 
-## Simple Example
+### Simple Example
 
 {{< f >}}
 
@@ -109,8 +110,22 @@ reply with a _very_ simple HTTP response.
 
 #### Some Apps
 
-- {{% fragment %}}[Document management](https://github.com/paperless-ngx/paperless-ngx)
-  ([Demo](https://demo.paperless-ngx.com/accounts/login/?next=/)){{% /fragment %}}
+{{< f >}}- [Document management](https://github.com/paperless-ngx/paperless-ngx)
+([Demo](https://demo.paperless-ngx.com/accounts/login/?next=/)): document
+archive{{< /f >}}
+
+{{< f >}}- [Home Assistant](https://www.home-assistant.io)
+([Demo](https://demo.home-assistant.io/)): home automation{{< /f >}}
+
+{{< f >}}- [Miniflux](https://miniflux.app/): simple RSS reader{{< /f >}}
+
+{{< f >}}- [AdGuard Home](https://miniflux.app/): DNS proxy
+([FBI warning](https://www.ic3.gov/Media/Y2022/PSA221221?=8324278624)){{< /f >}}
+
+{{< f >}}- [OPNsense](https://opnsense.org/about/about-opnsense/): firewall and
+router{{< /f >}}
+
+{{< f >}}- [Plex](https://www.plex.tv): stream home media{{< /f >}}
 
 {{% /section %}}
 
