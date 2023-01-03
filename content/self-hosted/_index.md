@@ -114,9 +114,6 @@ reply with a _very_ simple HTTP response.
 ([Demo](https://demo.paperless-ngx.com/accounts/login/?next=/)): document
 archive{{< /f >}}
 
-{{< f >}}- [Home Assistant](https://www.home-assistant.io)
-([Demo](https://demo.home-assistant.io/)): home automation{{< /f >}}
-
 {{< f >}}- [Miniflux](https://miniflux.app/): simple RSS reader{{< /f >}}
 
 {{< f >}}- [AdGuard Home](https://miniflux.app/): DNS proxy
@@ -126,6 +123,13 @@ archive{{< /f >}}
 router{{< /f >}}
 
 {{< f >}}- [Plex](https://www.plex.tv): stream home media{{< /f >}}
+
+{{< f >}}- [Home Assistant](https://www.home-assistant.io)
+([Demo](https://demo.home-assistant.io/)): home automation{{< /f >}}
+
+---
+
+### Home Assistant
 
 {{% /section %}}
 

@@ -1,12 +1,5 @@
 {
   "name": "slides",
-  "version": "1.0.0",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@fingerprintjs/fingerprintjs": "^3.3.6",
     "firebase": "^9.15.0",
