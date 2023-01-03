@@ -1,0 +1,190 @@
+@import url("../firebaseui.css");
+#header {
+  box-sizing: border-box;
+  z-index: 100;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row; }
+
+button.action {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  padding: 0.5rem 1rem;
+  border-radius: 3px; }
+
+.spacer-left {
+  margin-left: 0.5rem; }
+
+.spacer-right {
+  margin-right: 0.5rem; }
+
+.dim {
+  transition: opacity 150ms;
+  opacity: 0.3; }
+  .dim:hover, .dim:active, .dim:focus {
+    opacity: 1; }
+
+/* For now since auth only applies to presenters */
+.hidden {
+  opacity: 0;
+  transition: opacity 150ms; }
+  .hidden:hover, .hidden:active, .hidden:focus {
+    opacity: 1; }
+
+.opaque {
+  opacity: 1; }
+
+.flex {
+  display: flex;
+  align-items: center; }
+  .flex.column {
+    flex-direction: column; }
+
+.relative {
+  position: relative; }
+
+.nowrap {
+  white-space: nowrap; }
+
+#auth {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center; }
+
+#user-icon {
+  overflow: hidden; }
+  #user-icon img {
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    transition: opacity 250ms; }
+
+#sync.active {
+  color: #2684ff; }
+
+#firebase-ui {
+  align-items: flex-end;
+  margin: 2px;
+  padding: 0.5rem;
+  top: 0;
+  right: 0;
+  left: 0; }
+
+.dropdown {
+  position: absolute;
+  z-index: 100; }
+
+.border {
+  border-width: 1px;
+  border-color: inherit;
+  border-style: solid;
+  border-radius: 3px; }
+
+@media only screen and (min-width: 500px) {
+  #firebase-ui {
+    width: 360px;
+    left: auto; } }
+
+#firebase-ui button {
+  transition: opacity 200ms;
+  opacity: 0.75; }
+  #firebase-ui button:hover {
+    opacity: 1; }
+
+#firebase-ui-close {
+  margin-bottom: 0.25rem; }
+
+#user-dropdown {
+  right: 0;
+  padding-top: 7px; }
+  #user-dropdown > div:after {
+    top: -6px;
+    right: 20px;
+    left: auto;
+    border: 7px solid transparent;
+    border-bottom-color: inherit;
+    position: absolute;
+    display: inline-block;
+    content: ""; }
+
+.dropdown-item {
+  display: flex;
+  justify-content: space-between;
+  width: 100%; }
+
+.icon-sm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0.65); }
+
+#viewer-count {
+  opacity: 0.6;
+  font-size: 14px;
+  padding: 0.5rem; }
+
+.reveal.paused .pause-overlay {
+  visibility: visible;
+  opacity: 1; }
+
+.twitter-tweet-rendered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 !important;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto !important;
+  max-width: 300px !important; }
+
+.overflow-auto {
+  max-height: 100%;
+  overflow-y: auto; }
+
+#chalkboard-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 400; }
+  #chalkboard-controls ul {
+    list-style: none;
+    padding: 0;
+    margin: 1rem; }
+  #chalkboard-controls button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+    padding: 0.25rem;
+    border-radius: 3px; }
+
+@media print {
+  .no-print,
+  .no-print * {
+    display: none !important; } }
+
+.h-full {
+  height: 100%;
+  width: auto; }
+
+.snippet {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  padding: 1rem; }
+
+.icon {
+  width: 24px;
+  height: 24px; }
