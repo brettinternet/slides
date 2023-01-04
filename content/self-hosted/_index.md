@@ -67,6 +67,14 @@ Grandma to run Facebook on. {{% /note %}}
 
 ---
 
+{{< slide background-image="pico-cluster.jpg" >}}
+
+---
+
+{{< slide background-iframe="https://www.hardkernel.com" >}}
+
+---
+
 {{< slide background-iframe="https://www.fractal-design.com/products/cases/node/node-804/" >}}
 
 ---
