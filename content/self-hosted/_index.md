@@ -15,6 +15,9 @@ plugins = ["plugins/chalkboard.js"]
 
 ## in the laundry room
 
+{{% note %}} Nevermind the clickbait title, in my opinion the "Homelab" also
+applies to cloud services that you run yourself. {{% /note %}}
+
 ---
 
 <!-- Poll -->
@@ -50,6 +53,17 @@ plugins = ["plugins/chalkboard.js"]
 {{% note %}}From 2009 I think? Start using it in 2015. There's veteran blood in
 the room with a few of you being sysadmins - **Has anyone self-hosted on _older_
 hardware than this?** {{% /note %}}
+
+---
+
+{{< slide background-image="" >}}
+
+<img src="raspberrypi.png" alt="Raspberry Pi" height="500px" />
+
+$35
+
+{{% note %}} Enough compute in the palm of your hand to make a desktop for
+Grandma to run Facebook on. {{% /note %}}
 
 ---
 
@@ -133,7 +147,8 @@ archive{{< /f >}}
 
 {{< f >}}- [Miniflux](https://miniflux.app/): simple RSS reader{{< /f >}}
 
-{{< f >}}- [AdGuard Home](https://miniflux.app/): DNS proxy
+{{< f >}}- [AdGuard Home](https://miniflux.app/) or
+[Pi-hole](https://pi-hole.net/): DNS proxy
 ([FBI warning](https://www.ic3.gov/Media/Y2022/PSA221221?=8324278624)){{< /f >}}
 
 {{< f >}}- [OPNsense](https://opnsense.org/about/about-opnsense/): firewall and
