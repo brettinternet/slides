@@ -21,7 +21,7 @@ plugins = ["plugins/chalkboard.js"]
 
 ### Resources & Questions
 
-[https://go.gardiner.cloud/harse](https://app.mural.co/t/pdq3587/m/pdq3587/1672788287090/6eb4baca62fcbe958507dab73b33f88a28279404?sender=a8ff14a1-7a4c-4610-9ecf-4c2add6f713f)
+[https://go.gardiner.cloud/mural](https://app.mural.co/t/pdq3587/m/pdq3587/1672788287090/6eb4baca62fcbe958507dab73b33f88a28279404?sender=a8ff14a1-7a4c-4610-9ecf-4c2add6f713f)
 
 {{< f >}}
 
