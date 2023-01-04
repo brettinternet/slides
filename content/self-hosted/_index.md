@@ -55,6 +55,17 @@ hardware than this?** {{% /note %}}
 
 {{< slide background-iframe="https://www.fractal-design.com/products/cases/node/node-804/" >}}
 
+---
+
+{{< slide background-image="supermicro.png" >}}
+
+---
+
+<img src="./hba.jpg" width="600px" alt="HBA PCI card" />
+
+- Dell Perc H310
+- LSI 9211-8i IT mode (bypass hardware RAID)
+
 {{% /section %}}
 
 ---
@@ -137,6 +148,12 @@ router{{< /f >}}
 
 ### Home Assistant
 
+{{< tweet user="grohliest" id="1025944951123861504" >}}
+
+---
+
+{{< slide background-image="homeassistant.png" >}}
+
 {{% /section %}}
 
 ---
@@ -150,3 +167,4 @@ router{{< /f >}}
 - [Privacy Guides](https://www.privacyguides.org/)
   ([PrivacyToolsIO subreddit](https://www.reddit.com/r/privacytoolsIO/))
 - [Homelab slideshow](../homelabs)
+- [PDQ Homelab Mural](https://go.gardiner.cloud/mural)
