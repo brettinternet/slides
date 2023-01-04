@@ -181,6 +181,8 @@ router{{< /f >}}
 
 ---
 
+{{% section %}}
+
 ## Resources
 
 - [awesome-selfhosted](https://github.com/awesome-selfhosted/awesome-selfhosted)
@@ -191,3 +193,13 @@ router{{< /f >}}
   ([PrivacyToolsIO subreddit](https://www.reddit.com/r/privacytoolsIO/))
 - [Homelab slideshow](../homelabs)
 - [PDQ Homelab Mural](https://go.gardiner.cloud/mural)
+
+---
+
+## Thank you to our sponsors
+
+<img src="austin.png" alt="Austin" width="300px" />
+
+[The NetMan Shop](https://netmanshop.com/)
+
+{{% /section %}}
