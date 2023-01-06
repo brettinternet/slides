@@ -13,7 +13,7 @@ loop = false
 
 ---
 
-{{< slide background-image="./cody.jpg">}}
+{{< slide background-image="cody.jpg">}}
 
 <div class="backdrop snippet">
   <a href="https://github.com/cfbender">@young_cody</a>
@@ -21,7 +21,7 @@ loop = false
 
 ---
 
-{{< slide background-image="./jarem_1.jpg">}}
+{{< slide background-image="jarem_1.jpg">}}
 
 <div class="backdrop snippet">
   <a href="https://github.com/jaremandersen">@jaremandersen</a>
@@ -29,8 +29,32 @@ loop = false
 
 ---
 
-{{< slide background-image="./jarem_2.jpg">}}
+{{< slide background-image="jarem_2.jpg">}}
 
 <div class="backdrop snippet">
   <a href="https://github.com/jaremandersen">@jaremandersen</a>
+</div>
+
+---
+
+{{< slide background-image="sid.jpg">}}
+
+<div class="backdrop snippet">
+  sid
+</div>
+
+---
+
+{{< slide background-image="wylan.jpg">}}
+
+<div class="backdrop snippet">
+  Wylan
+</div>
+
+---
+
+{{< slide background-image="clayton.jpg">}}
+
+<div class="backdrop snippet">
+  Clayton
 </div>

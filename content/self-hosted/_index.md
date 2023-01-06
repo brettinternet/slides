@@ -16,7 +16,17 @@ plugins = ["plugins/chalkboard.js"]
 ## in the laundry room
 
 {{% note %}} Nevermind the clickbait title, in my opinion the "Homelab" also
-applies to cloud services that you run yourself. {{% /note %}}
+applies to cloud services that you run yourself.
+
+It's hard to tailor this topic to a wide audience with a variety of experiences,
+so I'll touch on various ideas and leave it up to you to explore the rest.
+
+I really want what I present to be actionable instead of theoretical. This is
+from the perspective of a hobbyist, instead of a professional, although I
+believe the both support each other.
+
+Working agreement: you can interrupt me as we go or even shout vulgarities if
+you'd like. {{% /note %}}
 
 ---
 
@@ -96,7 +106,11 @@ Grandma to run Facebook on. {{% /note %}}
 
 <!-- Software 1. Simple, 2. Good, 3. Bad -->
 
-### Simple Example
+### Simple Examples
+
+{{< slide background-image="proxmox.png" >}}
+
+---
 
 {{< f >}}
 
@@ -149,6 +163,9 @@ reply with a _very_ simple HTTP response.
 
 #### Some Apps
 
+{{< f >}}- [OPNsense](https://opnsense.org/about/about-opnsense/): firewall and
+router{{< /f >}}
+
 {{< f >}}- [Document management](https://github.com/paperless-ngx/paperless-ngx)
 ([Demo](https://demo.paperless-ngx.com/accounts/login/?next=/)): document
 archive{{< /f >}}
@@ -159,10 +176,10 @@ archive{{< /f >}}
 [Pi-hole](https://pi-hole.net/): DNS proxy
 ([FBI warning](https://www.ic3.gov/Media/Y2022/PSA221221?=8324278624)){{< /f >}}
 
-{{< f >}}- [OPNsense](https://opnsense.org/about/about-opnsense/): firewall and
-router{{< /f >}}
-
 {{< f >}}- [Plex](https://www.plex.tv): stream home media{{< /f >}}
+
+{{< f >}}- [ntfy](https://ntfy.sh) ([Demo](https://ntfy.sh/app)): pubsub push
+notifications{{< /f >}}
 
 {{< f >}}- [Home Assistant](https://www.home-assistant.io)
 ([Demo](https://demo.home-assistant.io/)): home automation{{< /f >}}
