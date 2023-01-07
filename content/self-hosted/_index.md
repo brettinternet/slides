@@ -106,13 +106,15 @@ Grandma to run Facebook on. {{% /note %}}
 
 <!-- Software 1. Simple, 2. Good, 3. Bad -->
 
-### Simple Examples
-
-{{< slide background-image="proxmox.png" >}}
+### Devops
 
 ---
 
-{{< f >}}
+<img src="proxmox.png" alt="Proxmox dashboard" width="800px" />
+
+---
+
+#### Docker
 
 ```sh
 APP=$(cat <<-END
@@ -123,8 +125,6 @@ END
 )
 docker run --rm --name simple -p 3000:3000 busybox sh -c "$APP"
 ```
-
-{{< /f >}}
 
 {{% note %}}
 
