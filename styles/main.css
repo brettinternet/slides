@@ -183,7 +183,9 @@ button.action {
   align-items: center;
   justify-content: center;
   height: 60px;
-  padding: 1rem; }
+  padding: 0rem 0.5rem;
+  opacity: 0.8;
+  border-radius: 5px; }
 
 .icon {
   width: 24px;
