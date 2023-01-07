@@ -2,6 +2,7 @@
 title = "Homelabs"
 outputs = ["Reveal"]
 [reveal_hugo]
+theme = "blood"
 history = true
 center = true
 plugins = ["plugins/chalkboard.js"]
@@ -9,14 +10,14 @@ auto_slide = 4000
 loop = false
 +++
 
-# Some Homelabs
+# iSpy Homelabs
 
 ---
 
 {{< slide background-image="cody.jpg">}}
 
 <div class="backdrop snippet">
-  <a href="https://github.com/cfbender">@young_cody</a>
+  Young Cody
 </div>
 
 ---
@@ -24,7 +25,7 @@ loop = false
 {{< slide background-image="jarem_1.jpg">}}
 
 <div class="backdrop snippet">
-  <a href="https://github.com/jaremandersen">@jaremandersen</a>
+  Jarem
 </div>
 
 ---
@@ -32,7 +33,7 @@ loop = false
 {{< slide background-image="jarem_2.jpg">}}
 
 <div class="backdrop snippet">
-  <a href="https://github.com/jaremandersen">@jaremandersen</a>
+  Jarem
 </div>
 
 ---
@@ -40,7 +41,7 @@ loop = false
 {{< slide background-image="sid.jpg">}}
 
 <div class="backdrop snippet">
-  sid
+  Sid
 </div>
 
 ---
@@ -57,4 +58,28 @@ loop = false
 
 <div class="backdrop snippet">
   Clayton
+</div>
+
+---
+
+{{< slide background-image="michael.jpg">}}
+
+<div class="backdrop snippet">
+  Michael
+</div>
+
+---
+
+{{< slide background-image="steven.jpg">}}
+
+<div class="backdrop snippet">
+  Steven
+</div>
+
+---
+
+{{< slide background-image="hackerman.webp">}}
+
+<div class="backdrop snippet">
+  Hackerman
 </div>
