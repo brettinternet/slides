@@ -30,31 +30,35 @@ you'd like. {{% /note %}}
 
 ---
 
-<!-- Poll -->
-
-### Resources & Questions
-
-[https://go.gardiner.cloud/mural](https://app.mural.co/t/pdq3587/m/pdq3587/1672788287090/6eb4baca62fcbe958507dab73b33f88a28279404?sender=a8ff14a1-7a4c-4610-9ecf-4c2add6f713f)
+## Poll
 
 {{< f >}}
 
-#### Who self-hosts an application _locally_?
+Who self-hosts an application _locally_?
 
 {{< /f >}} {{< f >}}
 
-#### Who self-hosts an application _in the cloud_?
+Who self-hosts an application _in the cloud_?
 
 {{< /f >}} {{< f >}}
 
-#### Why is this relevant?
+Why is this relevant?
 
 {{< /f >}}
 
 ---
 
-<!-- About -->
+## Demo
 
-### Hardware
+[https://livebook.brett.pw](https://livebook.brett.pw)
+
+{{% /section %}}
+
+---
+
+{{% section %}}
+
+## Hardware
 
 <!-- Move this to after software? -->
 
@@ -65,8 +69,6 @@ the room with a few of you being sysadmins - **Has anyone self-hosted on _older_
 hardware than this?** {{% /note %}}
 
 ---
-
-{{< slide background-image="" >}}
 
 <img src="raspberrypi.png" alt="Raspberry Pi" height="500px" />
 
@@ -104,17 +106,15 @@ Grandma to run Facebook on. {{% /note %}}
 
 {{% section %}}
 
-<!-- Software 1. Simple, 2. Good, 3. Bad -->
+<!-- Software 1. VMs/Docker, 2. docker-compose, 3. kubernetes -->
 
-### Devops
+## Devops
 
 ---
 
 <img src="proxmox.png" alt="Proxmox dashboard" width="800px" />
 
 ---
-
-#### Docker
 
 ```sh
 APP=$(cat <<-END
@@ -135,23 +135,48 @@ reply with a _very_ simple HTTP response.
 
 {{% /note %}}
 
-{{% /section %}}
+---
+
+<img src="docker-compose.png" alt="yaml code" width="200px" />
+
+[brettinternet/docker-compose-hosted-demo](https://github.com/brettinternet/docker-compose-hosted-demo)
 
 ---
 
-{{% section %}}
-
-## Good Example
-
-{{% /section %}}
-
-{{% section %}}
-
-## Bad Example
-
 {{< tweet user="dexhorthy" id="856639005462417409" >}}
 
+---
+
+Self-hosted K8s tooling
+
+{{< f >}}- [metallb](https://metallb.universe.tf/): bare-metal service
+LoadBalancer{{< /f >}}
+
+{{< f >}}- [Flux](https://fluxcd.io/flux/): gitops{{< /f >}}
+
+{{< f >}}- [sops](https://github.com/mozilla/sops): secrets in git{{< /f >}}
+
+{{< f >}}- [reloader](https://github.com/stakater/Reloader): upgrade pod when
+config/secret changes{{< /f >}}
+
+{{< f >}}
+
+- [system-upgrade-controller](https://github.com/rancher/system-upgrade-controller):
+  planned node upgrades{{< /f >}}
+
+{{< f >}}- [kured](https://github.com/kubereboot/kured): reboot daemon{{< /f >}}
+
+{{< f >}}
+
+Starting point: https://github.com/onedr0p/flux-cluster-template
+
+[k8s@home Discord](https://k8s-at-home.com/)
+
+{{< /f >}}
+
 {{% /section %}}
+
+---
 
 {{% section %}}
 
@@ -169,6 +194,9 @@ router{{< /f >}}
 {{< f >}}- [Document management](https://github.com/paperless-ngx/paperless-ngx)
 ([Demo](https://demo.paperless-ngx.com/accounts/login/?next=/)): document
 archive{{< /f >}}
+
+{{< f >}}- [Folding@home](https://foldingathome.org/diseases/?lng=en): protein
+simulations{{< /f >}}
 
 {{< f >}}- [Miniflux](https://miniflux.app/): simple RSS reader{{< /f >}}
 
@@ -208,8 +236,6 @@ notifications{{< /f >}}
   [DataHoarder](https://www.reddit.com/r/DataHoarder/)
 - [Privacy Guides](https://www.privacyguides.org/)
   ([PrivacyToolsIO subreddit](https://www.reddit.com/r/privacytoolsIO/))
-- [Homelab slideshow](../homelabs)
-- [PDQ Homelab Mural](https://go.gardiner.cloud/mural)
 
 ---
 
@@ -218,5 +244,9 @@ notifications{{< /f >}}
 <img src="austin.png" alt="Austin" width="300px" />
 
 [The NetMan Shop](https://netmanshop.com/)
+
+---
+
+[Homelab slideshow](../homelabs)
 
 {{% /section %}}
