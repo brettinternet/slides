@@ -1,10 +1,10 @@
 +++
-title = "Self-hosted"
+title = "homelab"
 outputs = ["Reveal"]
 [reveal_hugo]
 history = true
 center = true
-plugins = ["plugins/chalkboard.js"]
+plugins = ["/plugins/chalkboard.js"]
 +++
 
 {{% section %}}
@@ -50,7 +50,7 @@ Why is this relevant?
 
 ## Demo
 
-[https://livebook.brett.pw](https://livebook.brett.pw)
+{{< f >}} [https://livebook.brett.pw](https://livebook.brett.pw) {{< /f >}}
 
 {{% /section %}}
 
@@ -247,6 +247,6 @@ notifications{{< /f >}}
 
 ---
 
-[Homelab slideshow](../homelabs)
+[Homelab pics](../homelab-pics)
 
 {{% /section %}}

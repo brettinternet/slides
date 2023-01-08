@@ -4,7 +4,7 @@ outputs = ["Reveal"]
 [reveal_hugo]
 history = true
 center = true
-plugins = ["plugins/chalkboard.js"]
+plugins = ["/plugins/chalkboard.js"]
 +++
 
 # [Brett](https://brett.cloud)

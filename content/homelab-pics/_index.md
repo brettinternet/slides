@@ -1,11 +1,11 @@
 +++
-title = "Homelabs"
+title = "Homelab pics"
 outputs = ["Reveal"]
 [reveal_hugo]
 theme = "blood"
 history = true
 center = true
-plugins = ["plugins/chalkboard.js"]
+plugins = ["/plugins/chalkboard.js"]
 auto_slide = 4000
 loop = false
 +++
