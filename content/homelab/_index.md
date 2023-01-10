@@ -4,7 +4,6 @@ outputs = ["Reveal"]
 [reveal_hugo]
 history = true
 center = true
-plugins = ["/plugins/chalkboard.js"]
 +++
 
 {{% section %}}
@@ -42,7 +41,7 @@ Who self-hosts an application _in the cloud_?
 
 {{< /f >}} {{< f >}}
 
-Why is this relevant?
+Why do you do it?
 
 {{< /f >}}
 
