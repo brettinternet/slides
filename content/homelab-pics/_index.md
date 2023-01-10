@@ -12,6 +12,22 @@ plugins = ["/plugins/chalkboard.js"]
 
 ---
 
+{{< slide background-image="nick_1.jpg">}}
+
+<div class="backdrop snippet">
+  Nick
+</div>
+
+---
+
+{{< slide background-image="nick_2.jpg">}}
+
+<div class="backdrop snippet">
+  Nick
+</div>
+
+---
+
 {{< slide background-image="cody.jpg">}}
 
 <div class="backdrop snippet">
