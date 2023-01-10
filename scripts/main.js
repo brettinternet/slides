@@ -988,14 +988,14 @@
   });
 
   // ns-params:@params
-  var firebaseApiKey = "";
-  var firebaseAppId = "";
-  var firebaseAuthDomain = "";
-  var firebaseDatabaseUrl = "";
-  var firebaseMeasurementId = "";
-  var firebaseProjectId = "";
+  var firebaseApiKey = "AIzaSyB_irRP1uSwfjOH0Sa5p_p8w1F38ZHy6qA";
+  var firebaseAppId = "1:1085061633013:web:150eec1fbc4727aaf5c6bc";
+  var firebaseAuthDomain = "slides-d5c14.firebaseapp.com";
+  var firebaseDatabaseUrl = "https://slides-d5c14.firebaseio.com";
+  var firebaseMeasurementId = "G-Z0MK6965VJ";
+  var firebaseProjectId = "slides-d5c14";
   var isProd = true;
-  var presenterUids = "";
+  var presenterUids = "SjD1ze42kKP7ep9iGeZEqd6dNrv2";
 
   // node_modules/@firebase/app/dist/esm/index.esm2017.js
   var index_esm2017_exports = {};
@@ -31096,6 +31096,8 @@
   };
 
   // ns-hugo:/home/runner/work/slides/slides/assets/scripts/sync/sync.ts
+  var noop2 = () => {
+  };
   var Sync = class {
     isSynced = false;
     isActivePresentation = false;
@@ -31115,7 +31117,7 @@
       clientId,
       presenterUids: presenterUids2,
       dbPaths,
-      onPresentationStart
+      onPresentationStart = noop2
     }) {
       this.app = app;
       this.reveal = reveal;
@@ -31304,52 +31306,14 @@
   };
   var sync_default = (args) => new Sync(args);
 
-  // ns-hugo:/home/runner/work/slides/slides/assets/scripts/sync/chalkboard.ts
-  var squareSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>`;
-  var upSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="icon"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" /></svg>`;
-  var downSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="icon"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>`;
-  var chalkboard_default = (reveal) => {
-    window.RevealChalkboard.init(reveal);
-    const chalkboardControls = document.getElementById("chalkboard-controls");
-    if (chalkboardControls && window.RevealChalkboard) {
-      chalkboardControls.style.display = "";
-      const squares = document.getElementsByClassName(
-        "fa-square"
-      );
-      Array.from(squares).forEach((el) => {
-        if (el.parentElement) {
-          el.parentElement.innerHTML = squareSvg;
-        }
-      });
-      const chevronUps = document.getElementsByClassName("fa-chevron-up");
-      Array.from(chevronUps).forEach((el) => {
-        if (el.parentElement) {
-          el.parentElement.innerHTML = upSvg;
-        }
-      });
-      const chevronDowns = document.getElementsByClassName("fa-chevron-down");
-      Array.from(chevronDowns).forEach((el) => {
-        if (el.parentElement) {
-          el.parentElement.innerHTML = downSvg;
-        }
-      });
-    }
-  };
-
   // ns-hugo:/home/runner/work/slides/slides/assets/scripts/sync/index.ts
   var sync_default2 = ({ reveal, app, clientId, presenterUids: presenterUids2, dbPaths }) => {
-    const onPresentationStart = (isPresenter) => {
-      if (isPresenter) {
-        chalkboard_default(reveal);
-      }
-    };
     sync_default({
       app,
       reveal,
       clientId,
       presenterUids: presenterUids2,
-      dbPaths,
-      onPresentationStart
+      dbPaths
     });
   };
 
