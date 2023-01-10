@@ -61,7 +61,7 @@ Why do you do it?
 
 <!-- Move this to after software? -->
 
-<img src="optiplex.webp" width="600" alt="dell optiplex" />
+<img src="optiplex.webp" width="500" alt="dell optiplex" />
 
 {{% note %}}From 2009 I think? Start using it in 2015. There's veteran blood in
 the room with a few of you being sysadmins - **Has anyone self-hosted on _older_
