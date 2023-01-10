@@ -109,5 +109,8 @@
   "presenterUids" $presenter_uids
 }}
 
-{{ $js := resources.Get "scripts/main.ts" | js.Build (dict "params" $env_vars) }}
-<script src="{{ $js.Permalink }}" defer></script>
+{{ $scripts := resources.Get "scripts/main.ts" | js.Build (dict "params" $env_vars) }}
+{{ if hugo.IsProduction }}
+  {{ $scripts = $scripts | minify | fingerprint }}
+{{ end }}
+<script src="{{ $scripts.Permalink }}" defer></script>
