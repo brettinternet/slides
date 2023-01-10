@@ -14,18 +14,16 @@ center = true
 
 ## in the laundry room
 
-{{% note %}} Nevermind the clickbait title, in my opinion the "Homelab" also
-applies to cloud services that you run yourself.
+{{% note %}} Nevermind the clickbait title - bare metal just sounded sexy.
 
-It's hard to tailor this topic to a wide audience with a variety of experiences,
-so I'll touch on various ideas and leave it up to you to explore the rest.
+Wide audience - experience, interests, etc Touch on various ideas and leave it
+up to you to explore the rest.
 
-I really want what I present to be actionable instead of theoretical. This is
-from the perspective of a hobbyist, instead of a professional, although I
-believe the both support each other.
+Goal is to give you something actionable instead of completely theoretical (if
+this interests you).
 
-Working agreement: you can interrupt me as we go or even shout vulgarities if
-you'd like. {{% /note %}}
+Hobby, but a place to _prototype_ (creativity that Kyle and Dan have suggested
+is so crucial to success), learn, break things or see what happens {{% /note %}}
 
 ---
 
@@ -51,10 +49,10 @@ Why do you do it?
 
 {{< f >}} [https://livebook.brett.pw](https://livebook.brett.pw) {{< /f >}}
 
-{{% /section %}}
-
 {{% note %}} I want to _connect_ you with this demo at this address.
 {{% /note %}}
+
+{{% /section %}}
 
 ---
 
@@ -93,6 +91,8 @@ Does anyone use a different ARM device in their homelab? {{% /note %}}
 
 {{< slide background-iframe="https://www.fractal-design.com/products/cases/node/node-804/" >}}
 
+{{% note %}} Good for when you live in an apartment. {{% /note %}}
+
 ---
 
 {{< slide background-image="supermicro.png" >}}
@@ -103,6 +103,8 @@ Does anyone use a different ARM device in their homelab? {{% /note %}}
 
 - Dell Perc H310
 - LSI 9211-8i IT mode (bypass hardware RAID)
+
+{{% note %}} Another hardware you want to shoutout? NUC {{% /note %}}
 
 {{% /section %}}
 
@@ -152,12 +154,13 @@ reply with a _very_ simple HTTP response.
 {{% note %}} The screenshot here shows you the manifest you'd need to self-host
 our Livebook app here.
 
-It does everything you'd need and lets you avoid port forwarding anything:
+No port forwarding, HTTPS
+
+_This is simple, secure and pretty damn quick!_
+
 There's a reverse proxy, cloudflare tunnel (only traffic from cloudflare),
 automatic DNS record updates, and then our app with a directory on my laptop
 mounted as a volume.
-
-This is simple, secure and pretty damn quick!!
 
 1. Review docker-compose
 1. Review repo devops
@@ -169,7 +172,7 @@ This is simple, secure and pretty damn quick!!
 
 ---
 
-Self-hosted K8s tooling
+### Self-hosted K8s tooling
 
 {{< f >}}- [metallb](https://metallb.universe.tf/): bare-metal service
 LoadBalancer{{< /f >}}
@@ -198,8 +201,12 @@ Starting point: https://github.com/onedr0p/flux-cluster-template
 
 {{% /section %}}
 
-{{% note %}} Teaser of what's available to those who are interested in
-self-hosting a kubernetes cluster. {{% /note %}}
+{{% note %}} Teaser - now check out the starter template.
+
+- Installs k3s with Ansible and sets up DNS with Terraform
+- Installs Flux and reconciles the cluster with the git repo's kustomize and
+  helm definitions
+- Cert-manager will manage your Let's Encrypt certs {{% /note %}}
 
 ---
 
@@ -264,6 +271,10 @@ notifications{{< /f >}}
   [DataHoarder](https://www.reddit.com/r/DataHoarder/)
 - [Privacy Guides](https://www.privacyguides.org/)
   ([PrivacyToolsIO subreddit](https://www.reddit.com/r/privacytoolsIO/))
+
+{{% note %}} What did I miss? What resources or tips do you want your peers to
+know about self-hosting or setting up a homelab to prototype and play with
+ideas. {{% /note %}}
 
 ---
 
