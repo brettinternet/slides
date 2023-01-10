@@ -3,7 +3,7 @@ import { FirebaseApp } from 'firebase/app'
 
 import { DbPaths } from '../firebase'
 import slideSync from './sync'
-import showChalkboardControls from './chalkboard'
+// import showChalkboardControls from './chalkboard'
 
 type Args = {
   reveal: Reveal
@@ -14,17 +14,17 @@ type Args = {
 }
 
 export default ({ reveal, app, clientId, presenterUids, dbPaths }: Args) => {
-  const onPresentationStart = (isPresenter: boolean) => {
-    if (isPresenter) {
-      showChalkboardControls(reveal)
-    }
-  }
+  // const onPresentationStart = (isPresenter: boolean) => {
+  //   if (isPresenter) {
+  //     showChalkboardControls(reveal)
+  //   }
+  // }
   slideSync({
     app,
     reveal,
     clientId,
     presenterUids,
     dbPaths,
-    onPresentationStart,
+    // onPresentationStart,
   })
 }

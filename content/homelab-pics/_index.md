@@ -6,8 +6,6 @@ theme = "blood"
 history = true
 center = true
 plugins = ["/plugins/chalkboard.js"]
-auto_slide = 4000
-loop = false
 +++
 
 # iSpy Homelabs
@@ -50,6 +48,14 @@ loop = false
 
 <div class="backdrop snippet">
   Wylan
+</div>
+
+---
+
+{{< slide background-image="brett.png">}}
+
+<div class="backdrop snippet">
+  Brett
 </div>
 
 ---

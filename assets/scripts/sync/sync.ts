@@ -23,6 +23,8 @@ type Indices = {
   f?: number | null
 }
 
+const noop = () => {}
+
 enum State {
   OVERVIEW_SHOWN = 'overviewshown',
   OVERVIEW_HIDDEN = 'overviewhidden',
@@ -42,7 +44,7 @@ type Args = {
   clientId: string
   presenterUids: string[]
   dbPaths: DbPaths
-  onPresentationStart: (isPresenter: boolean) => void
+  onPresentationStart?: (isPresenter: boolean) => void
 }
 
 /**
@@ -60,7 +62,7 @@ export class Sync {
   private ref: DatabaseReference
   private magneticTimeout?: number
   private magneticTimeoutTime = 1000
-  private onPresentationStart: Args['onPresentationStart']
+  private onPresentationStart: (isPresenter: boolean) => void
 
   constructor({
     app,
@@ -68,7 +70,7 @@ export class Sync {
     clientId,
     presenterUids,
     dbPaths,
-    onPresentationStart,
+    onPresentationStart = noop,
   }: Args) {
     this.app = app
     this.reveal = reveal
