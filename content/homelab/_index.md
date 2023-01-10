@@ -53,6 +53,9 @@ Why do you do it?
 
 {{% /section %}}
 
+{{% note %}} I want to _connect_ you with this demo at this address.
+{{% /note %}}
+
 ---
 
 {{% section %}}
@@ -153,6 +156,8 @@ It does everything you'd need and lets you avoid port forwarding anything:
 There's a reverse proxy, cloudflare tunnel (only traffic from cloudflare),
 automatic DNS record updates, and then our app with a directory on my laptop
 mounted as a volume.
+
+This is simple, secure and pretty damn quick!!
 
 1. Review docker-compose
 1. Review repo devops
