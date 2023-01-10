@@ -52,7 +52,7 @@ plugins = ["/plugins/chalkboard.js"]
 
 ---
 
-{{< slide background-image="brett.png">}}
+<img src="brett.png" alt="old hardware" width="400px" />
 
 <div class="backdrop snippet">
   Brett
@@ -68,7 +68,7 @@ plugins = ["/plugins/chalkboard.js"]
 
 ---
 
-{{< slide background-image="michael.jpg">}}
+<img src="michael.jpg" alt="nice hardware" width="400px" />
 
 <div class="backdrop snippet">
   Michael

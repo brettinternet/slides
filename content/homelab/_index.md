@@ -61,7 +61,7 @@ Why do you do it?
 
 <!-- Move this to after software? -->
 
-<img src="./optiplex.webp" width="600" alt="dell optiplex" />
+<img src="optiplex.webp" width="600" alt="dell optiplex" />
 
 {{% note %}}From 2009 I think? Start using it in 2015. There's veteran blood in
 the room with a few of you being sysadmins - **Has anyone self-hosted on _older_
@@ -71,10 +71,12 @@ hardware than this?** {{% /note %}}
 
 <img src="raspberrypi.png" alt="Raspberry Pi" height="500px" />
 
-$35
+<s>$35</s>
 
 {{% note %}} Enough compute in the palm of your hand to make a desktop for
-Grandma to run Facebook on. {{% /note %}}
+Grandma to run Facebook on.
+
+Does anyone use a different ARM device in their homelab? {{% /note %}}
 
 ---
 
@@ -94,7 +96,7 @@ Grandma to run Facebook on. {{% /note %}}
 
 ---
 
-<img src="./hba.jpg" width="600px" alt="HBA PCI card" />
+<img src="hba.jpg" width="600px" alt="HBA PCI card" />
 
 - Dell Perc H310
 - LSI 9211-8i IT mode (bypass hardware RAID)
@@ -112,6 +114,10 @@ Grandma to run Facebook on. {{% /note %}}
 ---
 
 <img src="proxmox.png" alt="Proxmox dashboard" width="800px" />
+
+{{% note %}} Spinning up multiple VMs per app is becoming sort of old fashioned
+because it consumes resources unnecessarily. There are lots of legitmate reasons
+to use a VM when other virtualization methods aren't available. {{% /note %}}
 
 ---
 
@@ -139,6 +145,18 @@ reply with a _very_ simple HTTP response.
 <img src="docker-compose.png" alt="yaml code" width="200px" />
 
 [brettinternet/docker-compose-hosted-demo](https://github.com/brettinternet/docker-compose-hosted-demo)
+
+{{% note %}} The screenshot here shows you the manifest you'd need to self-host
+our Livebook app here.
+
+It does everything you'd need and lets you avoid port forwarding anything:
+There's a reverse proxy, cloudflare tunnel (only traffic from cloudflare),
+automatic DNS record updates, and then our app with a directory on my laptop
+mounted as a volume.
+
+1. Review docker-compose
+1. Review repo devops
+1. Review architecture with diagram in Livebook {{% /note %}}
 
 ---
 
@@ -175,6 +193,9 @@ Starting point: https://github.com/onedr0p/flux-cluster-template
 
 {{% /section %}}
 
+{{% note %}} Teaser of what's available to those who are interested in
+self-hosting a kubernetes cluster. {{% /note %}}
+
 ---
 
 {{% section %}}
@@ -185,7 +206,7 @@ Starting point: https://github.com/onedr0p/flux-cluster-template
 
 ---
 
-#### Some Apps
+#### There's an app for that
 
 {{< f >}}- [OPNsense](https://opnsense.org/about/about-opnsense/): firewall and
 router{{< /f >}}
@@ -216,6 +237,9 @@ notifications{{< /f >}}
 ### Home Assistant
 
 {{< tweet user="grohliest" id="1025944951123861504" >}}
+
+{{% note %}} What's stopping you from having relationships like this?
+{{% /note %}}
 
 ---
 
