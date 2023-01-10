@@ -111,6 +111,6 @@
 
 {{ $scripts := resources.Get "scripts/main.ts" | js.Build (dict "params" $env_vars) }}
 {{ if hugo.IsProduction }}
-  {{ $scripts = $scripts | minify | fingerprint }}
+  {{ $scripts = $scripts | fingerprint }}
 {{ end }}
 <script src="{{ $scripts.Permalink }}" defer></script>
