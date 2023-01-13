@@ -261,8 +261,6 @@ notifications{{< /f >}}
 
 ---
 
-{{% section %}}
-
 ## Resources
 
 - [awesome-selfhosted](https://github.com/awesome-selfhosted/awesome-selfhosted)
@@ -275,17 +273,3 @@ notifications{{< /f >}}
 {{% note %}} What did I miss? What resources or tips do you want your peers to
 know about self-hosting or setting up a homelab to prototype and play with
 ideas. {{% /note %}}
-
----
-
-## Thank you to our sponsors
-
-<img src="austin.png" alt="Austin" width="300px" />
-
-[The NetMan Shop](https://netmanshop.com/)
-
----
-
-[Homelab pics](../homelab-pics)
-
-{{% /section %}}
