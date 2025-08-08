@@ -40,7 +40,3 @@ params:
     theme: moon
     # https://highlightjs.org/static/demo/
     highlight_theme: solarized-dark
-    plugins:
-      - name: RevealNotes
-        source: reveal-notes/notes.js
-        css: reveal-notes/notes.css
