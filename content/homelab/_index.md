@@ -248,14 +248,6 @@ notifications{{< /f >}}
 
 ### Home Assistant
 
-<!-- https://x.com/grohliest/status/1025944951123861504 -->
-<!-- {{< x user="grohliest" id="1025944951123861504" >}}
-
-{{% note %}} What's stopping you from having relationships like this?
-{{% /note %}}
-
--->
-
 {{< slide background-image="homeassistant.png" >}}
 
 {{% /section %}}
