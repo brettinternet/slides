@@ -38,7 +38,9 @@ tasks:
 
   fix:
     desc: Fix client checks
-    cmd: bun run fix
+    cmds:
+      - bun run fix
+      - hugo mod tidy
 
   node-modules-install:
     cmd: bun install

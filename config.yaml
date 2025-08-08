@@ -3,7 +3,8 @@ languageCode: en-us
 title: slides
 author: brett
 
-theme: reveal-hugo
+theme:
+  - github.com/joshed-io/reveal-hugo
 
 module:
   mounts:
