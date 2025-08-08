@@ -608,13 +608,13 @@
   });
 
   // ns-hugo-params:<stdin>
-  var firebaseApiKey = "";
-  var firebaseAppId = "";
-  var firebaseAuthDomain = "";
-  var firebaseDatabaseUrl = "";
-  var firebaseMeasurementId = "";
-  var firebaseProjectId = "";
-  var presenterUids = "";
+  var firebaseApiKey = "AIzaSyB_irRP1uSwfjOH0Sa5p_p8w1F38ZHy6qA";
+  var firebaseAppId = "1:1085061633013:web:150eec1fbc4727aaf5c6bc";
+  var firebaseAuthDomain = "slides-d5c14.firebaseapp.com";
+  var firebaseDatabaseUrl = "https://slides-d5c14.firebaseio.com";
+  var firebaseMeasurementId = "G-Z0MK6965VJ";
+  var firebaseProjectId = "slides-d5c14";
+  var presenterUids = "SjD1ze42kKP7ep9iGeZEqd6dNrv2";
 
   // node_modules/tslib/tslib.es6.mjs
   var __assign = function() {
