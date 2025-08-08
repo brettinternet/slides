@@ -24,7 +24,7 @@ theme = "serif"
 {{% note %}}
 There are some who may think this way.
 
-I think we're at a moment like this (a "fourth turning", if you will 😏)
+I think we're headed toward a moment like this (a "fourth turning", if you will 😏)
 {{% /note %}}
 
 ---
@@ -133,16 +133,16 @@ A major differentiator between agents right now is how well they _find_ relevant
 
 ```mermaid
 flowchart LR
-    Code[🤖 Generate Code] --> Test[🧪 Run Tests]
-    Test --> Fix[🔧 Fix Issues]
-    Fix --> Code
+    A[🤖 Code] --> B[🧪 Test]
+    B --> C[🔧 Fix]
+    C --> A
 
-    Test --> Done[✅ Success]
+    B --> D[✅ Done]
 
-    style Code fill:#e3f2fd
-    style Test fill:#fff3e0
-    style Fix fill:#ffebee
-    style Done fill:#e8f5e8
+    style A fill:#e3f2fd
+    style B fill:#fff3e0
+    style C fill:#ffebee
+    style D fill:#e8f5e8
 ```
 
 {{% note %}}

@@ -51,6 +51,13 @@ jobs:
         run: hugo --minify
         env:
           NODE_ENV: production
+          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
+          FIREBASE_DATABASE_URL: ${{ secrets.FIREBASE_DATABASE_URL }}
+          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+          FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+          FIREBASE_MEASUREMENT_ID: ${{ secrets.FIREBASE_MEASUREMENT_ID }}
+          PRESENTER_UIDS: ${{ secrets.PRESENTER_UIDS }}
 
       # source: https://github.com/tschaub/gh-pages/issues/345#issuecomment-608243163
       - name: Deploy site
