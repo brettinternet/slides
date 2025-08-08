@@ -1,13 +1,12 @@
-import Reveal from 'reveal.js'
-import { initializeApp, FirebaseOptions } from 'firebase/app'
-import { initializeAnalytics } from 'firebase/analytics'
 import { load } from '@fingerprintjs/fingerprintjs'
-import { v4 as uuidv4 } from 'uuid'
+import { initializeAnalytics } from 'firebase/analytics'
+import { type FirebaseOptions, initializeApp } from 'firebase/app'
+import type Reveal from 'reveal.js'
 
-import auth from './auth'
-import header from './header'
 // import presence from './presence'
 import { getSlug } from '../utils/url'
+import auth from './auth'
+import header from './header'
 
 export type DbPaths = {
   presentation: string

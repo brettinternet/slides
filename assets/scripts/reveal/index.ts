@@ -1,7 +1,7 @@
-import Reveal from 'reveal.js'
+import type Reveal from 'reveal.js'
 
-import styles from './styles'
 import { isNewDomain } from '../utils/url'
+import styles from './styles'
 
 const openLinksInNewTab = () => {
   Array.from(document.links).forEach((anchor) => {

@@ -1,6 +1,6 @@
-import Reveal from 'reveal.js'
+import type Reveal from 'reveal.js'
 
-import { showUserMenu, hideUserMenu, showHeader } from './handlers'
+import { hideUserMenu, showHeader, showUserMenu } from './handlers'
 
 export default (reveal: Reveal) => {
   showHeader()
@@ -9,7 +9,7 @@ export default (reveal: Reveal) => {
    * Dismiss dropdowns when inner button is selected
    */
   const dropdowns = document.getElementsByClassName(
-    'dropdown'
+    'dropdown',
   ) as HTMLCollectionOf<HTMLElement>
   Array.from(dropdowns).forEach((dropdown) => {
     const buttons = dropdown.getElementsByTagName('button')

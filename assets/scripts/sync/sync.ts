@@ -1,19 +1,20 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access */
-import type Reveal from 'reveal.js'
-import { FirebaseApp } from 'firebase/app'
+
+import type { FirebaseApp } from 'firebase/app'
+import { getAuth, type User } from 'firebase/auth'
 import type { DatabaseReference, DataSnapshot } from 'firebase/database'
 import * as firebaseDatabase from 'firebase/database'
-import { getAuth, User } from 'firebase/auth'
+import type Reveal from 'reveal.js'
 
 import type { DbPaths } from '../firebase'
+import { isNewDomain } from '../utils/url'
 import {
+  handleDisableSync,
+  handleEnableSync,
+  hideSyncButton,
   setupViewer,
   showSyncButton,
-  hideSyncButton,
-  handleEnableSync,
-  handleDisableSync,
 } from './handlers'
-import { isNewDomain } from '../utils/url'
 
 type RevealEvent = Parameters<Parameters<Reveal['addEventListener']>[1]>[0]
 
@@ -171,7 +172,7 @@ export class Sync {
   }
 
   private getSnapshotValues = (
-    snapshot: DataSnapshot
+    snapshot: DataSnapshot,
   ): PresentationStore | null | undefined =>
     snapshot.exists() ? (snapshot.val() as PresentationStore | null) : undefined
 

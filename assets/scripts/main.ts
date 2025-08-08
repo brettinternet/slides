@@ -1,12 +1,12 @@
 import * as params from '@params'
-import Reveal from 'reveal.js'
-import { FirebaseOptions } from 'firebase/app'
+import type { FirebaseOptions } from 'firebase/app'
+import type Reveal from 'reveal.js'
 
 import setupFirebase from './firebase'
 import setupReveal from './reveal'
+import setupSync from './sync'
 import { inIframe } from './utils/dom'
 import { tc } from './utils/try'
-import setupSync from './sync'
 
 const isProd = params.isProd
 const config: FirebaseOptions = {
@@ -37,7 +37,7 @@ const main = async (reveal: Reveal | undefined) => {
   } else if (!isProd) {
     if (!('apiKey' in config)) {
       console.error(
-        `Unable to initialize the firebase connection with config: ${config}`
+        `Unable to initialize the firebase connection with config: ${config}`,
       )
     }
     if (!reveal) {

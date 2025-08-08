@@ -1,4 +1,4 @@
-import { FirebaseApp } from 'firebase/app'
+import type { FirebaseApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 import * as firebaseDatabase from 'firebase/database'
 
@@ -9,7 +9,7 @@ const presenceState = {
   OFFLINE: 'offline',
 } as const
 
-type PresenceState = typeof presenceState[keyof typeof presenceState]
+type PresenceState = (typeof presenceState)[keyof typeof presenceState]
 
 type StatusStore = {
   state: PresenceState
@@ -61,7 +61,7 @@ Args) => {
 
   const instancesClientPresenceRef = firebaseDatabase.child(
     clientPresenceRef,
-    'instanceId'
+    'instanceId',
   )
 
   const newInstanceRef = await firebaseDatabase.push(instancesClientPresenceRef)

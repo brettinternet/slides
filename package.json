@@ -1,21 +1,21 @@
 {
-  "name": "slides",
-  "scripts": {
-    "check": "biome check && tsc --noEmit",
-    "fix": "biome check --write"
-  },
-  "dependencies": {
-    "@fingerprintjs/fingerprintjs": "^3.3.6",
-    "firebase": "^9.15.0",
-    "firebaseui": "^6.0.2",
-    "reveal.js": "^4.4.0",
-    "reveal.js-plugins": "^4.1.5",
-    "uuid": "^9.0.0"
-  },
-  "devDependencies": {
-    "@types/uuid": "^9.0.0",
-    "prettier": "^2.8.1",
-    "prettier-plugin-go-template": "^0.0.13",
-    "typescript": "^4.9.4"
-  }
+    "name": "slides",
+    "scripts": {
+        "check": "biome check && tsc --noEmit",
+        "fix": "biome check --write"
+    },
+    "dependencies": {
+        "@fingerprintjs/fingerprintjs": "^3.3.6",
+        "firebase": "^9.15.0",
+        "firebaseui": "^6.0.2",
+        "reveal.js": "^4.4.0",
+        "reveal.js-plugins": "^4.1.5",
+        "uuid": "^9.0.0"
+    },
+    "devDependencies": {
+        "@types/uuid": "^9.0.0",
+        "prettier": "^2.8.1",
+        "prettier-plugin-go-template": "^0.0.13",
+        "typescript": "^4.9.4"
+    }
 }

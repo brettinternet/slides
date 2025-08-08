@@ -4,6 +4,6 @@ export const isNewDomain = (href: string) =>
 export const getSlug = (): string => {
   const trailingSlashRemoved = window.location.pathname.replace(/\/$/, '')
   return trailingSlashRemoved.substring(
-    trailingSlashRemoved.lastIndexOf('/') + 1
+    trailingSlashRemoved.lastIndexOf('/') + 1,
   )
 }

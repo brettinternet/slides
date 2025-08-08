@@ -1,4 +1,4 @@
-import Reveal from 'reveal.js'
+import type Reveal from 'reveal.js'
 
 export const setViewerCount = (count: number) => {
   const viewerCount = document.getElementById('viewer-count')
@@ -24,14 +24,14 @@ export const setupViewer = (_reveal: Reveal) => {
   // ].forEach(reveal.removeKeyBinding)
 
   const resumeButtons = document.getElementsByClassName(
-    'resume-button'
+    'resume-button',
   ) as HTMLCollectionOf<HTMLElement>
   Array.from(resumeButtons).forEach((el) => {
     el.remove()
   })
 
   const pauseOverlays = document.getElementsByClassName(
-    'pause-overlay'
+    'pause-overlay',
   ) as HTMLCollectionOf<HTMLElement>
   Array.from(pauseOverlays).forEach((el) => {
     const clone = el.cloneNode(true)
@@ -44,10 +44,10 @@ export const setupViewer = (_reveal: Reveal) => {
 export const handleEnableSync = () => {
   const sync = document.getElementById('sync')
   const syncStatusIconActive = document.getElementById(
-    'sync-status-icon-active'
+    'sync-status-icon-active',
   )
   const syncStatusIconInactive = document.getElementById(
-    'sync-status-icon-inactive'
+    'sync-status-icon-inactive',
   )
   const syncStatusText = document.getElementById('sync-status-text')
   if (sync) {
@@ -68,10 +68,10 @@ export const handleEnableSync = () => {
 export const handleDisableSync = () => {
   const sync = document.getElementById('sync')
   const syncStatusIconActive = document.getElementById(
-    'sync-status-icon-active'
+    'sync-status-icon-active',
   )
   const syncStatusIconInactive = document.getElementById(
-    'sync-status-icon-inactive'
+    'sync-status-icon-inactive',
   )
   const syncStatusText = document.getElementById('sync-status-text')
   if (sync) {

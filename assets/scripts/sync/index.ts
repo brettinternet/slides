@@ -1,8 +1,9 @@
-import Reveal from 'reveal.js'
-import { FirebaseApp } from 'firebase/app'
+import type { FirebaseApp } from 'firebase/app'
+import type Reveal from 'reveal.js'
 
-import { DbPaths } from '../firebase'
+import type { DbPaths } from '../firebase'
 import slideSync from './sync'
+
 // import showChalkboardControls from './chalkboard'
 
 type Args = {

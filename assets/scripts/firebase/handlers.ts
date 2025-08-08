@@ -1,4 +1,4 @@
-import { User, updateProfile } from 'firebase/auth'
+import { type User, updateProfile } from 'firebase/auth'
 
 import { stopPropagation } from '../utils/dom'
 

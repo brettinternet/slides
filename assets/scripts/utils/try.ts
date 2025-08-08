@@ -4,7 +4,7 @@
 export const tc =
   <T extends (...args: Parameters<T>) => ReturnType<T>>(
     cb: T,
-    condition = true
+    condition = true,
   ): ((...args: Parameters<T>) => ReturnType<T> | undefined) =>
   (...args: Parameters<T>) => {
     if (condition) {

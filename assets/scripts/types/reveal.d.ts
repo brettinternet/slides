@@ -181,7 +181,7 @@ declare module 'reveal.js' {
       'border-color',
       'border-radius',
       'outline',
-      'outline-offset'
+      'outline-offset',
     ]
 
     // Controls automatic progression to the next slide
@@ -304,12 +304,12 @@ declare module 'reveal.js' {
     addEventListener(
       type: string,
       listener: (event: RevealEvent) => void,
-      useCapture?: boolean
+      useCapture?: boolean,
     ): void
     removeEventListener(
       type: string,
       listener: (event: RevealEvent) => void,
-      useCapture?: boolean
+      useCapture?: boolean,
     ): void
     layout(): void
     addEventListeners(): void

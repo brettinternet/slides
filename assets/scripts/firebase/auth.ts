@@ -1,12 +1,12 @@
-import { auth as FirebaseUI } from 'firebaseui'
-import { FirebaseApp } from 'firebase/app'
+import type { FirebaseApp } from 'firebase/app'
 import { GithubAuthProvider, getAuth } from 'firebase/auth'
+import { auth as FirebaseUI } from 'firebaseui'
 
 import {
-  handleSignInClick,
-  hideAuthUI,
   handleSignedIn,
+  handleSignInClick,
   handleSignOut,
+  hideAuthUI,
 } from './handlers'
 
 const config: FirebaseUI.Config = {
