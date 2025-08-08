@@ -17,15 +17,16 @@ const config: FirebaseOptions = {
   measurementId: params.firebaseMeasurementId,
 }
 
+const hasFirebaseAPIKey = 'apiKey' in config && !!config.apiKey
+
 const main = async (reveal: Reveal | undefined) => {
   if (!inIframe() && reveal) {
-    tc(setupReveal, 'apiKey' in config)?.(reveal)
+    tc(setupReveal, hasFirebaseAPIKey)?.(reveal)
 
-    const { app, clientId, dbPaths } =
-      (await tc(setupFirebase)?.(reveal, config)) || {}
+    const { app, clientId, dbPaths } = (await tc(setupFirebase, hasFirebaseAPIKey)?.(reveal, config)) || {}
 
     if (app && clientId && dbPaths) {
-      tc(setupSync)?.({
+      tc(setupSync, hasFirebaseAPIKey)?.({
         reveal,
         app,
         dbPaths,
