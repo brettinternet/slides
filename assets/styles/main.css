@@ -30,6 +30,11 @@
   height: 24px;
 }
 
+img {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
 /* Slides */
 
 .reveal.paused .pause-overlay {
