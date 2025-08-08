@@ -69,7 +69,7 @@ Args) => {
 
   const connectedRef = firebaseDatabase.ref(db, '.info/connected')
   firebaseDatabase.onValue(connectedRef, (snapshot) => {
-    if (snapshot.val() == false) {
+    if (snapshot.val() === false) {
       return
     }
     firebaseDatabase
@@ -81,7 +81,6 @@ Args) => {
   })
 
   firebaseDatabase.onValue(presence, (snapshot) => {
-    console.log('snapshot: ', snapshot.size)
     onPresenceCountChange(snapshot.size)
   })
 

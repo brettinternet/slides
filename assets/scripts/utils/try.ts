@@ -10,9 +10,7 @@ export const tc =
     if (condition) {
       try {
         return cb(...args)
-      } catch (error) {
-        console.error(error)
-      }
+      } catch (_error) {}
     }
     return
   }

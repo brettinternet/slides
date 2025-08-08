@@ -15,12 +15,12 @@ module:
     # https://discourse.gohugo.io/t/resources-concat-with-js-slice-interface-not-supported-in-concat/26558/6
     - source: node_modules/firebaseui/dist/firebaseui.css
       target: static/firebaseui.css
-    - source: node_modules/reveal.js-plugins/chalkboard/plugin.js
-      target: static/plugins/chalkboard.js
-    - source: node_modules/reveal.js-plugins/chalkboard/style.css
-      target: static/plugins/chalkboard.css
-    - source: node_modules/reveal.js-plugins/chalkboard/img/
-      target: static/plugins/img/
+    # - source: node_modules/reveal.js-plugins/chalkboard/plugin.js
+    #   target: static/plugins/chalkboard.js
+    # - source: node_modules/reveal.js-plugins/chalkboard/style.css
+    #   target: static/plugins/chalkboard.css
+    # - source: node_modules/reveal.js-plugins/chalkboard/img/
+    #   target: static/plugins/img/
 
 markup:
   highlight:
@@ -40,3 +40,7 @@ params:
     theme: moon
     # https://highlightjs.org/static/demo/
     highlight_theme: solarized-dark
+    plugins:
+      - name: RevealNotes
+        source: reveal-notes/notes.js
+        css: reveal-notes/notes.css

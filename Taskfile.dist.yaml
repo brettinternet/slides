@@ -24,6 +24,10 @@ tasks:
     desc: Run development server
     cmd: hugo server --navigateToChanged
 
+  start-full:
+    desc: Run development server with full rebuilds (better for CSS changes)
+    cmd: hugo server --navigateToChanged --disableFastRender
+
   build:
     desc: Build production static site
     cmd: hugo

@@ -8,7 +8,6 @@ import setupSync from './sync'
 import { inIframe } from './utils/dom'
 import { tc } from './utils/try'
 
-const isProd = params.isProd
 const config: FirebaseOptions = {
   apiKey: params.firebaseApiKey,
   authDomain: params.firebaseAuthDomain,
@@ -33,15 +32,6 @@ const main = async (reveal: Reveal | undefined) => {
         clientId,
         presenterUids: params.presenterUids.split(','),
       })
-    }
-  } else if (!isProd) {
-    if (!('apiKey' in config)) {
-      console.error(
-        `Unable to initialize the firebase connection with config: ${config}`,
-      )
-    }
-    if (!reveal) {
-      console.warn(`Unable to locate Reveal instance: ${reveal}`)
     }
   }
 }

@@ -1,7 +1,7 @@
 [tools]
 biome = "latest"
 bun = "latest"
-hugo = "latest"
+hugo-extended = "latest"
 node = "latest"
 pre-commit = "latest"
 yamllint = "latest"

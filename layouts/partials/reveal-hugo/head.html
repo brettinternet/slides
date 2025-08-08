@@ -1,4 +1,13 @@
 <!-- Before head tag closes -->
 <link rel="icon" type="image/x-icon" href="{{ "favicon.ico" | relURL }}" />
-{{ $css := resources.Get "styles/main.sass" | resources.ToCSS }}
-<link rel="stylesheet" href="{{ $css.RelPermalink }}" />
+{{ $header := resources.Get "styles/header.css" }}
+{{ $main := resources.Get "styles/main.css" }}
+{{ $css := slice $header $main | resources.Concat "styles/bundle.css" }}
+{{ if hugo.IsDevelopment }}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}">
+{{ else }}
+{{ with $css | minify | fingerprint }}
+<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
+{{ end }}
+{{ end }}
+<link rel="stylesheet" href="{{ "firebaseui.css" | relURL }}" />

@@ -245,7 +245,6 @@ export class Sync {
           this.reveal.toggleOverview(true)
         }
         break
-      case State.OVERVIEW_HIDDEN:
       default:
         if (this.reveal.isOverview()) {
           this.reveal.toggleOverview(false)

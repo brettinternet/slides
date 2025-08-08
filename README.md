@@ -47,7 +47,7 @@ Add a ruleset to Realtime Database rules with your Firebase user UID:
 
 ### Slides
 
-Refer to [reveal-hugo](https://github.com/dzello/reveal-hugo) for configuration.
+Refer to [reveal-hugo](https://github.com/dzello/reveal-hugo) for configuration and the [hugo plugin](https://github.com/joshed-io/reveal-hugo).
 Snakecase [config values](https://revealjs.com/config/) are used in the page
 frontmatter.
 

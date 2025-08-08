@@ -41,7 +41,7 @@ export const enableFormFieldset = (form: HTMLFormElement) => {
 export const inIframe = () => {
   try {
     return window.self !== window.top
-  } catch (e) {
+  } catch (_e) {
     return true
   }
 }
