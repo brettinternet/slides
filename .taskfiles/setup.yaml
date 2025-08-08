@@ -1,0 +1,37 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+tasks:
+  init:
+    desc: Install dependencies
+    cmds:
+      - task: mise
+      - task: create-env-file
+      - task: direnv
+
+  mise:
+    desc: Install workstation dependencies
+    cmds:
+      - mise trust -q -a
+      - mise install -q
+    preconditions:
+      - sh: command -v mise
+        msg: Mise is not installed
+
+  create-env-file:
+    desc: Create local environment variable file
+    cmds:
+      - cp example.env .env
+    status:
+      - test -f .env
+
+  direnv:
+    desc: Run direnv hooks
+    cmd: direnv allow .
+    status:
+      - "[[ $(direnv status --json | jq '.state.foundRC.allowed') == 0 ]]"
+      - "[[ $(direnv status --json | jq '.state.loadedRC.allowed') == 0 ]]"
+    preconditions:
+      - command -v direnv
+      - test -f .envrc

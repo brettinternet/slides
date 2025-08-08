@@ -1,0 +1,52 @@
+---
+version: "3"
+
+includes:
+  lint: .taskfiles/lint.yaml
+  precommit: .taskfiles/precommit.yaml
+  setup: .taskfiles/setup.yaml
+
+tasks:
+  default:
+    silent: true
+    cmd: task -l
+
+  init:
+    desc: Install dependencies and setup environment
+    cmds:
+      - task: setup:init
+      - task: precommit:init
+      - task: precommit:update
+      - task: node-modules-install
+      - task: update-theme
+
+  start:
+    desc: Run development server
+    cmd: hugo server --navigateToChanged
+
+  build:
+    desc: Build production static site
+    cmd: hugo
+
+  kill:
+    desc: Kill process running on client dev ßport
+    cmd: lsof -t -i tcp:1313 | xargs kill
+
+  check:
+    desc: Run client checks
+    cmd: bun run check
+
+  fix:
+    desc: Fix client checks
+    cmd: bun run fix
+
+  node-modules-install:
+    cmd: bun install
+    status:
+      - test -d node_modules
+
+  update-theme:
+    desc: Update git submodules
+    cmds:
+      - git submodule update --init --recursive
+      - git submodule foreach git pull origin master

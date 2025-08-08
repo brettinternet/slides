@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   publish:
     # api: https://developer.github.com/webhooks/event-payloads/
@@ -12,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Setup Git
         run: |
@@ -20,18 +24,21 @@ jobs:
           git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
       - name: Setup Node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
 
       - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v2
+        uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: '0.108.0'
+          hugo-version: "0.148.0"
           extended: true
 
-      - name: Install
-        run: npm ci
+      - name: Install bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install node module dependencies
+        run: bun ci
 
       # New syntax for setting environment variables:
       # https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-commands-for-github-actions#environment-files
@@ -44,23 +51,11 @@ jobs:
         run: hugo --minify
         env:
           NODE_ENV: production
-          PATH_PREFIX: /slides/
-          THEME: black
-          HIGHLIGHT_THEME: agate
-          # These values are not secret: https://stackoverflow.com/a/37484053/6817437
-          # They're already exposed in the client
-          HUGO_FIREBASE_API_KEY: AIzaSyB_irRP1uSwfjOH0Sa5p_p8w1F38ZHy6qA
-          HUGO_FIREBASE_AUTH_DOMAIN: slides-d5c14.firebaseapp.com
-          HUGO_FIREBASE_DATABASE_URL: https://slides-d5c14.firebaseio.com
-          HUGO_FIREBASE_APP_ID: 1:1085061633013:web:150eec1fbc4727aaf5c6bc
-          HUGO_FIREBASE_PROJECT_ID: slides-d5c14
-          HUGO_FIREBASE_MEASUREMENT_ID: G-Z0MK6965VJ
-          HUGO_PRESENTER_UIDS: SjD1ze42kKP7ep9iGeZEqd6dNrv2
 
       # source: https://github.com/tschaub/gh-pages/issues/345#issuecomment-608243163
       - name: Deploy site
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-          npx gh-pages -d public -u "$GITHUB_ACTOR@users.noreply.github.com" -m "deploy revision $BUILD_VERSION"
+          bunx gh-pages -d public -u "$GITHUB_ACTOR@users.noreply.github.com" -m "deploy revision $HUGO_BUILD_VERSION"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

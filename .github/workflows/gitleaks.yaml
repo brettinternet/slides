@@ -3,9 +3,6 @@ name: gitleaks
 on: # yamllint disable-line rule:truthy
   pull_request:
   push:
-  workflow_dispatch:
-  schedule:
-    - cron: '0 0 * * *'
 
 jobs:
   scan:
