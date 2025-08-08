@@ -113,4 +113,7 @@
 {{ if hugo.IsProduction }}
   {{ $scripts = $scripts | fingerprint }}
 {{ end }}
-<script src="{{ $scripts.Permalink }}" defer></script>
+
+{{ $build_version := default "dev" (getenv "HUGO_BUILD_VERSION") }}
+{{ $build_time := default "now" (getenv "HUGO_BUILD_TIME") }}
+<script src="{{ $scripts.Permalink }}" defer data-build-version="{{ $build_version }}" data-build-time="{{ $build_time }}"></script>
