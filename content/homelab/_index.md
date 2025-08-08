@@ -168,7 +168,7 @@ mounted as a volume.
 
 ---
 
-{{< tweet user="dexhorthy" id="856639005462417409" >}}
+{{< x user="dexhorthy" id="856639005462417409" >}}
 
 ---
 
@@ -248,12 +248,13 @@ notifications{{< /f >}}
 
 ### Home Assistant
 
-{{< tweet user="grohliest" id="1025944951123861504" >}}
+<!-- https://x.com/grohliest/status/1025944951123861504 -->
+<!-- {{< x user="grohliest" id="1025944951123861504" >}}
 
 {{% note %}} What's stopping you from having relationships like this?
 {{% /note %}}
 
----
+-->
 
 {{< slide background-image="homeassistant.png" >}}
 
