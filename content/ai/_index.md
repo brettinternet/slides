@@ -145,6 +145,24 @@ flowchart LR
     style D fill:#e8f5e8
 ```
 
+{{< f class="small" >}}
+````
+```mermaid
+flowchart LR
+    A[🤖 Code] --> B[🧪 Test]
+    B --> C[🔧 Fix]
+    C --> A
+
+    B --> D[✅ Done]
+
+    style A fill:#e3f2fd
+    style B fill:#fff3e0
+    style C fill:#ffebee
+    style D fill:#e8f5e8
+```
+````
+{{< /f >}}
+
 {{% note %}}
 FOURTH: Iterative edit-test loops
 
@@ -152,6 +170,7 @@ AI agents are excellent at small tasks where they can iteratively loop through p
 
 I've seen Claude delete tests in order to get them to pass. So we have to be careful. I'll get the agent to write a bunch of tests for me and then I'll go through and review them and think of additional cases that might be missing. So, we have to be careful.
 
+I made this chart with AI.
 {{% /note %}}
 
 {{% /section %}}

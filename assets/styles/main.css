@@ -81,3 +81,9 @@ img {
   padding: 0.25rem;
   border-radius: 3px;
 }
+
+.fragment.small {
+  font-size: 1.5rem;
+  width: 60%;
+  margin: 0 auto;
+}
