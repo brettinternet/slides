@@ -112,7 +112,7 @@ THIRD: Surgical updates
 
 This tweet is an example of a "broad" update. The opposite of that are precise changes.
 
-Dorian calls these "surgical" updates, where you're basically paving a precise path for the agent to make changes. You might use results from "discovery" stage. In large enterprise codebases, this is all about how you manage context.
+Dorian calls these "surgical" updates, where you're basically paving a precise path for the agent to make changes. You might first build up a context from a discovery or planning stage with an agent. In large enterprise codebases, this is all about how you manage context.
 
 You're a conductor in this scenario but you're also reading out the sheet music, or laying down the track.
 {{% /note %}}
