@@ -22,9 +22,9 @@ theme = "serif"
 {{< x user="RyanEls4" id="1879978018204184582" >}}
 
 {{% note %}}
-There are some who may think this way.
+There are some who may think this way with AI.
 
-I think we're headed toward a moment like this (a "fourth turning", if you will 😏)
+They think we're headed towards a "fourth turning", if you will 😏
 {{% /note %}}
 
 ---
@@ -33,7 +33,7 @@ I think we're headed toward a moment like this (a "fourth turning", if you will 
 {{< x user="amritwt" id="1941460667946713311" >}}
 
 {{% note %}}
-However, I don't think we're at a moment like this.
+And then there are others who think this way.
 {{% /note %}}
 
 {{% /section %}}
@@ -50,6 +50,8 @@ However, I don't think we're at a moment like this.
 1. Iterative edit-test loops
 
 {{% note %}}
+My experience with AI has been that it augments my workflows and it can automate tedium to make me more productive. Claude and I "pair program".
+
 Here are a few of my favorite roles that AI fulfills.
 
 1. Code completions
@@ -67,7 +69,9 @@ Let me go over each one.
 {{% note %}}
 FIRST: Code completions
 
-This is the most obvious pair programming application for AI. It's extremely context-aware changes and combat small-scale tedium.
+This is the most obvious pair programming/productivity application for AI.
+
+Code completions are extremely context-aware changes and combat small-scale tedium. See it here appear in gray, much like predictive text on the phone.
 
 Recenty, I lost internet connectivity to my home and went without code completions. I wasn't inhibited but I could feel the difference without this feature. I no longer had a friend that finished my sentences for me.
 {{% /note %}}
