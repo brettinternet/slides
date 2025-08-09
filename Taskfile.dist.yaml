@@ -40,7 +40,7 @@ tasks:
 
   build:
     desc: Build production static site
-    cmd: hugo
+    cmd: hugo --minify --cleanDestinationDir
 
   kill:
     desc: Kill process running on client dev ßport
