@@ -36,6 +36,27 @@ They think we're headed towards a "fourth turning", if you will 😏
 And then there are others who think this way.
 {{% /note %}}
 
+---
+
+<!-- https://x.com/paulg/status/1953289830982664236 -->
+{{< x user="paulg" id="1953289830982664236" >}}
+
+{{% note %}}
+But then… there's stuff like this, and who knows what to make of this?
+
+Paul Graham knows an engineer writing 10k lines/12h 🤔.
+
+I like that he says:
+
+> This is not 10,000 lines of bug-filled crap.
+
+Who in this scenario is actually confirming that?
+
+I think software engineers might sometimes get defensive on the topic of AI and productivity, because they are perturbed by these sorts of unrealistic soundbites.
+
+So I've been very grateful that Raj seems to have a strong interest in productivity and is level-headed about AI.
+{{% /note %}}
+
 {{% /section %}}
 
 ---
@@ -50,7 +71,7 @@ And then there are others who think this way.
 1. Iterative edit-test loops
 
 {{% note %}}
-My experience with AI has been that it augments my workflows and it can automate tedium to make me more productive. Claude and I "pair program".
+My experience with AI has been that it augments my workflows and it can automate tedium to make me more productive. We'll call this "pair programming", the agent and I.
 
 Here are a few of my favorite roles that AI fulfills.
 
@@ -71,7 +92,7 @@ FIRST: Code completions
 
 This is the most obvious pair programming/productivity application for AI.
 
-Code completions are extremely context-aware changes and combat small-scale tedium. See it here appear in gray, much like predictive text on the phone.
+They're extremely context-aware changes.
 
 Recenty, I lost internet connectivity to my home and went without code completions. I wasn't inhibited but I could feel the difference without this feature. I no longer had a friend that finished my sentences for me.
 {{% /note %}}
@@ -87,9 +108,9 @@ SECOND: Discovery
 
 This is my favorite usecase for AI. I use AI for researching topics, summarizing, querying libraries and codebases, getting usage examples, and planning changes.
 
-I used Claude Code to explore the Websocket Proxy service's side effects when communicated with our agent devices. It's a small service, a little under 1500 lines of Elixir code (over half that, like 800 lines in YAML which defines the infrastructure 🤔).
+There'a s link there at the bottom: I used Claude Code to explore the Websocket Proxy service's side effects when communicated with our agent devices. It's a small service, a little under 1500 lines of Elixir code (over half that, like 800 lines in YAML which defines the infrastructure 🤔).
 
-This is a huge lift with onboarding engineers and understanding code. I frequently query for side-effects of certain modules and find it deepens my grasp on hotspots in our code.
+This could be a huge lift for onboarding, knowledge transfer and debugging code. I frequently query for side-effects of certain modules and find it deepens my grasp on hotspots in our code.
 {{% /note %}}
 
 ---
@@ -116,9 +137,9 @@ THIRD: Surgical updates
 
 This tweet is an example of a "broad" update. The opposite of that are precise changes.
 
-Dorian calls these "surgical" updates, where you're basically paving a precise path for the agent to make changes. You might first build up a context from a discovery or planning stage with an agent. In large enterprise codebases, this is all about how you manage context.
+Dorian calls these "surgical" updates, where you're basically paving a precise path for the agent to make changes (the precision can be variable). You might first build up a context from a discovery or planning stage with an agent. In large enterprise codebases, this is all about how you manage context.
 
-You're a conductor in this scenario but you're also reading out the sheet music, or laying down the track.
+I'd say that writing code is rarely is the bottleneck.
 {{% /note %}}
 
 ---
@@ -130,7 +151,7 @@ Claude Code is Anthropic's agentic CLI. I noticed recently that it was using a C
 
 Ripgrep is a CLI tool for finding text in files and file content with regex.
 
-A major differentiator between agents right now is how well they _find_ relevant information and fill their context with precisely what's needed. This furthers the "surgical" capability.
+I point this out because I believe a major differentiator between agents right now is how well they capture and fill relevant context. So the agent is "surgical" in a sense as well.
 {{% /note %}}
 
 ---
@@ -168,11 +189,11 @@ flowchart LR
 {{< /f >}}
 
 {{% note %}}
-FOURTH: Iterative edit-test loops
+FOURTH (and last): Iterative edit-test loops
 
 AI agents are excellent at small tasks where they can iteratively loop through problems that provide immediate feedback. For example, you can make the agent write a failing test, implement a change to match the expectation of the test, run the test and linting checks, and repeat. Note the architecture has to be straightforward enough to facilitate that feedback loop for the AI. This is becoming easier with additional tooling, such as validating UI changes with the Playwright MCP.
 
-I've seen Claude delete tests in order to get them to pass. So we have to be careful. I'll get the agent to write a bunch of tests for me and then I'll go through and review them and think of additional cases that might be missing. So, we have to be careful.
+I've seen Claude delete or mangle tests in order to get them to pass. So we have to be careful. I'll get the agent to write a bunch of tests for me and then I'll go through and review them and think of additional cases that might be missing. So, we have to be careful.
 
 I made this chart with AI.
 {{% /note %}}
@@ -186,13 +207,13 @@ I made this chart with AI.
 <img src="glazing.png" alt="deep as hell" width="70%" />
 
 {{% note %}}
+Quick last thoughts:
+
+This screenshot was from a GPT 4o update a few months ago where OpenAI released a personality update that was intensely sycophantic and mirrored your language. Well OpenAI just did an AMA with their GPT5 release and what were all the top comments begging for? They wanted the 4o user engagement maximizer back because it was friendly.
 
 There's an inside joke with Claude where it consistently says "You're absolutely right!" Gen Z calls this glazing and it makes for "slothful servants", if you will.
 
-The glazing is bad. We need self-awareness and good reviewing practices to avoid problematic code getting into production.
-
-People are accountable for code. AI can't be accountable.
-
+The glazing is bad. We need self-awareness about what AI does to our psychology and good reviewing practices to avoid problematic slop getting into production.
 {{% /note %}}
 
 ---
@@ -201,27 +222,47 @@ People are accountable for code. AI can't be accountable.
 {{< x user="Steve8708" id="1856896071433424982" >}}
 
 {{% note %}}
-Dorian and I noticed a coworker published a PR for review that had invalid code and the engineer blamed it on AI. Fingerpointing at agentic AI isn't really acceptable.
+Dorian and I noticed a coworker published a PR for review that had invalid code and the engineer blamed it on AI. People are accountable for code. AI can't be accountable.
 
-However, I will say that in my opinion there isn't really a major paradigm shift with best practice. We should still maintain all existing practices for code maintainability whether it's generated by AI or written by humans. For example, of course we should be concerned about what code AI writes. The same is true when we select libraries or languages without AI. In both cases we own the decision and the code. Age old best practice continue even with modern AI technology.
+However, I will say that in my opinion there isn't really a major paradigm shift with best practice. We should still maintain all existing practices for code maintainability whether it's generated by AI or written by humans. For example, of course we should be concerned about what code AI writes. The same is true when we select libraries or languages without AI. In both cases we own the decision and the code. Age old best practice continues even with modern AI technology.
 {{% /note %}}
 
 ---
 
 ## Questions
 
-- Grow excessively reliant on agentic prompting?
-- What will this mean especially for newer programmers in the field?
-- Is innovation beginning to plateau?
-- How much compute is being subsidized?
-
+{{< f >}}
+Can one grow excessively reliant on agentic prompting?
 {{% note %}}
-- Will this change engineering culture?
-- How are junior programmers changing?
-- I wonder if we're nearing a point where throwing more compute or a longer chain of thought won't yield additional gains in performance.
-- The GPT5 release appears to have been a cost-saving exercise for several reasons.
+Will this change engineering culture? The agent can be a little addictive.
+{{% /note %}}
+{{< /f >}}
+
+{{< f >}}
+Is innovation beginning to plateau?
+{{% note %}}
+I wonder if we're nearing a point where throwing more compute or a longer chain of thought won't yield additional gains in performance.
+{{% /note %}}
+{{< /f >}}
+
+{{< f >}}
+How much compute is being subsidized?
+{{% note %}}
+The GPT5 release appears to have been a cost-saving exercise for several reasons.
+{{% /note %}}
+{{< /f >}}
+
+{{< f >}}
+How can prompting be more deterministic?
+{{% note %}}
+The GPT5 release has me wondering if we'll need prompt testing for our own prompts.
 
 For now I think we can still push boundaries in our own productivity with AI.
+{{% /note %}}
+{{< /f >}}
+
+{{% note %}}
+My questions
 {{% /note %}}
 
 {{% /section %}}
