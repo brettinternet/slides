@@ -7,7 +7,7 @@ center = true
 theme = "serif"
 +++
 
-# AI
+# [AI](https://brett.cloud/ai-productivity)
 
 {{% note %}}
 - Use spacebar!
@@ -22,9 +22,7 @@ theme = "serif"
 {{< x user="RyanEls4" id="1879978018204184582" >}}
 
 {{% note %}}
-There are some who may think this way with AI.
-
-They think we're headed towards a "fourth turning", if you will 😏
+Welcome to my talk on the "fourth turning".
 {{% /note %}}
 
 ---
@@ -33,28 +31,9 @@ They think we're headed towards a "fourth turning", if you will 😏
 {{< x user="amritwt" id="1941460667946713311" >}}
 
 {{% note %}}
-And then there are others who think this way.
-{{% /note %}}
+Here's another extreme. Maybe someday.
 
----
-
-<!-- https://x.com/paulg/status/1953289830982664236 -->
-{{< x user="paulg" id="1953289830982664236" >}}
-
-{{% note %}}
-But then… there's stuff like this, and who knows what to make of this?
-
-Paul Graham knows an engineer writing 10k lines/12h 🤔.
-
-I like that he says:
-
-> This is not 10,000 lines of bug-filled crap.
-
-Who in this scenario is actually confirming that?
-
-I think software engineers might sometimes get defensive on the topic of AI and productivity, because they are perturbed by these sorts of unrealistic soundbites.
-
-So I've been very grateful that Raj seems to have a strong interest in productivity and is level-headed about AI.
+The reality is somewhere between the extremes. AI isn't replacing engineers, but it's also not just a fancy autocomplete. So I believe we can genuinely accelerate development workflows by taking on specific, well-defined roles in the programming process.
 {{% /note %}}
 
 {{% /section %}}
@@ -71,7 +50,7 @@ So I've been very grateful that Raj seems to have a strong interest in productiv
 1. Iterative edit-test loops
 
 {{% note %}}
-My experience with AI has been that it augments my workflows and it can automate tedium to make me more productive. We'll call this "pair programming", the agent and I.
+My experience with AI has been that it augments my workflows and it can automate tedium to make me more productive. I'll call this "pair programming", the agent and I.
 
 Here are a few of my favorite roles that AI fulfills.
 
@@ -92,9 +71,7 @@ FIRST: Code completions
 
 This is the most obvious pair programming/productivity application for AI.
 
-They're extremely context-aware changes.
-
-Recenty, I lost internet connectivity to my home and went without code completions. I wasn't inhibited but I could feel the difference without this feature. I no longer had a friend that finished my sentences for me.
+They're extremely context-aware changes. It's a friend that finishes my sentences.
 {{% /note %}}
 
 ---
@@ -106,9 +83,9 @@ Recenty, I lost internet connectivity to my home and went without code completio
 {{% note %}}
 SECOND: Discovery
 
-This is my favorite usecase for AI. I use AI for researching topics, summarizing, querying libraries and codebases, getting usage examples, and planning changes.
+This is my favorite usecase for AI. I use it for researching topics, summarizing, querying libraries and codebases, getting usage examples, and planning changes.
 
-There'a s link there at the bottom: I used Claude Code to explore the Websocket Proxy service's side effects when communicated with our agent devices. It's a small service, a little under 1500 lines of Elixir code (over half that, like 800 lines in YAML which defines the infrastructure 🤔).
+There's a link there at the bottom: I used Claude Code to explore the Websocket Proxy service's side effects when communicated with our agent devices. It's a small service, a little under 1500 lines of Elixir code (over half that, like 800 lines in YAML which defines the infrastructure 🤔).
 
 This could be a huge lift for onboarding, knowledge transfer and debugging code. I frequently query for side-effects of certain modules and find it deepens my grasp on hotspots in our code.
 {{% /note %}}
@@ -120,11 +97,13 @@ This could be a huge lift for onboarding, knowledge transfer and debugging code.
 {{% note %}}
 brett.cloud/boundary blog post:
 
-Recently I wrote about how our ongoing refactor in Connect with "Context Boundaries" (or may have been called "Context Domains") prepares the codebase for team scaleability. What I found interesting is that our changes also prepare the codebase for AI scaleability by enabling agents to easily capture context from a subdivision of the code (much like the size of the websocket proxy service).
+Well-structured codebases with clear boundaries are easier for both humans and AI to navigate. Our Domain Context refactor was primarily for team scalability, but I believe it sets us up to improve AI's ability to provide focused, relevant insights by confining context to specific code subdivisions.
 
-So in truth, as we're beginning to think about discoverability for AI, I believe the question becomes:
+This raises an important design question as we integrate AI into development workflows:
 
-> "How can we improve readability for both humans and AI?"
+> How can we improve code organization for both human and AI readability?
+
+The answer benefits onboarding, knowledge transfer, and debugging regardless of whether you're working with human teammates or AI assistants.
 {{% /note %}}
 
 ---
@@ -139,7 +118,7 @@ This tweet is an example of a "broad" update. The opposite of that are precise c
 
 Dorian calls these "surgical" updates, where you're basically paving a precise path for the agent to make changes (the precision can be variable). You might first build up a context from a discovery or planning stage with an agent. In large enterprise codebases, this is all about how you manage context.
 
-I'd say that writing code is rarely is the bottleneck.
+Writing code is rarely the bottleneck, however.
 {{% /note %}}
 
 ---
@@ -147,7 +126,7 @@ I'd say that writing code is rarely is the bottleneck.
 <img src="claude-vendor.png" alt="terminal output" height="250px" />
 
 {{% note %}}
-Claude Code is Anthropic's agentic CLI. I noticed recently that it was using a CLI tool called ripgrep that I was certain I didn't have installed. Claude Code is closed-source but after some digging you'll find it ships with a few vendor distributions: (a) JetBrains extension, (b) VSCode extension, and (c) ripgrep.
+I noticed that Claude Code includes something called ripgrep with its distributions.
 
 Ripgrep is a CLI tool for finding text in files and file content with regex.
 
