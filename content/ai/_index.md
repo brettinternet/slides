@@ -188,7 +188,8 @@ I made this chart with AI.
 {{% note %}}
 Quick last thoughts:
 
-This screenshot was from a GPT 4o update a few months ago where OpenAI released a personality update that was intensely sycophantic and mirrored your language. Everyone was begging for their 4o user engagement maximizer back because it was "friendly".
+GPT 4o update - sycophantic and mirrored your language.
+Everyone was begging for their 4o user engagement maximizer back because it was "friendly".
 
 The glazing is bad. We need self-awareness about what AI does to our psychology and good reviewing practices to avoid problematic slop getting into production.
 {{% /note %}}
@@ -204,18 +205,22 @@ Dorian and I noticed a coworker published a PR for review that had invalid code 
 
 ---
 
-## Questions
 
-{{< f >}}
+## My Questions
 Can one grow excessively reliant on agentic prompting?
+
 {{% note %}}
+**My questions:**
+
 Will this change engineering culture? The agent can be a little addictive.
 {{% /note %}}
-{{< /f >}}
 
 {{< f >}}
 Is innovation beginning to plateau?
+
 {{% note %}}
+**My questions:**
+
 I wonder if we're nearing a point where throwing more compute or a longer chain of thought won't yield additional gains in performance.
 {{% /note %}}
 {{< /f >}}
@@ -223,6 +228,8 @@ I wonder if we're nearing a point where throwing more compute or a longer chain 
 {{< f >}}
 How much compute is being subsidized?
 {{% note %}}
+**My questions:**
+
 The GPT5 release appears to have been a cost-saving exercise for several reasons.
 {{% /note %}}
 {{< /f >}}
@@ -230,14 +237,16 @@ The GPT5 release appears to have been a cost-saving exercise for several reasons
 {{< f >}}
 How can prompting be more deterministic?
 {{% note %}}
+**My questions:**
+
 The GPT5 release has me wondering if we'll need prompt testing for our own prompts.
 
+**Conclusions:**
+
 For now I think we can still push boundaries in our own productivity with AI.
+
+Thank you.
 {{% /note %}}
 {{< /f >}}
-
-{{% note %}}
-My questions
-{{% /note %}}
 
 {{% /section %}}
