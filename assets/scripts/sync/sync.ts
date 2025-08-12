@@ -7,7 +7,7 @@ import * as firebaseDatabase from 'firebase/database'
 import type Reveal from 'reveal.js'
 
 import type { DbPaths } from '../firebase'
-import { isNewDomain } from '../utils/url'
+import { isNotALinkToSlide } from '../utils/url'
 import {
   handleDisableSync,
   handleEnableSync,
@@ -314,7 +314,7 @@ export class Sync {
   private modifyExternalPresentationLinks = () => {
     Array.from(document.links).forEach((anchor) => {
       anchor.onclick = () => {
-        if (isNewDomain(anchor.href) && this.isAuthorizedPresenter()) {
+        if ((isNotALinkToSlide(anchor.href) || anchor.target === "_blank") && this.isAuthorizedPresenter()) {
           if (!this.reveal.isPaused()) {
             this.reveal.togglePause()
           }
