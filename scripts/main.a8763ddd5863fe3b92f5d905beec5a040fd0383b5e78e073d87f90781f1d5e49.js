@@ -6415,7 +6415,8 @@
   registerVersion(name4, version5, "app");
 
   // ns-hugo-imp:/home/runner/work/slides/slides/assets/scripts/utils/url.ts
-  var isNewDomain = (href) => href?.includes("http") && !href.includes(window.location.hostname);
+  var getHostnameWithPath = () => `${window.location.hostname}/${window.location.pathname.split("/")[1]}`;
+  var isNotALinkToSlide = (href) => href?.includes("http") && (!href.includes(window.location.hostname) || !href.includes(getHostnameWithPath()));
   var getSlug = () => {
     const trailingSlashRemoved = window.location.pathname.replace(/\/$/, "");
     return trailingSlashRemoved.substring(
@@ -25607,14 +25608,14 @@
   // ns-hugo-imp:/home/runner/work/slides/slides/assets/scripts/reveal/index.ts
   var openLinksInNewTab = () => {
     Array.from(document.links).forEach((anchor) => {
-      if (isNewDomain(anchor.href)) {
+      if (isNotALinkToSlide(anchor.href)) {
         anchor.setAttribute("target", "_blank");
       }
     });
   };
   var reveal_default = (reveal) => {
-    styles_default(reveal);
     openLinksInNewTab();
+    styles_default(reveal);
   };
 
   // node_modules/@firebase/database/dist/index.esm2017.js
@@ -34519,7 +34520,7 @@
     modifyExternalPresentationLinks = () => {
       Array.from(document.links).forEach((anchor) => {
         anchor.onclick = () => {
-          if (isNewDomain(anchor.href) && this.isAuthorizedPresenter()) {
+          if ((isNotALinkToSlide(anchor.href) || anchor.target === "_blank") && this.isAuthorizedPresenter()) {
             if (!this.reveal.isPaused()) {
               this.reveal.togglePause();
             }
