@@ -12,9 +12,10 @@ theme = "night"
 # The Harness 🏇
 
 {{% note %}}
+
 - Use spacebar!
 - Keep fast pace!
-{{% /note %}}
+  {{% /note %}}
 
 ---
 
@@ -32,11 +33,19 @@ theme = "night"
 {{% section %}}
 
 <!-- https://x.com/RyanEls4/status/1879978018204184582 -->
+
 {{< x user="RyanEls4" id="1879978018204184582" >}}
+
+{{% note %}}
+Our industry is changing quite a bit.
+
+Who is nervous about the future?
+{{% /note %}}
 
 ---
 
 <!-- https://x.com/Steve8708/status/1856896071433424982 -->
+
 {{< x user="Steve8708" id="1856896071433424982" >}}
 
 {{% note %}}
@@ -61,18 +70,6 @@ Never talk about goblins, gremlins, raccoons, trolls, ogres, pigeons, or other a
 OpenAI found that the model’s overuse of “goblins” came from reinforcement-learning rewards for a playful “Nerdy” personality, where creature metaphors were accidentally favored, then leaked into broader model behavior through training feedback loops.
 
 So how do we fix the goblins? How do we improve the quality of AI augmented code?
-{{% /note %}}
-
----
-
-<img src="userspace.png" alt="dev breaks userspace, linus mad" height="300px" />
-
-{{% note %}}
-Sometimes we are the goblins. This is Linus getting mad at someone for breaking userspace.
-
-I believe that a lot of the harnesses outside of the agent itself are effective tools for humans, too.
-
-I kind of think we need CodeRabbit to review our PRs like this.
 {{% /note %}}
 
 {{% /section %}}
@@ -102,10 +99,13 @@ lunchtime agents
    ↓
 outsourcing real work
 ```
+
 {{% f %}}
+
 ```ascii
    ↓
 ```
+
 <img src="ugg.png" alt="agent reply: ugg. big task." height="250px" />
 {{% /f %}}
 
@@ -143,18 +143,20 @@ I won't speak about the agent because others will.
 
 ---
 
-| guides:    | sensors: |
-| -------- | ------- |
-| tools  | tests    |
-| instructions   | linters     |
-| patterns   | structural analysis     |
-| skills   | CodeRabbi     |
+| guides:      | sensors:            |
+| ------------ | ------------------- |
+| tools        | tests               |
+| instructions | linters             |
+| patterns     | structural analysis |
+| skills       | CodeRabbi           |
 
 {{% note %}}
 guides: (help steer)
+
 - tools like `gh`, CLI search tools, agent web search tools
 
 sensors:
+
 - we call code rabbi bc it blesses our code
 
 Some of these are fast checks, and some are slow.
@@ -182,11 +184,12 @@ Notice that these tools are both good for AI agents _and_ humans.
 - `AGENTS.local.md`
 
 {{% note %}}
+
 - Code standards: Unlintable
 - context on-demand
 - separate architecture which agents can refer to
 - local, personalized instructions
-{{% /note %}}
+  {{% /note %}}
 
 ---
 
@@ -200,6 +203,18 @@ Future holds, likely become system designers.
 Working on GraphQL subscriptions, agent lacked specific pattern to follow, implemented 3 or 4 different patterns
 
 Good systems and good patterns are still very important.
+{{% /note %}}
+
+---
+
+<img src="userspace.png" alt="dev breaks userspace, linus mad" height="300px" />
+
+{{% note %}}
+Don't break userspace is Linus Torvald's primary guide harness.
+
+Sometimes we are the goblins. I kind of think we need CodeRabbit to review our PRs like this.
+
+I believe that a lot of the harnesses outside of the agent itself are effective tools for humans, too.
 {{% /note %}}
 
 {{% /section %}}
@@ -243,7 +258,11 @@ Does any of this matter?
 
 idk man. But I think probably. It's certainly not going away.
 
-There are lots more harnesses that might be right for Connect, or your team, or you.
+It's fun to be productive and effective. That will look different for everyone.
+
+The golden path will look different for everyone with the agent.
+
+However, there are lots more harnesses that might be right for Connect, or your team, or you.
 Maybe you'll collect some new ones this week.
 {{% /note %}}
 

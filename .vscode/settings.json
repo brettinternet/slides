@@ -1,0 +1,20 @@
+{
+  "emmet.includeLanguages": {
+    "markdown": "html"
+  },
+  "files.associations": {
+    "content/**/*.md": "markdown",
+    "layouts/**/*.html": "go-html-template"
+  },
+  "html.format.templating": true,
+  "markdown.validate.enabled": true,
+  "prettier.documentSelectors": ["**/*.md", "**/*.html"],
+  "prettier.htmlWhitespaceSensitivity": "ignore",
+  "prettier.proseWrap": "preserve",
+  "[go-html-template]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
