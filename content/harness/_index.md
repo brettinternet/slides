@@ -189,13 +189,14 @@ Notice that these tools are both good for AI agents _and_ humans.
 - context on-demand
 - separate architecture which agents can refer to
 - local, personalized instructions
-  {{% /note %}}
+
+{{% /note %}}
 
 ---
 
-#### System designers
-
 {{< slide background-image="cody-jarem.png" >}}
+
+#### System designers
 
 {{% note %}}
 Future holds, likely become system designers.
@@ -207,7 +208,7 @@ Good systems and good patterns are still very important.
 
 ---
 
-<img src="userspace.png" alt="dev breaks userspace, linus mad" height="300px" />
+<img src="userspace.png" alt="dev breaks userspace, linus mad" height="400px" />
 
 {{% note %}}
 Don't break userspace is Linus Torvald's primary guide harness.
