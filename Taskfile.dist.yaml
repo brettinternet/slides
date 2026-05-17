@@ -17,6 +17,7 @@ tasks:
 
   init:
     desc: Install dependencies and setup environment
+    aliases: [setup]
     cmds:
       - task: setup:init
       - task: node-modules-install
