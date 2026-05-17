@@ -5,21 +5,21 @@
         "fix": "biome check --write"
     },
     "dependencies": {
-        "@fingerprintjs/fingerprintjs": "^3.3.6",
-        "firebase": "^9.15.0",
-        "firebaseui": "^6.0.2",
-        "reveal.js": "^4.4.0",
-        "reveal.js-plugins": "^4.1.5",
-        "uuid": "^9.0.0"
+        "@fingerprintjs/fingerprintjs": "^5.2.0",
+        "firebase": "^12.13.0",
+        "firebaseui": "^6.1.0",
+        "reveal.js": "^6.0.1",
+        "reveal.js-plugins": "^4.6.0",
+        "uuid": "^14.0.0"
     },
     "devDependencies": {
-        "@types/uuid": "^9.0.0",
-        "autoprefixer": "^10.4.21",
-        "postcss": "^8.5.6",
+        "@types/uuid": "^11.0.0",
+        "autoprefixer": "^10.5.0",
+        "postcss": "^8.5.14",
         "postcss-cli": "^11.0.1",
         "postcss-import": "^16.1.1",
-        "prettier": "^2.8.1",
-        "prettier-plugin-go-template": "^0.0.13",
-        "typescript": "^4.9.4"
+        "prettier": "^3.8.3",
+        "prettier-plugin-go-template": "^0.0.15",
+        "typescript": "^6.0.3"
     }
 }

@@ -3,11 +3,15 @@
  * Types are unkept https://github.com/hakimel/reveal.js/issues/2496
  */
 declare module 'reveal.js' {
+  interface RevealPlugin {
+    open(): void
+  }
+
   /**
    * @source https://revealjs.com/config/
    */
   interface Options {
-    plugins?: any[]
+    plugins?: unknown[]
 
     // Display presentation control arrows
     controls?: true
@@ -317,13 +321,13 @@ declare module 'reveal.js' {
     getSlide(x: number, y?: number): Element
     getScale(): number
     getConfig(): Options
-    getQueryHash(): any
-    setState(state: any): void
-    getState(): any
+    getQueryHash(): unknown
+    setState(state: unknown): void
+    getState(): unknown
     sync(): void
     // https://revealjs.com/plugins/#built-in-plugins
-    getPlugins(): Record<string, any>
-    getPlugin(name: string): Record<string, any>
+    getPlugins(): Record<string, RevealPlugin>
+    getPlugin(name: string): RevealPlugin
     // https://revealjs.com/api/
     hasHorizontalSlides(): boolean
     hasVerticalSlides(): boolean

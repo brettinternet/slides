@@ -1,5 +1,6 @@
+---
 baseURL: https://brett.cloud/slides
-languageCode: en-us
+locale: en-us
 title: slides
 author: brett
 
@@ -15,12 +16,14 @@ module:
     # https://discourse.gohugo.io/t/resources-concat-with-js-slice-interface-not-supported-in-concat/26558/6
     - source: node_modules/firebaseui/dist/firebaseui.css
       target: static/firebaseui.css
+    # yamllint disable rule:comments-indentation
     # - source: node_modules/reveal.js-plugins/chalkboard/plugin.js
     #   target: static/plugins/chalkboard.js
     # - source: node_modules/reveal.js-plugins/chalkboard/style.css
     #   target: static/plugins/chalkboard.css
     # - source: node_modules/reveal.js-plugins/chalkboard/img/
     #   target: static/plugins/img/
+    # yamllint enable rule:comments-indentation
 
 markup:
   highlight:
@@ -36,6 +39,7 @@ outputFormats:
     isHTML: true
 
 params:
+  author: brett
   reveal_hugo:
     theme: moon
     # https://highlightjs.org/static/demo/

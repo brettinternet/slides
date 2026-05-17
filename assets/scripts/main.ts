@@ -23,10 +23,14 @@ const main = async (reveal: Reveal | undefined) => {
   if (!inIframe() && reveal) {
     tc(setupReveal, hasFirebaseAPIKey)?.(reveal)
 
-    const { app, clientId, dbPaths } = (await tc(setupFirebase, hasFirebaseAPIKey)?.(reveal, config)) || {}
+    const { app, clientId, dbPaths } =
+      (await tc(setupFirebase, hasFirebaseAPIKey)?.(reveal, config)) || {}
 
     if (app && clientId && dbPaths) {
-      tc(setupSync, hasFirebaseAPIKey)?.({
+      tc(
+        setupSync,
+        hasFirebaseAPIKey,
+      )?.({
         reveal,
         app,
         dbPaths,

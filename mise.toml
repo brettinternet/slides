@@ -2,9 +2,10 @@
 biome = "latest"
 bun = "latest"
 hugo-extended = "latest"
+gitleaks = "latest"
 lefthook = "latest"
 node = "latest"
 yamllint = "latest"
 
 [settings]
-npm.package_manager = "bun"
+npm.bun = true

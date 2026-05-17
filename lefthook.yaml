@@ -1,0 +1,18 @@
+---
+pre-commit:
+  parallel: true
+  commands:
+    biome:
+      glob: "*.{ts,js,css,json,jsonc}"
+      run: mise exec bun -- bunx biome check --write {staged_files}
+      stage_fixed: true
+    yaml:
+      glob: "*.{yaml,yml}"
+      run: mise exec yamllint -- yamllint -c .yamllint.yaml {staged_files}
+    gitleaks:
+      run: mise exec gitleaks -- gitleaks protect --staged --redact --config .github/gitleaks.toml
+
+pre-push:
+  commands:
+    check:
+      run: task check

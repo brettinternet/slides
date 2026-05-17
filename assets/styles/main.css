@@ -3,6 +3,7 @@
 @media print {
   .no-print,
   .no-print * {
+    /* biome-ignore lint/complexity/noImportantStyles: Print output must override Reveal and slide-specific display rules. */
     display: none !important;
   }
 }
@@ -46,11 +47,13 @@ img {
   display: flex;
   justify-content: center;
   align-items: center;
+  /* biome-ignore lint/complexity/noImportantStyles: Twitter embeds ship inline sizing that must be overridden. */
   margin: 0 auto !important;
 }
 
 @media screen and (min-width: 900px) {
   .twitter-tweet-rendered {
+    /* biome-ignore lint/complexity/noImportantStyles: Twitter embeds ship inline sizing that must be overridden. */
     max-width: 400px !important;
   }
 }

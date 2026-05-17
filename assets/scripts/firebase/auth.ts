@@ -2,6 +2,7 @@ import type { FirebaseApp } from 'firebase/app'
 import { GithubAuthProvider, getAuth } from 'firebase/auth'
 import { auth as FirebaseUI } from 'firebaseui'
 
+import { ToastType, toast } from '../utils/toast'
 import {
   handleSignedIn,
   handleSignInClick,
@@ -24,13 +25,18 @@ export default (app: FirebaseApp) => {
   const ui = new FirebaseUI.AuthUI(auth)
   ui.start('#firebase-ui', config)
 
-  auth.onAuthStateChanged((user) => {
-    if (user) {
-      handleSignedIn(user)
-    } else {
-      handleSignOut()
-    }
-  }, console.error)
+  auth.onAuthStateChanged(
+    (user) => {
+      if (user) {
+        handleSignedIn(user)
+      } else {
+        handleSignOut()
+      }
+    },
+    (error) => {
+      toast(error.message, ToastType.Error)
+    },
+  )
 
   const signOut = document.getElementById('sign-out')
   if (signOut) {

@@ -1,10 +1,9 @@
-# https://github.com/zricethezav/gitleaks#configuration
+# https://github.com/gitleaks/gitleaks#configuration
 [extend]
 useDefault = true
 
-[[rules]]
-[rules.allowlist]
+[[allowlists]]
 description = "ignore public keys in public workflow"
 paths = [
-  '''publish\.yaml'''
+  '''publish\.yaml''',
 ]

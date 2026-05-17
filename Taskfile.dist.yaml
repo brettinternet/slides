@@ -44,11 +44,14 @@ tasks:
     cmd: lsof -t -i tcp:1313 | xargs kill
 
   check:
-    desc: Run client checks
-    cmd: bun run check
+    desc: Run project checks
+    cmds:
+      - task: lint:lint
+      - bun run check
+      - task: build
 
   fix:
-    desc: Fix client checks
+    desc: Fix project checks
     cmds:
       - bun run fix
       - hugo mod tidy
@@ -60,6 +63,4 @@ tasks:
 
   update-theme:
     desc: Update git submodules
-    cmds:
-      - git submodule update --init --recursive
-      - git submodule foreach git pull origin master
+    cmd: git submodule update --init --recursive --remote

@@ -314,7 +314,10 @@ export class Sync {
   private modifyExternalPresentationLinks = () => {
     Array.from(document.links).forEach((anchor) => {
       anchor.onclick = () => {
-        if ((isNotALinkToSlide(anchor.href) || anchor.target === "_blank") && this.isAuthorizedPresenter()) {
+        if (
+          (isNotALinkToSlide(anchor.href) || anchor.target === '_blank') &&
+          this.isAuthorizedPresenter()
+        ) {
           if (!this.reveal.isPaused()) {
             this.reveal.togglePause()
           }
