@@ -9,7 +9,6 @@ env:
 
 includes:
   lint: .taskfiles/lint.yaml
-  precommit: .taskfiles/precommit.yaml
   setup: .taskfiles/setup.yaml
 
 tasks:
@@ -21,8 +20,6 @@ tasks:
     desc: Install dependencies and setup environment
     cmds:
       - task: setup:init
-      - task: precommit:init
-      - task: precommit:update
       - task: node-modules-install
       - task: update-theme
 
