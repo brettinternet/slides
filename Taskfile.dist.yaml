@@ -8,7 +8,6 @@ env:
       date -u +"%Y-%m-%dT%H:%M:%SZ"
 
 includes:
-  lint: .taskfiles/lint.yaml
   setup: .taskfiles/setup.yaml
 
 tasks:
@@ -46,7 +45,6 @@ tasks:
   check:
     desc: Run project checks
     cmds:
-      - task: lint:lint
       - bun run check
       - task: build
 

@@ -5,7 +5,6 @@ hugo-extended = "latest"
 gitleaks = "latest"
 lefthook = "latest"
 node = "latest"
-yamllint = "latest"
 
 [settings]
 npm.bun = true

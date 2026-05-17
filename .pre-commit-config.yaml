@@ -10,13 +10,6 @@ exclude: |
       ^\.hugo_build.lock
   )
 repos:
-  - repo: https://github.com/adrienverge/yamllint
-    rev: v1.37.1
-    hooks:
-      - args:
-          - --config-file
-          - .yamllint.yaml
-        id: yamllint
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:

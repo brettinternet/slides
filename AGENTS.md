@@ -9,12 +9,12 @@ This repository contains presentation slides as a Hugo static site using the `re
 - `task init` installs local dependencies and prepares hooks.
 - `task start` runs the Hugo development server.
 - `task build` builds the production static site.
-- `task check` runs YAML linting, Biome, TypeScript, and the production Hugo build.
+- `task check` runs Biome, TypeScript, and the production Hugo build.
 - `task fix` applies Biome fixes and runs `hugo mod tidy`.
 
 ## Development notes
 
 - Use `bun` for JavaScript dependency management.
-- Lefthook manages Git hooks; `pre-commit` runs Biome, yamllint, and gitleaks, while `pre-push` runs `task check`.
+- Lefthook manages Git hooks; `pre-commit` runs Biome and gitleaks, while `pre-push` runs `task check`.
 - Keep slide sync behavior grounded in the Firebase scripts under `assets/scripts/firebase/` and `assets/scripts/sync/`.
 - Prefer updating existing Hugo layouts, shortcodes, and content patterns rather than introducing parallel conventions.
