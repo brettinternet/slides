@@ -262,7 +262,7 @@ It's fun to be productive and effective. That will look different for everyone.
 
 The golden path will look different for everyone with the agent.
 
-However, there are lots more harnesses that might be right for Connect, or your team, or you.
+However, there are lots more harnesses that might be right for our products, or your team, or you.
 Maybe you'll collect some new ones this week.
 {{% /note %}}
 
