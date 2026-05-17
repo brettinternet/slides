@@ -7,4 +7,4 @@ lefthook = "latest"
 node = "latest"
 
 [settings]
-npm.bun = true
+npm.package_manager = "bun"
