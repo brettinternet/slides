@@ -616,152 +616,22 @@
   var firebaseProjectId = "slides-d5c14";
   var presenterUids = "SjD1ze42kKP7ep9iGeZEqd6dNrv2";
 
-  // node_modules/tslib/tslib.es6.mjs
-  var __assign = function() {
-    __assign = Object.assign || function __assign2(t) {
-      for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-      return t;
-    };
-    return __assign.apply(this, arguments);
-  };
-  function __rest(s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-      t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-      for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-        if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-          t[p[i]] = s[p[i]];
-      }
-    return t;
-  }
-  function __awaiter(thisArg, _arguments, P, generator) {
-    function adopt(value) {
-      return value instanceof P ? value : new P(function(resolve) {
-        resolve(value);
-      });
-    }
-    return new (P || (P = Promise))(function(resolve, reject) {
-      function fulfilled(value) {
-        try {
-          step(generator.next(value));
-        } catch (e) {
-          reject(e);
-        }
-      }
-      function rejected(value) {
-        try {
-          step(generator["throw"](value));
-        } catch (e) {
-          reject(e);
-        }
-      }
-      function step(result) {
-        result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-      }
-      step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-  }
-  function __generator(thisArg, body) {
-    var _ = { label: 0, sent: function() {
-      if (t[0] & 1) throw t[1];
-      return t[1];
-    }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
-    return g.next = verb(0), g["throw"] = verb(1), g["return"] = verb(2), typeof Symbol === "function" && (g[Symbol.iterator] = function() {
-      return this;
-    }), g;
-    function verb(n) {
-      return function(v) {
-        return step([n, v]);
-      };
-    }
-    function step(op) {
-      if (f) throw new TypeError("Generator is already executing.");
-      while (g && (g = 0, op[0] && (_ = 0)), _) try {
-        if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-        if (y = 0, t) op = [op[0] & 2, t.value];
-        switch (op[0]) {
-          case 0:
-          case 1:
-            t = op;
-            break;
-          case 4:
-            _.label++;
-            return { value: op[1], done: false };
-          case 5:
-            _.label++;
-            y = op[1];
-            op = [0];
-            continue;
-          case 7:
-            op = _.ops.pop();
-            _.trys.pop();
-            continue;
-          default:
-            if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-              _ = 0;
-              continue;
-            }
-            if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
-              _.label = op[1];
-              break;
-            }
-            if (op[0] === 6 && _.label < t[1]) {
-              _.label = t[1];
-              t = op;
-              break;
-            }
-            if (t && _.label < t[2]) {
-              _.label = t[2];
-              _.ops.push(op);
-              break;
-            }
-            if (t[2]) _.ops.pop();
-            _.trys.pop();
-            continue;
-        }
-        op = body.call(thisArg, _);
-      } catch (e) {
-        op = [6, e];
-        y = 0;
-      } finally {
-        f = t = 0;
-      }
-      if (op[0] & 5) throw op[1];
-      return { value: op[0] ? op[1] : void 0, done: true };
-    }
-  }
-  function __spreadArray(to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-      if (ar || !(i in from)) {
-        if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-        ar[i] = from[i];
-      }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-  }
-
   // node_modules/@fingerprintjs/fingerprintjs/dist/fp.esm.js
-  var version = "3.4.2";
+  var version = "5.2.0";
   function wait(durationMs, resolveWith) {
-    return new Promise(function(resolve) {
-      return setTimeout(resolve, durationMs, resolveWith);
+    return new Promise((resolve) => setTimeout(resolve, durationMs, resolveWith));
+  }
+  function releaseEventLoop() {
+    return new Promise((resolve) => {
+      const channel = new MessageChannel();
+      channel.port1.onmessage = () => resolve();
+      channel.port2.postMessage(null);
     });
   }
-  function requestIdleCallbackIfAvailable(fallbackTimeout, deadlineTimeout) {
-    if (deadlineTimeout === void 0) {
-      deadlineTimeout = Infinity;
-    }
-    var requestIdleCallback = window.requestIdleCallback;
+  function requestIdleCallbackIfAvailable(fallbackTimeout, deadlineTimeout = Infinity) {
+    const { requestIdleCallback } = window;
     if (requestIdleCallback) {
-      return new Promise(function(resolve) {
-        return requestIdleCallback.call(window, function() {
-          return resolve();
-        }, { timeout: deadlineTimeout });
-      });
+      return new Promise((resolve) => requestIdleCallback.call(window, () => resolve(), { timeout: deadlineTimeout }));
     } else {
       return wait(Math.min(fallbackTimeout, deadlineTimeout));
     }
@@ -771,13 +641,9 @@
   }
   function awaitIfAsync(action, callback) {
     try {
-      var returnedValue = action();
+      const returnedValue = action();
       if (isPromise(returnedValue)) {
-        returnedValue.then(function(result) {
-          return callback(true, result);
-        }, function(error2) {
-          return callback(false, error2);
-        });
+        returnedValue.then((result) => callback(true, result), (error2) => callback(false, error2));
       } else {
         callback(true, returnedValue);
       }
@@ -785,226 +651,25 @@
       callback(false, error2);
     }
   }
-  function mapWithBreaks(items, callback, loopReleaseInterval) {
-    if (loopReleaseInterval === void 0) {
-      loopReleaseInterval = 16;
+  async function mapWithBreaks(items, callback, loopReleaseInterval = 16) {
+    const results = Array(items.length);
+    let lastLoopReleaseTime = Date.now();
+    for (let i = 0; i < items.length; ++i) {
+      results[i] = callback(items[i], i);
+      const now = Date.now();
+      if (now >= lastLoopReleaseTime + loopReleaseInterval) {
+        lastLoopReleaseTime = now;
+        await releaseEventLoop();
+      }
     }
-    return __awaiter(this, void 0, void 0, function() {
-      var results, lastLoopReleaseTime, i, now;
-      return __generator(this, function(_a) {
-        switch (_a.label) {
-          case 0:
-            results = Array(items.length);
-            lastLoopReleaseTime = Date.now();
-            i = 0;
-            _a.label = 1;
-          case 1:
-            if (!(i < items.length)) return [3, 4];
-            results[i] = callback(items[i], i);
-            now = Date.now();
-            if (!(now >= lastLoopReleaseTime + loopReleaseInterval)) return [3, 3];
-            lastLoopReleaseTime = now;
-            return [4, wait(0)];
-          case 2:
-            _a.sent();
-            _a.label = 3;
-          case 3:
-            ++i;
-            return [3, 1];
-          case 4:
-            return [2, results];
-        }
-      });
-    });
+    return results;
   }
   function suppressUnhandledRejectionWarning(promise) {
-    promise.then(void 0, function() {
-      return void 0;
-    });
-  }
-  function x64Add(m, n) {
-    m = [m[0] >>> 16, m[0] & 65535, m[1] >>> 16, m[1] & 65535];
-    n = [n[0] >>> 16, n[0] & 65535, n[1] >>> 16, n[1] & 65535];
-    var o = [0, 0, 0, 0];
-    o[3] += m[3] + n[3];
-    o[2] += o[3] >>> 16;
-    o[3] &= 65535;
-    o[2] += m[2] + n[2];
-    o[1] += o[2] >>> 16;
-    o[2] &= 65535;
-    o[1] += m[1] + n[1];
-    o[0] += o[1] >>> 16;
-    o[1] &= 65535;
-    o[0] += m[0] + n[0];
-    o[0] &= 65535;
-    return [o[0] << 16 | o[1], o[2] << 16 | o[3]];
-  }
-  function x64Multiply(m, n) {
-    m = [m[0] >>> 16, m[0] & 65535, m[1] >>> 16, m[1] & 65535];
-    n = [n[0] >>> 16, n[0] & 65535, n[1] >>> 16, n[1] & 65535];
-    var o = [0, 0, 0, 0];
-    o[3] += m[3] * n[3];
-    o[2] += o[3] >>> 16;
-    o[3] &= 65535;
-    o[2] += m[2] * n[3];
-    o[1] += o[2] >>> 16;
-    o[2] &= 65535;
-    o[2] += m[3] * n[2];
-    o[1] += o[2] >>> 16;
-    o[2] &= 65535;
-    o[1] += m[1] * n[3];
-    o[0] += o[1] >>> 16;
-    o[1] &= 65535;
-    o[1] += m[2] * n[2];
-    o[0] += o[1] >>> 16;
-    o[1] &= 65535;
-    o[1] += m[3] * n[1];
-    o[0] += o[1] >>> 16;
-    o[1] &= 65535;
-    o[0] += m[0] * n[3] + m[1] * n[2] + m[2] * n[1] + m[3] * n[0];
-    o[0] &= 65535;
-    return [o[0] << 16 | o[1], o[2] << 16 | o[3]];
-  }
-  function x64Rotl(m, n) {
-    n %= 64;
-    if (n === 32) {
-      return [m[1], m[0]];
-    } else if (n < 32) {
-      return [m[0] << n | m[1] >>> 32 - n, m[1] << n | m[0] >>> 32 - n];
-    } else {
-      n -= 32;
-      return [m[1] << n | m[0] >>> 32 - n, m[0] << n | m[1] >>> 32 - n];
-    }
-  }
-  function x64LeftShift(m, n) {
-    n %= 64;
-    if (n === 0) {
-      return m;
-    } else if (n < 32) {
-      return [m[0] << n | m[1] >>> 32 - n, m[1] << n];
-    } else {
-      return [m[1] << n - 32, 0];
-    }
-  }
-  function x64Xor(m, n) {
-    return [m[0] ^ n[0], m[1] ^ n[1]];
-  }
-  function x64Fmix(h) {
-    h = x64Xor(h, [0, h[0] >>> 1]);
-    h = x64Multiply(h, [4283543511, 3981806797]);
-    h = x64Xor(h, [0, h[0] >>> 1]);
-    h = x64Multiply(h, [3301882366, 444984403]);
-    h = x64Xor(h, [0, h[0] >>> 1]);
-    return h;
-  }
-  function x64hash128(key, seed) {
-    key = key || "";
-    seed = seed || 0;
-    var remainder = key.length % 16;
-    var bytes = key.length - remainder;
-    var h1 = [0, seed];
-    var h2 = [0, seed];
-    var k1 = [0, 0];
-    var k2 = [0, 0];
-    var c1 = [2277735313, 289559509];
-    var c2 = [1291169091, 658871167];
-    var i;
-    for (i = 0; i < bytes; i = i + 16) {
-      k1 = [
-        key.charCodeAt(i + 4) & 255 | (key.charCodeAt(i + 5) & 255) << 8 | (key.charCodeAt(i + 6) & 255) << 16 | (key.charCodeAt(i + 7) & 255) << 24,
-        key.charCodeAt(i) & 255 | (key.charCodeAt(i + 1) & 255) << 8 | (key.charCodeAt(i + 2) & 255) << 16 | (key.charCodeAt(i + 3) & 255) << 24
-      ];
-      k2 = [
-        key.charCodeAt(i + 12) & 255 | (key.charCodeAt(i + 13) & 255) << 8 | (key.charCodeAt(i + 14) & 255) << 16 | (key.charCodeAt(i + 15) & 255) << 24,
-        key.charCodeAt(i + 8) & 255 | (key.charCodeAt(i + 9) & 255) << 8 | (key.charCodeAt(i + 10) & 255) << 16 | (key.charCodeAt(i + 11) & 255) << 24
-      ];
-      k1 = x64Multiply(k1, c1);
-      k1 = x64Rotl(k1, 31);
-      k1 = x64Multiply(k1, c2);
-      h1 = x64Xor(h1, k1);
-      h1 = x64Rotl(h1, 27);
-      h1 = x64Add(h1, h2);
-      h1 = x64Add(x64Multiply(h1, [0, 5]), [0, 1390208809]);
-      k2 = x64Multiply(k2, c2);
-      k2 = x64Rotl(k2, 33);
-      k2 = x64Multiply(k2, c1);
-      h2 = x64Xor(h2, k2);
-      h2 = x64Rotl(h2, 31);
-      h2 = x64Add(h2, h1);
-      h2 = x64Add(x64Multiply(h2, [0, 5]), [0, 944331445]);
-    }
-    k1 = [0, 0];
-    k2 = [0, 0];
-    switch (remainder) {
-      case 15:
-        k2 = x64Xor(k2, x64LeftShift([0, key.charCodeAt(i + 14)], 48));
-      // fallthrough
-      case 14:
-        k2 = x64Xor(k2, x64LeftShift([0, key.charCodeAt(i + 13)], 40));
-      // fallthrough
-      case 13:
-        k2 = x64Xor(k2, x64LeftShift([0, key.charCodeAt(i + 12)], 32));
-      // fallthrough
-      case 12:
-        k2 = x64Xor(k2, x64LeftShift([0, key.charCodeAt(i + 11)], 24));
-      // fallthrough
-      case 11:
-        k2 = x64Xor(k2, x64LeftShift([0, key.charCodeAt(i + 10)], 16));
-      // fallthrough
-      case 10:
-        k2 = x64Xor(k2, x64LeftShift([0, key.charCodeAt(i + 9)], 8));
-      // fallthrough
-      case 9:
-        k2 = x64Xor(k2, [0, key.charCodeAt(i + 8)]);
-        k2 = x64Multiply(k2, c2);
-        k2 = x64Rotl(k2, 33);
-        k2 = x64Multiply(k2, c1);
-        h2 = x64Xor(h2, k2);
-      // fallthrough
-      case 8:
-        k1 = x64Xor(k1, x64LeftShift([0, key.charCodeAt(i + 7)], 56));
-      // fallthrough
-      case 7:
-        k1 = x64Xor(k1, x64LeftShift([0, key.charCodeAt(i + 6)], 48));
-      // fallthrough
-      case 6:
-        k1 = x64Xor(k1, x64LeftShift([0, key.charCodeAt(i + 5)], 40));
-      // fallthrough
-      case 5:
-        k1 = x64Xor(k1, x64LeftShift([0, key.charCodeAt(i + 4)], 32));
-      // fallthrough
-      case 4:
-        k1 = x64Xor(k1, x64LeftShift([0, key.charCodeAt(i + 3)], 24));
-      // fallthrough
-      case 3:
-        k1 = x64Xor(k1, x64LeftShift([0, key.charCodeAt(i + 2)], 16));
-      // fallthrough
-      case 2:
-        k1 = x64Xor(k1, x64LeftShift([0, key.charCodeAt(i + 1)], 8));
-      // fallthrough
-      case 1:
-        k1 = x64Xor(k1, [0, key.charCodeAt(i)]);
-        k1 = x64Multiply(k1, c1);
-        k1 = x64Rotl(k1, 31);
-        k1 = x64Multiply(k1, c2);
-        h1 = x64Xor(h1, k1);
-    }
-    h1 = x64Xor(h1, [0, key.length]);
-    h2 = x64Xor(h2, [0, key.length]);
-    h1 = x64Add(h1, h2);
-    h2 = x64Add(h2, h1);
-    h1 = x64Fmix(h1);
-    h2 = x64Fmix(h2);
-    h1 = x64Add(h1, h2);
-    h2 = x64Add(h2, h1);
-    return ("00000000" + (h1[0] >>> 0).toString(16)).slice(-8) + ("00000000" + (h1[1] >>> 0).toString(16)).slice(-8) + ("00000000" + (h2[0] >>> 0).toString(16)).slice(-8) + ("00000000" + (h2[1] >>> 0).toString(16)).slice(-8);
-  }
-  function errorToObject(error2) {
-    var _a;
-    return __assign({ name: error2.name, message: error2.message, stack: (_a = error2.stack) === null || _a === void 0 ? void 0 : _a.split("\n") }, error2);
+    promise.then(void 0, () => void 0);
+    return promise;
   }
   function includes(haystack, needle) {
-    for (var i = 0, l = haystack.length; i < l; ++i) {
+    for (let i = 0, l = haystack.length; i < l; ++i) {
       if (haystack[i] === needle) {
         return true;
       }
@@ -1024,38 +689,33 @@
     return typeof value === "number" && isNaN(value) ? replacement : value;
   }
   function countTruthy(values) {
-    return values.reduce(function(sum, value) {
-      return sum + (value ? 1 : 0);
-    }, 0);
+    return values.reduce((sum, value) => sum + (value ? 1 : 0), 0);
   }
-  function round(value, base) {
-    if (base === void 0) {
-      base = 1;
-    }
+  function round(value, base = 1) {
     if (Math.abs(base) >= 1) {
       return Math.round(value / base) * base;
     } else {
-      var counterBase = 1 / base;
+      const counterBase = 1 / base;
       return Math.round(value * counterBase) / counterBase;
     }
   }
   function parseSimpleCssSelector(selector) {
     var _a, _b;
-    var errorMessage = "Unexpected syntax '".concat(selector, "'");
-    var tagMatch = /^\s*([a-z-]*)(.*)$/i.exec(selector);
-    var tag = tagMatch[1] || void 0;
-    var attributes = {};
-    var partsRegex = /([.:#][\w-]+|\[.+?\])/gi;
-    var addAttribute = function(name10, value) {
+    const errorMessage = `Unexpected syntax '${selector}'`;
+    const tagMatch = /^\s*([a-z-]*)(.*)$/i.exec(selector);
+    const tag = tagMatch[1] || void 0;
+    const attributes = {};
+    const partsRegex = /([.:#][\w-]+|\[.+?\])/gi;
+    const addAttribute = (name10, value) => {
       attributes[name10] = attributes[name10] || [];
       attributes[name10].push(value);
     };
     for (; ; ) {
-      var match = partsRegex.exec(tagMatch[2]);
+      const match = partsRegex.exec(tagMatch[2]);
       if (!match) {
         break;
       }
-      var part = match[0];
+      const part = match[0];
       switch (part[0]) {
         case ".":
           addAttribute("class", part.slice(1));
@@ -1064,7 +724,7 @@
           addAttribute("id", part.slice(1));
           break;
         case "[": {
-          var attributeMatch = /^\[([\w-]+)([~|^$*]?=("(.*?)"|([\w-]+)))?(\s+[is])?\]$/.exec(part);
+          const attributeMatch = /^\[([\w-]+)([~|^$*]?=("(.*?)"|([\w-]+)))?(\s+[is])?\]$/.exec(part);
           if (attributeMatch) {
             addAttribute(attributeMatch[1], (_b = (_a = attributeMatch[4]) !== null && _a !== void 0 ? _a : attributeMatch[5]) !== null && _b !== void 0 ? _b : "");
           } else {
@@ -1078,101 +738,301 @@
     }
     return [tag, attributes];
   }
-  function ensureErrorWithMessage(error2) {
-    return error2 && typeof error2 === "object" && "message" in error2 ? error2 : { message: error2 };
+  function getUTF8Bytes(input) {
+    const result = new Uint8Array(input.length);
+    for (let i = 0; i < input.length; i++) {
+      const charCode = input.charCodeAt(i);
+      if (charCode > 127) {
+        return new TextEncoder().encode(input);
+      }
+      result[i] = charCode;
+    }
+    return result;
+  }
+  function x64Add(m, n) {
+    const m0 = m[0] >>> 16, m1 = m[0] & 65535, m2 = m[1] >>> 16, m3 = m[1] & 65535;
+    const n0 = n[0] >>> 16, n1 = n[0] & 65535, n2 = n[1] >>> 16, n3 = n[1] & 65535;
+    let o0 = 0, o1 = 0, o2 = 0, o3 = 0;
+    o3 += m3 + n3;
+    o2 += o3 >>> 16;
+    o3 &= 65535;
+    o2 += m2 + n2;
+    o1 += o2 >>> 16;
+    o2 &= 65535;
+    o1 += m1 + n1;
+    o0 += o1 >>> 16;
+    o1 &= 65535;
+    o0 += m0 + n0;
+    o0 &= 65535;
+    m[0] = o0 << 16 | o1;
+    m[1] = o2 << 16 | o3;
+  }
+  function x64Multiply(m, n) {
+    const m0 = m[0] >>> 16, m1 = m[0] & 65535, m2 = m[1] >>> 16, m3 = m[1] & 65535;
+    const n0 = n[0] >>> 16, n1 = n[0] & 65535, n2 = n[1] >>> 16, n3 = n[1] & 65535;
+    let o0 = 0, o1 = 0, o2 = 0, o3 = 0;
+    o3 += m3 * n3;
+    o2 += o3 >>> 16;
+    o3 &= 65535;
+    o2 += m2 * n3;
+    o1 += o2 >>> 16;
+    o2 &= 65535;
+    o2 += m3 * n2;
+    o1 += o2 >>> 16;
+    o2 &= 65535;
+    o1 += m1 * n3;
+    o0 += o1 >>> 16;
+    o1 &= 65535;
+    o1 += m2 * n2;
+    o0 += o1 >>> 16;
+    o1 &= 65535;
+    o1 += m3 * n1;
+    o0 += o1 >>> 16;
+    o1 &= 65535;
+    o0 += m0 * n3 + m1 * n2 + m2 * n1 + m3 * n0;
+    o0 &= 65535;
+    m[0] = o0 << 16 | o1;
+    m[1] = o2 << 16 | o3;
+  }
+  function x64Rotl(m, bits) {
+    const m0 = m[0];
+    bits %= 64;
+    if (bits === 32) {
+      m[0] = m[1];
+      m[1] = m0;
+    } else if (bits < 32) {
+      m[0] = m0 << bits | m[1] >>> 32 - bits;
+      m[1] = m[1] << bits | m0 >>> 32 - bits;
+    } else {
+      bits -= 32;
+      m[0] = m[1] << bits | m0 >>> 32 - bits;
+      m[1] = m0 << bits | m[1] >>> 32 - bits;
+    }
+  }
+  function x64LeftShift(m, bits) {
+    bits %= 64;
+    if (bits === 0) {
+      return;
+    } else if (bits < 32) {
+      m[0] = m[1] >>> 32 - bits;
+      m[1] = m[1] << bits;
+    } else {
+      m[0] = m[1] << bits - 32;
+      m[1] = 0;
+    }
+  }
+  function x64Xor(m, n) {
+    m[0] ^= n[0];
+    m[1] ^= n[1];
+  }
+  var F1 = [4283543511, 3981806797];
+  var F2 = [3301882366, 444984403];
+  function x64Fmix(h) {
+    const shifted = [0, h[0] >>> 1];
+    x64Xor(h, shifted);
+    x64Multiply(h, F1);
+    shifted[1] = h[0] >>> 1;
+    x64Xor(h, shifted);
+    x64Multiply(h, F2);
+    shifted[1] = h[0] >>> 1;
+    x64Xor(h, shifted);
+  }
+  var C1 = [2277735313, 289559509];
+  var C2 = [1291169091, 658871167];
+  var M$1 = [0, 5];
+  var N1 = [0, 1390208809];
+  var N2 = [0, 944331445];
+  function x64hash128(input, seed) {
+    const key = getUTF8Bytes(input);
+    seed = seed || 0;
+    const length = [0, key.length];
+    const remainder = length[1] % 16;
+    const bytes = length[1] - remainder;
+    const h1 = [0, seed];
+    const h2 = [0, seed];
+    const k1 = [0, 0];
+    const k2 = [0, 0];
+    let i;
+    for (i = 0; i < bytes; i = i + 16) {
+      k1[0] = key[i + 4] | key[i + 5] << 8 | key[i + 6] << 16 | key[i + 7] << 24;
+      k1[1] = key[i] | key[i + 1] << 8 | key[i + 2] << 16 | key[i + 3] << 24;
+      k2[0] = key[i + 12] | key[i + 13] << 8 | key[i + 14] << 16 | key[i + 15] << 24;
+      k2[1] = key[i + 8] | key[i + 9] << 8 | key[i + 10] << 16 | key[i + 11] << 24;
+      x64Multiply(k1, C1);
+      x64Rotl(k1, 31);
+      x64Multiply(k1, C2);
+      x64Xor(h1, k1);
+      x64Rotl(h1, 27);
+      x64Add(h1, h2);
+      x64Multiply(h1, M$1);
+      x64Add(h1, N1);
+      x64Multiply(k2, C2);
+      x64Rotl(k2, 33);
+      x64Multiply(k2, C1);
+      x64Xor(h2, k2);
+      x64Rotl(h2, 31);
+      x64Add(h2, h1);
+      x64Multiply(h2, M$1);
+      x64Add(h2, N2);
+    }
+    k1[0] = 0;
+    k1[1] = 0;
+    k2[0] = 0;
+    k2[1] = 0;
+    const val = [0, 0];
+    switch (remainder) {
+      case 15:
+        val[1] = key[i + 14];
+        x64LeftShift(val, 48);
+        x64Xor(k2, val);
+      // fallthrough
+      case 14:
+        val[1] = key[i + 13];
+        x64LeftShift(val, 40);
+        x64Xor(k2, val);
+      // fallthrough
+      case 13:
+        val[1] = key[i + 12];
+        x64LeftShift(val, 32);
+        x64Xor(k2, val);
+      // fallthrough
+      case 12:
+        val[1] = key[i + 11];
+        x64LeftShift(val, 24);
+        x64Xor(k2, val);
+      // fallthrough
+      case 11:
+        val[1] = key[i + 10];
+        x64LeftShift(val, 16);
+        x64Xor(k2, val);
+      // fallthrough
+      case 10:
+        val[1] = key[i + 9];
+        x64LeftShift(val, 8);
+        x64Xor(k2, val);
+      // fallthrough
+      case 9:
+        val[1] = key[i + 8];
+        x64Xor(k2, val);
+        x64Multiply(k2, C2);
+        x64Rotl(k2, 33);
+        x64Multiply(k2, C1);
+        x64Xor(h2, k2);
+      // fallthrough
+      case 8:
+        val[1] = key[i + 7];
+        x64LeftShift(val, 56);
+        x64Xor(k1, val);
+      // fallthrough
+      case 7:
+        val[1] = key[i + 6];
+        x64LeftShift(val, 48);
+        x64Xor(k1, val);
+      // fallthrough
+      case 6:
+        val[1] = key[i + 5];
+        x64LeftShift(val, 40);
+        x64Xor(k1, val);
+      // fallthrough
+      case 5:
+        val[1] = key[i + 4];
+        x64LeftShift(val, 32);
+        x64Xor(k1, val);
+      // fallthrough
+      case 4:
+        val[1] = key[i + 3];
+        x64LeftShift(val, 24);
+        x64Xor(k1, val);
+      // fallthrough
+      case 3:
+        val[1] = key[i + 2];
+        x64LeftShift(val, 16);
+        x64Xor(k1, val);
+      // fallthrough
+      case 2:
+        val[1] = key[i + 1];
+        x64LeftShift(val, 8);
+        x64Xor(k1, val);
+      // fallthrough
+      case 1:
+        val[1] = key[i];
+        x64Xor(k1, val);
+        x64Multiply(k1, C1);
+        x64Rotl(k1, 31);
+        x64Multiply(k1, C2);
+        x64Xor(h1, k1);
+    }
+    x64Xor(h1, length);
+    x64Xor(h2, length);
+    x64Add(h1, h2);
+    x64Add(h2, h1);
+    x64Fmix(h1);
+    x64Fmix(h2);
+    x64Add(h1, h2);
+    x64Add(h2, h1);
+    return ("00000000" + (h1[0] >>> 0).toString(16)).slice(-8) + ("00000000" + (h1[1] >>> 0).toString(16)).slice(-8) + ("00000000" + (h2[0] >>> 0).toString(16)).slice(-8) + ("00000000" + (h2[1] >>> 0).toString(16)).slice(-8);
+  }
+  function errorToObject(error2) {
+    var _a;
+    return {
+      name: error2.name,
+      message: error2.message,
+      stack: (_a = error2.stack) === null || _a === void 0 ? void 0 : _a.split("\n"),
+      // The fields are not enumerable, so TS is wrong saying that they will be overridden
+      ...error2
+    };
+  }
+  function isFunctionNative(func) {
+    return /^function\s.*?\{\s*\[native code]\s*}$/.test(String(func));
   }
   function isFinalResultLoaded(loadResult) {
     return typeof loadResult !== "function";
   }
   function loadSource(source, sourceOptions) {
-    var sourceLoadPromise = new Promise(function(resolveLoad) {
-      var loadStartTime = Date.now();
-      awaitIfAsync(source.bind(null, sourceOptions), function() {
-        var loadArgs = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-          loadArgs[_i] = arguments[_i];
-        }
-        var loadDuration = Date.now() - loadStartTime;
+    const sourceLoadPromise = suppressUnhandledRejectionWarning(new Promise((resolveLoad) => {
+      const loadStartTime = Date.now();
+      awaitIfAsync(source.bind(null, sourceOptions), (...loadArgs) => {
+        const loadDuration = Date.now() - loadStartTime;
         if (!loadArgs[0]) {
-          return resolveLoad(function() {
-            return { error: ensureErrorWithMessage(loadArgs[1]), duration: loadDuration };
-          });
+          return resolveLoad(() => ({ error: loadArgs[1], duration: loadDuration }));
         }
-        var loadResult = loadArgs[1];
+        const loadResult = loadArgs[1];
         if (isFinalResultLoaded(loadResult)) {
-          return resolveLoad(function() {
-            return { value: loadResult, duration: loadDuration };
-          });
+          return resolveLoad(() => ({ value: loadResult, duration: loadDuration }));
         }
-        resolveLoad(function() {
-          return new Promise(function(resolveGet) {
-            var getStartTime = Date.now();
-            awaitIfAsync(loadResult, function() {
-              var getArgs = [];
-              for (var _i2 = 0; _i2 < arguments.length; _i2++) {
-                getArgs[_i2] = arguments[_i2];
-              }
-              var duration = loadDuration + Date.now() - getStartTime;
-              if (!getArgs[0]) {
-                return resolveGet({ error: ensureErrorWithMessage(getArgs[1]), duration });
-              }
-              resolveGet({ value: getArgs[1], duration });
-            });
+        resolveLoad(() => new Promise((resolveGet) => {
+          const getStartTime = Date.now();
+          awaitIfAsync(loadResult, (...getArgs) => {
+            const duration = loadDuration + Date.now() - getStartTime;
+            if (!getArgs[0]) {
+              return resolveGet({ error: getArgs[1], duration });
+            }
+            resolveGet({ value: getArgs[1], duration });
           });
-        });
+        }));
       });
-    });
-    suppressUnhandledRejectionWarning(sourceLoadPromise);
+    }));
     return function getComponent() {
-      return sourceLoadPromise.then(function(finalizeSource) {
-        return finalizeSource();
-      });
+      return sourceLoadPromise.then((finalizeSource) => finalizeSource());
     };
   }
-  function loadSources(sources2, sourceOptions, excludeSources) {
-    var includedSources = Object.keys(sources2).filter(function(sourceKey) {
-      return excludes(excludeSources, sourceKey);
-    });
-    var sourceGettersPromise = mapWithBreaks(includedSources, function(sourceKey) {
-      return loadSource(sources2[sourceKey], sourceOptions);
-    });
-    suppressUnhandledRejectionWarning(sourceGettersPromise);
-    return function getComponents() {
-      return __awaiter(this, void 0, void 0, function() {
-        var sourceGetters, componentPromises, componentArray, components, index;
-        return __generator(this, function(_a) {
-          switch (_a.label) {
-            case 0:
-              return [4, sourceGettersPromise];
-            case 1:
-              sourceGetters = _a.sent();
-              return [4, mapWithBreaks(sourceGetters, function(sourceGetter) {
-                var componentPromise = sourceGetter();
-                suppressUnhandledRejectionWarning(componentPromise);
-                return componentPromise;
-              })];
-            case 2:
-              componentPromises = _a.sent();
-              return [
-                4,
-                Promise.all(componentPromises)
-                // Keeping the component keys order the same as the source keys order
-              ];
-            case 3:
-              componentArray = _a.sent();
-              components = {};
-              for (index = 0; index < includedSources.length; ++index) {
-                components[includedSources[index]] = componentArray[index];
-              }
-              return [2, components];
-          }
-        });
-      });
+  function loadSources(sources2, sourceOptions, excludeSources, loopReleaseInterval) {
+    const includedSources = Object.keys(sources2).filter((sourceKey) => excludes(excludeSources, sourceKey));
+    const sourceGettersPromise = suppressUnhandledRejectionWarning(mapWithBreaks(includedSources, (sourceKey) => loadSource(sources2[sourceKey], sourceOptions), loopReleaseInterval));
+    return async function getComponents() {
+      const sourceGetters = await sourceGettersPromise;
+      const componentPromises = await mapWithBreaks(sourceGetters, (sourceGetter) => suppressUnhandledRejectionWarning(sourceGetter()), loopReleaseInterval);
+      const componentArray = await Promise.all(componentPromises);
+      const components = {};
+      for (let index = 0; index < includedSources.length; ++index) {
+        components[includedSources[index]] = componentArray[index];
+      }
+      return components;
     };
   }
   function isTrident() {
-    var w = window;
-    var n = navigator;
+    const w = window;
+    const n = navigator;
     return countTruthy([
       "MSCSSMatrix" in w,
       "msSetImmediate" in w,
@@ -1182,17 +1042,17 @@
     ]) >= 4;
   }
   function isEdgeHTML() {
-    var w = window;
-    var n = navigator;
+    const w = window;
+    const n = navigator;
     return countTruthy(["msWriteProfilerMark" in w, "MSStream" in w, "msLaunchUri" in n, "msSaveBlob" in n]) >= 3 && !isTrident();
   }
   function isChromium() {
-    var w = window;
-    var n = navigator;
+    const w = window;
+    const n = navigator;
     return countTruthy([
       "webkitPersistentStorage" in n,
       "webkitTemporaryStorage" in n,
-      n.vendor.indexOf("Google") === 0,
+      (n.vendor || "").indexOf("Google") === 0,
       "webkitResolveLocalFileSystemURL" in w,
       "BatteryManager" in w,
       "webkitMediaStream" in w,
@@ -1200,29 +1060,40 @@
     ]) >= 5;
   }
   function isWebKit() {
-    var w = window;
-    var n = navigator;
+    const w = window;
+    const n = navigator;
     return countTruthy([
       "ApplePayError" in w,
       "CSSPrimitiveValue" in w,
       "Counter" in w,
       n.vendor.indexOf("Apple") === 0,
-      "getStorageUpdates" in n,
+      "RGBColor" in w,
       "WebKitMediaKeys" in w
     ]) >= 4;
   }
-  function isDesktopSafari() {
-    var w = window;
+  function isDesktopWebKit() {
+    const w = window;
+    const { HTMLElement: HTMLElement2, Document } = w;
     return countTruthy([
       "safari" in w,
-      !("DeviceMotionEvent" in w),
       !("ongestureend" in w),
-      !("standalone" in navigator)
-    ]) >= 3;
+      !("TouchEvent" in w),
+      !("orientation" in w),
+      HTMLElement2 && !("autocapitalize" in HTMLElement2.prototype),
+      Document && "pointerLockElement" in Document.prototype
+    ]) >= 4;
+  }
+  function isSafariWebKit() {
+    const w = window;
+    return (
+      // Filters-out Chrome, Yandex, DuckDuckGo (macOS and iOS), Edge
+      isFunctionNative(w.print) && // Doesn't work in Safari < 15.4
+      String(w.browser) === "[object WebPageNamespace]"
+    );
   }
   function isGecko() {
     var _a, _b;
-    var w = window;
+    const w = window;
     return countTruthy([
       "buildID" in navigator,
       "MozAppearance" in ((_b = (_a = document.documentElement) === null || _a === void 0 ? void 0 : _a.style) !== null && _b !== void 0 ? _b : {}),
@@ -1232,8 +1103,36 @@
       "CanvasCaptureMediaStream" in w
     ]) >= 4;
   }
+  function isGecko120OrNewer() {
+    const w = window;
+    const n = navigator;
+    const { CSS } = w;
+    return countTruthy([
+      // User Activation API - added in Firefox 120
+      "userActivation" in n,
+      // CSS light-dark() function - added in Firefox 120
+      CSS.supports("color", "light-dark(#000, #fff)"),
+      // CSS lh unit - added in Firefox 120
+      CSS.supports("height", "1lh"),
+      // Global Privacy Control - added in Firefox 120 (desktop) / Firefox 122 (mobile)
+      "globalPrivacyControl" in n
+    ]) >= 3;
+  }
+  function isGecko143OrNewer() {
+    const { CSS } = window;
+    return countTruthy([
+      // CSS ::details-content pseudo-element - added in Firefox 143
+      CSS.supports("selector(::details-content)"),
+      // CSS ::before::marker nested pseudo-element - added in Firefox 143
+      CSS.supports("selector(::before::marker)"),
+      // CSS ::after::marker nested pseudo-element - added in Firefox 143
+      CSS.supports("selector(::after::marker)"),
+      // CompositionEvent.locale property - removed in Firefox 143 (Bug 1700969)
+      !("locale" in CompositionEvent.prototype)
+    ]) >= 3;
+  }
   function isChromium86OrNewer() {
-    var w = window;
+    const w = window;
     return countTruthy([
       !("MediaSettingsRange" in w),
       "RTCEncodedAudioFrame" in w,
@@ -1241,8 +1140,29 @@
       "" + w.Reflect === "[object Reflect]"
     ]) >= 3;
   }
+  function isChromium122OrNewer() {
+    const w = window;
+    const { URLPattern } = w;
+    return countTruthy([
+      "union" in Set.prototype,
+      "Iterator" in w,
+      URLPattern && "hasRegExpGroups" in URLPattern.prototype,
+      "RGB8" in WebGLRenderingContext.prototype
+    ]) >= 3;
+  }
+  function isChromium128OrNewer() {
+    const w = window;
+    const d = document;
+    const { CSS, Promise: Promise2, AudioContext: AudioContext2 } = w;
+    return countTruthy([
+      Promise2 && "try" in Promise2,
+      "caretPositionFromPoint" in d,
+      AudioContext2 && "onerror" in AudioContext2.prototype,
+      CSS.supports("ruby-align", "space-around")
+    ]) >= 3;
+  }
   function isWebKit606OrNewer() {
-    var w = window;
+    const w = window;
     return countTruthy([
       "DOMRectList" in w,
       "RTCPeerConnectionIceEvent" in w,
@@ -1250,57 +1170,99 @@
       "ontransitioncancel" in w
     ]) >= 3;
   }
+  function isWebKit616OrNewer() {
+    const w = window;
+    const n = navigator;
+    const { CSS, HTMLButtonElement } = w;
+    return countTruthy([
+      !("getStorageUpdates" in n),
+      HTMLButtonElement && "popover" in HTMLButtonElement.prototype,
+      "CSSCounterStyleRule" in w,
+      CSS.supports("font-size-adjust: ex-height 0.5"),
+      CSS.supports("text-transform: full-width")
+    ]) >= 4;
+  }
   function isIPad() {
     if (navigator.platform === "iPad") {
       return true;
     }
-    var s = screen;
-    var screenRatio = s.width / s.height;
+    const s = screen;
+    const screenRatio = s.width / s.height;
     return countTruthy([
+      // Since iOS 13. Doesn't work in Chrome on iPadOS <15, but works in desktop mode.
       "MediaSource" in window,
+      // Since iOS 12. Doesn't work in Chrome on iPadOS.
       !!Element.prototype.webkitRequestFullscreen,
-      // iPhone 4S that runs iOS 9 matches this. But it won't match the criteria above, so it won't be detected as iPad.
+      // iPhone 4S that runs iOS 9 matches this, but it is not supported
+      // Doesn't work in incognito mode of Safari ≥17 with split screen because of tracking prevention
       screenRatio > 0.65 && screenRatio < 1.53
     ]) >= 2;
   }
   function getFullscreenElement() {
-    var d = document;
+    const d = document;
     return d.fullscreenElement || d.msFullscreenElement || d.mozFullScreenElement || d.webkitFullscreenElement || null;
   }
   function exitFullscreen() {
-    var d = document;
+    const d = document;
     return (d.exitFullscreen || d.msExitFullscreen || d.mozCancelFullScreen || d.webkitExitFullscreen).call(d);
   }
   function isAndroid() {
-    var isItChromium = isChromium();
-    var isItGecko = isGecko();
-    if (!isItChromium && !isItGecko) {
+    const isItChromium = isChromium();
+    const isItGecko = isGecko();
+    const w = window;
+    const n = navigator;
+    const c = "connection";
+    if (isItChromium) {
+      return countTruthy([
+        !("SharedWorker" in w),
+        // `typechange` is deprecated, but it's still present on Android (tested on Chrome Mobile 117)
+        // Removal proposal https://bugs.chromium.org/p/chromium/issues/detail?id=699892
+        // Note: this expression returns true on ChromeOS, so additional detectors are required to avoid false-positives
+        n[c] && "ontypechange" in n[c],
+        !("sinkId" in new Audio())
+      ]) >= 2;
+    } else if (isItGecko) {
+      return countTruthy(["onorientationchange" in w, "orientation" in w, /android/i.test(n.appVersion)]) >= 2;
+    } else {
       return false;
     }
-    var w = window;
+  }
+  function isSamsungInternet() {
+    const n = navigator;
+    const w = window;
+    const audioPrototype = Audio.prototype;
+    const { visualViewport } = w;
     return countTruthy([
-      "onorientationchange" in w,
-      "orientation" in w,
-      isItChromium && !("SharedWorker" in w),
-      isItGecko && /android/i.test(navigator.appVersion)
-    ]) >= 2;
+      "srLatency" in audioPrototype,
+      "srChannelCount" in audioPrototype,
+      "devicePosture" in n,
+      visualViewport && "segments" in visualViewport,
+      "getTextInformation" in Image.prototype
+      // Not available in Samsung Internet 21
+    ]) >= 3;
   }
   function getAudioFingerprint() {
-    var w = window;
-    var AudioContext = w.OfflineAudioContext || w.webkitOfflineAudioContext;
-    if (!AudioContext) {
+    if (doesBrowserPerformAntifingerprinting()) {
+      return -4;
+    }
+    return getUnstableAudioFingerprint();
+  }
+  function getUnstableAudioFingerprint() {
+    const w = window;
+    const AudioContext2 = w.OfflineAudioContext || w.webkitOfflineAudioContext;
+    if (!AudioContext2) {
       return -2;
     }
-    if (doesCurrentBrowserSuspendAudioContext()) {
+    if (doesBrowserSuspendAudioContext()) {
       return -1;
     }
-    var hashFromIndex = 4500;
-    var hashToIndex = 5e3;
-    var context = new AudioContext(1, hashToIndex, 44100);
-    var oscillator = context.createOscillator();
+    const hashFromIndex = 4500;
+    const hashToIndex = 5e3;
+    const context = new AudioContext2(1, hashToIndex, 44100);
+    const oscillator = context.createOscillator();
     oscillator.type = "triangle";
     oscillator.frequency.value = 1e4;
-    var compressor = context.createDynamicsCompressor();
+    const compressor = context.createDynamicsCompressor();
     compressor.threshold.value = -50;
     compressor.knee.value = 40;
     compressor.ratio.value = 12;
@@ -1309,50 +1271,48 @@
     oscillator.connect(compressor);
     compressor.connect(context.destination);
     oscillator.start(0);
-    var _a = startRenderingAudio(context), renderPromise = _a[0], finishRendering = _a[1];
-    var fingerprintPromise = renderPromise.then(function(buffer) {
-      return getHash(buffer.getChannelData(0).subarray(hashFromIndex));
-    }, function(error2) {
+    const [renderPromise, finishRendering] = startRenderingAudio(context);
+    const fingerprintPromise = suppressUnhandledRejectionWarning(renderPromise.then((buffer) => getHash(buffer.getChannelData(0).subarray(hashFromIndex)), (error2) => {
       if (error2.name === "timeout" || error2.name === "suspended") {
         return -3;
       }
       throw error2;
-    });
-    suppressUnhandledRejectionWarning(fingerprintPromise);
-    return function() {
+    }));
+    return () => {
       finishRendering();
       return fingerprintPromise;
     };
   }
-  function doesCurrentBrowserSuspendAudioContext() {
-    return isWebKit() && !isDesktopSafari() && !isWebKit606OrNewer();
+  function doesBrowserSuspendAudioContext() {
+    return isWebKit() && !isDesktopWebKit() && !isWebKit606OrNewer();
+  }
+  function doesBrowserPerformAntifingerprinting() {
+    return (
+      // Safari ≥17
+      isWebKit() && isWebKit616OrNewer() && isSafariWebKit() || // Samsung Internet ≥26
+      isChromium() && isSamsungInternet() && isChromium122OrNewer()
+    );
   }
   function startRenderingAudio(context) {
-    var renderTryMaxCount = 3;
-    var renderRetryDelay = 500;
-    var runningMaxAwaitTime = 500;
-    var runningSufficientTime = 5e3;
-    var finalize = function() {
-      return void 0;
-    };
-    var resultPromise = new Promise(function(resolve, reject) {
-      var isFinalized = false;
-      var renderTryCount = 0;
-      var startedRunningAt = 0;
-      context.oncomplete = function(event) {
-        return resolve(event.renderedBuffer);
+    const renderTryMaxCount = 3;
+    const renderRetryDelay = 500;
+    const runningMaxAwaitTime = 500;
+    const runningSufficientTime = 5e3;
+    let finalize = () => void 0;
+    const resultPromise = new Promise((resolve, reject) => {
+      let isFinalized = false;
+      let renderTryCount = 0;
+      let startedRunningAt = 0;
+      context.oncomplete = (event) => resolve(event.renderedBuffer);
+      const startRunningTimeout = () => {
+        setTimeout(() => reject(makeInnerError(
+          "timeout"
+          /* InnerErrorName.Timeout */
+        )), Math.min(runningMaxAwaitTime, startedRunningAt + runningSufficientTime - Date.now()));
       };
-      var startRunningTimeout = function() {
-        setTimeout(function() {
-          return reject(makeInnerError(
-            "timeout"
-            /* InnerErrorName.Timeout */
-          ));
-        }, Math.min(runningMaxAwaitTime, startedRunningAt + runningSufficientTime - Date.now()));
-      };
-      var tryRender = function() {
+      const tryRender = () => {
         try {
-          var renderingPromise = context.startRendering();
+          const renderingPromise = context.startRendering();
           if (isPromise(renderingPromise)) {
             suppressUnhandledRejectionWarning(renderingPromise);
           }
@@ -1385,7 +1345,7 @@
         }
       };
       tryRender();
-      finalize = function() {
+      finalize = () => {
         if (!isFinalized) {
           isFinalized = true;
           if (startedRunningAt > 0) {
@@ -1397,127 +1357,110 @@
     return [resultPromise, finalize];
   }
   function getHash(signal) {
-    var hash = 0;
-    for (var i = 0; i < signal.length; ++i) {
+    let hash = 0;
+    for (let i = 0; i < signal.length; ++i) {
       hash += Math.abs(signal[i]);
     }
     return hash;
   }
   function makeInnerError(name10) {
-    var error2 = new Error(name10);
+    const error2 = new Error(name10);
     error2.name = name10;
     return error2;
   }
-  function withIframe(action, initialHtml, domPollInterval) {
+  async function withIframe(action, initialHtml, domPollInterval = 50) {
     var _a, _b, _c;
-    if (domPollInterval === void 0) {
-      domPollInterval = 50;
+    const d = document;
+    while (!d.body) {
+      await wait(domPollInterval);
     }
-    return __awaiter(this, void 0, void 0, function() {
-      var d, iframe;
-      return __generator(this, function(_d) {
-        switch (_d.label) {
-          case 0:
-            d = document;
-            _d.label = 1;
-          case 1:
-            if (!!d.body) return [3, 3];
-            return [4, wait(domPollInterval)];
-          case 2:
-            _d.sent();
-            return [3, 1];
-          case 3:
-            iframe = d.createElement("iframe");
-            _d.label = 4;
-          case 4:
-            _d.trys.push([4, , 10, 11]);
-            return [4, new Promise(function(_resolve, _reject) {
-              var isComplete = false;
-              var resolve = function() {
-                isComplete = true;
-                _resolve();
-              };
-              var reject = function(error2) {
-                isComplete = true;
-                _reject(error2);
-              };
-              iframe.onload = resolve;
-              iframe.onerror = reject;
-              var style = iframe.style;
-              style.setProperty("display", "block", "important");
-              style.position = "absolute";
-              style.top = "0";
-              style.left = "0";
-              style.visibility = "hidden";
-              if (initialHtml && "srcdoc" in iframe) {
-                iframe.srcdoc = initialHtml;
-              } else {
-                iframe.src = "about:blank";
-              }
-              d.body.appendChild(iframe);
-              var checkReadyState = function() {
-                var _a2, _b2;
-                if (isComplete) {
-                  return;
-                }
-                if (((_b2 = (_a2 = iframe.contentWindow) === null || _a2 === void 0 ? void 0 : _a2.document) === null || _b2 === void 0 ? void 0 : _b2.readyState) === "complete") {
-                  resolve();
-                } else {
-                  setTimeout(checkReadyState, 10);
-                }
-              };
-              checkReadyState();
-            })];
-          case 5:
-            _d.sent();
-            _d.label = 6;
-          case 6:
-            if (!!((_b = (_a = iframe.contentWindow) === null || _a === void 0 ? void 0 : _a.document) === null || _b === void 0 ? void 0 : _b.body)) return [3, 8];
-            return [4, wait(domPollInterval)];
-          case 7:
-            _d.sent();
-            return [3, 6];
-          case 8:
-            return [4, action(iframe, iframe.contentWindow)];
-          case 9:
-            return [2, _d.sent()];
-          case 10:
-            (_c = iframe.parentNode) === null || _c === void 0 ? void 0 : _c.removeChild(iframe);
-            return [
-              7
-              /*endfinally*/
-            ];
-          case 11:
-            return [
-              2
-              /*return*/
-            ];
+    const iframe = d.createElement("iframe");
+    try {
+      await new Promise((_resolve, _reject) => {
+        let isComplete = false;
+        const resolve = () => {
+          isComplete = true;
+          _resolve();
+        };
+        const reject = (error2) => {
+          isComplete = true;
+          _reject(error2);
+        };
+        iframe.onload = resolve;
+        iframe.onerror = reject;
+        const { style } = iframe;
+        style.setProperty("display", "block", "important");
+        style.position = "absolute";
+        style.top = "0";
+        style.left = "0";
+        style.visibility = "hidden";
+        if (initialHtml && "srcdoc" in iframe) {
+          iframe.srcdoc = initialHtml;
+        } else {
+          iframe.src = "about:blank";
         }
+        d.body.appendChild(iframe);
+        const checkReadyState = () => {
+          var _a2, _b2;
+          if (isComplete) {
+            return;
+          }
+          if (((_b2 = (_a2 = iframe.contentWindow) === null || _a2 === void 0 ? void 0 : _a2.document) === null || _b2 === void 0 ? void 0 : _b2.readyState) === "complete") {
+            resolve();
+          } else {
+            setTimeout(checkReadyState, 10);
+          }
+        };
+        checkReadyState();
       });
-    });
+      while (!((_b = (_a = iframe.contentWindow) === null || _a === void 0 ? void 0 : _a.document) === null || _b === void 0 ? void 0 : _b.body)) {
+        await wait(domPollInterval);
+      }
+      return await action(iframe, iframe.contentWindow);
+    } finally {
+      (_c = iframe.parentNode) === null || _c === void 0 ? void 0 : _c.removeChild(iframe);
+    }
   }
   function selectorToElement(selector) {
-    var _a = parseSimpleCssSelector(selector), tag = _a[0], attributes = _a[1];
-    var element = document.createElement(tag !== null && tag !== void 0 ? tag : "div");
-    for (var _i = 0, _b = Object.keys(attributes); _i < _b.length; _i++) {
-      var name_1 = _b[_i];
-      var value = attributes[name_1].join(" ");
-      if (name_1 === "style") {
+    const [tag, attributes] = parseSimpleCssSelector(selector);
+    const element = document.createElement(tag !== null && tag !== void 0 ? tag : "div");
+    for (const name10 of Object.keys(attributes)) {
+      const value = attributes[name10].join(" ");
+      if (name10 === "style") {
         addStyleString(element.style, value);
       } else {
-        element.setAttribute(name_1, value);
+        element.setAttribute(name10, value);
       }
     }
     return element;
   }
   function addStyleString(style, source) {
-    for (var _i = 0, _a = source.split(";"); _i < _a.length; _i++) {
-      var property = _a[_i];
-      var match = /^\s*([\w-]+)\s*:\s*(.+?)(\s*!([\w-]+))?\s*$/.exec(property);
+    for (const property of source.split(";")) {
+      const match = /^\s*([\w-]+)\s*:\s*(.+?)(\s*!([\w-]+))?\s*$/.exec(property);
       if (match) {
-        var name_2 = match[1], value = match[2], priority = match[4];
-        style.setProperty(name_2, value, priority || "");
+        const [, name10, value, , priority] = match;
+        style.setProperty(name10, value, priority || "");
       }
+    }
+  }
+  function isAnyParentCrossOrigin() {
+    let currentWindow = window;
+    for (; ; ) {
+      const parentWindow = currentWindow.parent;
+      if (!parentWindow || parentWindow === currentWindow) {
+        return false;
+      }
+      try {
+        if (parentWindow.location.origin !== currentWindow.location.origin) {
+          return true;
+        }
+      } catch (error2) {
+        if (error2 instanceof Error && error2.name === "SecurityError") {
+          return true;
+        }
+        throw error2;
+      }
+      currentWindow = parentWindow;
     }
   }
   var testString = "mmMwWLliI0O&1";
@@ -1579,16 +1522,16 @@
     "ZWAdobeF"
   ];
   function getFonts() {
-    return withIframe(function(_, _a) {
-      var document2 = _a.document;
-      var holder = document2.body;
+    return withIframe(async (_, { document: document2 }) => {
+      const holder = document2.body;
       holder.style.fontSize = textSize;
-      var spansContainer = document2.createElement("div");
-      var defaultWidth = {};
-      var defaultHeight = {};
-      var createSpan = function(fontFamily) {
-        var span = document2.createElement("span");
-        var style = span.style;
+      const spansContainer = document2.createElement("div");
+      spansContainer.style.setProperty("visibility", "hidden", "important");
+      const defaultWidth = {};
+      const defaultHeight = {};
+      const createSpan = (fontFamily) => {
+        const span = document2.createElement("span");
+        const { style } = span;
         style.position = "absolute";
         style.top = "0";
         style.left = "0";
@@ -1597,56 +1540,46 @@
         spansContainer.appendChild(span);
         return span;
       };
-      var createSpanWithFonts = function(fontToDetect, baseFont) {
-        return createSpan("'".concat(fontToDetect, "',").concat(baseFont));
+      const createSpanWithFonts = (fontToDetect, baseFont) => {
+        return createSpan(`'${fontToDetect}',${baseFont}`);
       };
-      var initializeBaseFontsSpans = function() {
+      const initializeBaseFontsSpans = () => {
         return baseFonts.map(createSpan);
       };
-      var initializeFontsSpans = function() {
-        var spans = {};
-        var _loop_1 = function(font2) {
-          spans[font2] = baseFonts.map(function(baseFont) {
-            return createSpanWithFonts(font2, baseFont);
-          });
-        };
-        for (var _i = 0, fontList_1 = fontList; _i < fontList_1.length; _i++) {
-          var font = fontList_1[_i];
-          _loop_1(font);
+      const initializeFontsSpans = () => {
+        const spans = {};
+        for (const font of fontList) {
+          spans[font] = baseFonts.map((baseFont) => createSpanWithFonts(font, baseFont));
         }
         return spans;
       };
-      var isFontAvailable = function(fontSpans) {
-        return baseFonts.some(function(baseFont, baseFontIndex) {
-          return fontSpans[baseFontIndex].offsetWidth !== defaultWidth[baseFont] || fontSpans[baseFontIndex].offsetHeight !== defaultHeight[baseFont];
-        });
+      const isFontAvailable = (fontSpans) => {
+        return baseFonts.some((baseFont, baseFontIndex) => fontSpans[baseFontIndex].offsetWidth !== defaultWidth[baseFont] || fontSpans[baseFontIndex].offsetHeight !== defaultHeight[baseFont]);
       };
-      var baseFontsSpans = initializeBaseFontsSpans();
-      var fontsSpans = initializeFontsSpans();
+      const baseFontsSpans = initializeBaseFontsSpans();
+      const fontsSpans = initializeFontsSpans();
       holder.appendChild(spansContainer);
-      for (var index = 0; index < baseFonts.length; index++) {
+      for (let index = 0; index < baseFonts.length; index++) {
         defaultWidth[baseFonts[index]] = baseFontsSpans[index].offsetWidth;
         defaultHeight[baseFonts[index]] = baseFontsSpans[index].offsetHeight;
       }
-      return fontList.filter(function(font) {
-        return isFontAvailable(fontsSpans[font]);
-      });
+      return fontList.filter((font) => isFontAvailable(fontsSpans[font]));
     });
   }
   function getPlugins() {
-    var rawPlugins = navigator.plugins;
+    const rawPlugins = navigator.plugins;
     if (!rawPlugins) {
       return void 0;
     }
-    var plugins = [];
-    for (var i = 0; i < rawPlugins.length; ++i) {
-      var plugin = rawPlugins[i];
+    const plugins = [];
+    for (let i = 0; i < rawPlugins.length; ++i) {
+      const plugin = rawPlugins[i];
       if (!plugin) {
         continue;
       }
-      var mimeTypes = [];
-      for (var j = 0; j < plugin.length; ++j) {
-        var mimeType = plugin[j];
+      const mimeTypes = [];
+      for (let j = 0; j < plugin.length; ++j) {
+        const mimeType = plugin[j];
         mimeTypes.push({
           type: mimeType.type,
           suffixes: mimeType.suffixes
@@ -1661,29 +1594,27 @@
     return plugins;
   }
   function getCanvasFingerprint() {
-    var winding = false;
-    var geometry;
-    var text;
-    var _a = makeCanvasContext(), canvas = _a[0], context = _a[1];
+    return getUnstableCanvasFingerprint(doesBrowserPerformAntiFingerprinting());
+  }
+  function getUnstableCanvasFingerprint(skipImages) {
+    let winding = false;
+    let geometry;
+    let text;
+    const [canvas, context] = makeCanvasContext();
     if (!isSupported(canvas, context)) {
-      geometry = text = "";
+      geometry = text = "unsupported";
     } else {
       winding = doesSupportWinding(context);
-      renderTextImage(canvas, context);
-      var textImage1 = canvasToString(canvas);
-      var textImage2 = canvasToString(canvas);
-      if (textImage1 !== textImage2) {
-        geometry = text = "unstable";
+      if (skipImages) {
+        geometry = text = "skipped";
       } else {
-        text = textImage1;
-        renderGeometryImage(canvas, context);
-        geometry = canvasToString(canvas);
+        [geometry, text] = renderImages(canvas, context);
       }
     }
     return { winding, geometry, text };
   }
   function makeCanvasContext() {
-    var canvas = document.createElement("canvas");
+    const canvas = document.createElement("canvas");
     canvas.width = 1;
     canvas.height = 1;
     return [canvas, canvas.getContext("2d")];
@@ -1696,6 +1627,21 @@
     context.rect(2, 2, 6, 6);
     return !context.isPointInPath(5, 5, "evenodd");
   }
+  function renderImages(canvas, context) {
+    renderTextImage(canvas, context);
+    const textImage1 = canvasToString(canvas);
+    const textImage2 = canvasToString(canvas);
+    if (textImage1 !== textImage2) {
+      return [
+        "unstable",
+        "unstable"
+        /* ImageStatus.Unstable */
+      ];
+    }
+    renderGeometryImage(canvas, context);
+    const geometryImage = canvasToString(canvas);
+    return [geometryImage, textImage1];
+  }
   function renderTextImage(canvas, context) {
     canvas.width = 240;
     canvas.height = 60;
@@ -1704,10 +1650,7 @@
     context.fillRect(100, 1, 62, 20);
     context.fillStyle = "#069";
     context.font = '11pt "Times New Roman"';
-    var printedText = "Cwm fjordbank gly ".concat(
-      String.fromCharCode(55357, 56835)
-      /* 😃 */
-    );
+    const printedText = `Cwm fjordbank gly ${String.fromCharCode(55357, 56835)}`;
     context.fillText(printedText, 2, 15);
     context.fillStyle = "rgba(102, 204, 0, 0.2)";
     context.font = "18pt Arial";
@@ -1717,12 +1660,11 @@
     canvas.width = 122;
     canvas.height = 110;
     context.globalCompositeOperation = "multiply";
-    for (var _i = 0, _a = [
+    for (const [color, x, y] of [
       ["#f2f", 40, 40],
       ["#2ff", 80, 40],
       ["#ff2", 60, 80]
-    ]; _i < _a.length; _i++) {
-      var _b = _a[_i], color = _b[0], x = _b[1], y = _b[2];
+    ]) {
       context.fillStyle = color;
       context.beginPath();
       context.arc(x, y, 40, 0, Math.PI * 2, true);
@@ -1737,10 +1679,15 @@
   function canvasToString(canvas) {
     return canvas.toDataURL();
   }
+  function doesBrowserPerformAntiFingerprinting() {
+    const isSafari17OrAbove = isWebKit() && isWebKit616OrNewer() && isSafariWebKit();
+    const isFirefox120OrAbove = isGecko() && isGecko120OrNewer();
+    return isSafari17OrAbove || isFirefox120OrAbove;
+  }
   function getTouchSupport() {
-    var n = navigator;
-    var maxTouchPoints = 0;
-    var touchEvent;
+    const n = navigator;
+    let maxTouchPoints = 0;
+    let touchEvent;
     if (n.maxTouchPoints !== void 0) {
       maxTouchPoints = toInt(n.maxTouchPoints);
     } else if (n.msMaxTouchPoints !== void 0) {
@@ -1752,7 +1699,7 @@
     } catch (_a) {
       touchEvent = false;
     }
-    var touchStart = "ontouchstart" in window;
+    const touchStart = "ontouchstart" in window;
     return {
       maxTouchPoints,
       touchEvent,
@@ -1763,9 +1710,9 @@
     return navigator.oscpu;
   }
   function getLanguages() {
-    var n = navigator;
-    var result = [];
-    var language = n.language || n.userLanguage || n.browserLanguage || n.systemLanguage;
+    const n = navigator;
+    const result = [];
+    const language = n.language || n.userLanguage || n.browserLanguage || n.systemLanguage;
     if (language !== void 0) {
       result.push([language]);
     }
@@ -1774,7 +1721,7 @@
         result.push(n.languages);
       }
     } else if (typeof n.languages === "string") {
-      var languages = n.languages;
+      const languages = n.languages;
       if (languages) {
         result.push(languages.split(","));
       }
@@ -1788,11 +1735,15 @@
     return replaceNaN(toFloat(navigator.deviceMemory), void 0);
   }
   function getScreenResolution() {
-    var s = screen;
-    var parseDimension = function(value) {
-      return replaceNaN(toInt(value), null);
-    };
-    var dimensions = [parseDimension(s.width), parseDimension(s.height)];
+    if (isWebKit() && isWebKit616OrNewer() && isSafariWebKit()) {
+      return void 0;
+    }
+    return getUnstableScreenResolution();
+  }
+  function getUnstableScreenResolution() {
+    const s = screen;
+    const parseDimension = (value) => replaceNaN(toInt(value), null);
+    const dimensions = [parseDimension(s.width), parseDimension(s.height)];
     dimensions.sort().reverse();
     return dimensions;
   }
@@ -1804,8 +1755,8 @@
     if (screenFrameSizeTimeoutId !== void 0) {
       return;
     }
-    var checkScreenFrame = function() {
-      var frameSize = getCurrentScreenFrame();
+    const checkScreenFrame = () => {
+      const frameSize = getCurrentScreenFrame();
       if (isFrameSizeNull(frameSize)) {
         screenFrameSizeTimeoutId = setTimeout(checkScreenFrame, screenFrameCheckInterval);
       } else {
@@ -1815,59 +1766,40 @@
     };
     checkScreenFrame();
   }
-  function getScreenFrame() {
-    var _this = this;
+  function getUnstableScreenFrame() {
     watchScreenFrame();
-    return function() {
-      return __awaiter(_this, void 0, void 0, function() {
-        var frameSize;
-        return __generator(this, function(_a) {
-          switch (_a.label) {
-            case 0:
-              frameSize = getCurrentScreenFrame();
-              if (!isFrameSizeNull(frameSize)) return [3, 2];
-              if (screenFrameBackup) {
-                return [2, __spreadArray([], screenFrameBackup, true)];
-              }
-              if (!getFullscreenElement()) return [3, 2];
-              return [4, exitFullscreen()];
-            case 1:
-              _a.sent();
-              frameSize = getCurrentScreenFrame();
-              _a.label = 2;
-            case 2:
-              if (!isFrameSizeNull(frameSize)) {
-                screenFrameBackup = frameSize;
-              }
-              return [2, frameSize];
-          }
-        });
-      });
+    return async () => {
+      let frameSize = getCurrentScreenFrame();
+      if (isFrameSizeNull(frameSize)) {
+        if (screenFrameBackup) {
+          return [...screenFrameBackup];
+        }
+        if (getFullscreenElement()) {
+          await exitFullscreen();
+          frameSize = getCurrentScreenFrame();
+        }
+      }
+      if (!isFrameSizeNull(frameSize)) {
+        screenFrameBackup = frameSize;
+      }
+      return frameSize;
     };
   }
-  function getRoundedScreenFrame() {
-    var _this = this;
-    var screenFrameGetter = getScreenFrame();
-    return function() {
-      return __awaiter(_this, void 0, void 0, function() {
-        var frameSize, processSize;
-        return __generator(this, function(_a) {
-          switch (_a.label) {
-            case 0:
-              return [4, screenFrameGetter()];
-            case 1:
-              frameSize = _a.sent();
-              processSize = function(sideSize) {
-                return sideSize === null ? null : round(sideSize, roundingPrecision);
-              };
-              return [2, [processSize(frameSize[0]), processSize(frameSize[1]), processSize(frameSize[2]), processSize(frameSize[3])]];
-          }
-        });
-      });
+  function getScreenFrame() {
+    const isSafari17OrAbove = isWebKit() && isWebKit616OrNewer() && isSafariWebKit();
+    const isFirefox143OrAbove = isGecko() && isGecko143OrNewer();
+    if (isSafari17OrAbove || isFirefox143OrAbove) {
+      return () => Promise.resolve(void 0);
+    }
+    const screenFrameGetter = getUnstableScreenFrame();
+    return async () => {
+      const frameSize = await screenFrameGetter();
+      const processSize = (sideSize) => sideSize === null ? null : round(sideSize, roundingPrecision);
+      return [processSize(frameSize[0]), processSize(frameSize[1]), processSize(frameSize[2]), processSize(frameSize[3])];
     };
   }
   function getCurrentScreenFrame() {
-    var s = screen;
+    const s = screen;
     return [
       replaceNaN(toFloat(s.availTop), null),
       replaceNaN(toFloat(s.width) - toFloat(s.availWidth) - replaceNaN(toFloat(s.availLeft), 0), null),
@@ -1876,7 +1808,7 @@
     ];
   }
   function isFrameSizeNull(frameSize) {
-    for (var i = 0; i < 4; ++i) {
+    for (let i = 0; i < 4; ++i) {
       if (frameSize[i]) {
         return false;
       }
@@ -1884,22 +1816,29 @@
     return true;
   }
   function getHardwareConcurrency() {
+    const value = getUnstableHardwareConcurrency();
+    if (value !== void 0 && isGecko() && isGecko143OrNewer()) {
+      return value >= 8 ? 8 : 4;
+    }
+    return value;
+  }
+  function getUnstableHardwareConcurrency() {
     return replaceNaN(toInt(navigator.hardwareConcurrency), void 0);
   }
   function getTimezone() {
     var _a;
-    var DateTimeFormat = (_a = window.Intl) === null || _a === void 0 ? void 0 : _a.DateTimeFormat;
+    const DateTimeFormat = (_a = window.Intl) === null || _a === void 0 ? void 0 : _a.DateTimeFormat;
     if (DateTimeFormat) {
-      var timezone = new DateTimeFormat().resolvedOptions().timeZone;
+      const timezone = new DateTimeFormat().resolvedOptions().timeZone;
       if (timezone) {
         return timezone;
       }
     }
-    var offset = -getTimezoneOffset();
-    return "UTC".concat(offset >= 0 ? "+" : "").concat(Math.abs(offset));
+    const offset = -getTimezoneOffset();
+    return `UTC${offset >= 0 ? "+" : ""}${offset}`;
   }
   function getTimezoneOffset() {
-    var currentYear = (/* @__PURE__ */ new Date()).getFullYear();
+    const currentYear = (/* @__PURE__ */ new Date()).getFullYear();
     return Math.max(
       // `getTimezoneOffset` returns a number as a string in some unidentified cases
       toFloat(new Date(currentYear, 0, 1).getTimezoneOffset()),
@@ -1937,9 +1876,9 @@
     return navigator.cpuClass;
   }
   function getPlatform() {
-    var platform = navigator.platform;
+    const { platform } = navigator;
     if (platform === "MacIntel") {
-      if (isWebKit() && !isDesktopSafari()) {
+      if (isWebKit() && !isDesktopWebKit()) {
         return isIPad() ? "iPad" : "iPhone";
       }
     }
@@ -1949,8 +1888,8 @@
     return navigator.vendor || "";
   }
   function getVendorFlavors() {
-    var flavors = [];
-    for (var _i = 0, _a = [
+    const flavors = [];
+    for (const key of [
       // Blink and some browsers on iOS
       "chrome",
       // Safari on macOS
@@ -1979,9 +1918,8 @@
       "puffinDevice"
       // UC on iOS and Opera on Android have no specific global variables
       // Edge for Android isn't checked
-    ]; _i < _a.length; _i++) {
-      var key = _a[_i];
-      var value = window[key];
+    ]) {
+      const value = window[key];
       if (value && typeof value === "object") {
         flavors.push(key);
       }
@@ -1989,10 +1927,10 @@
     return flavors.sort();
   }
   function areCookiesEnabled() {
-    var d = document;
+    const d = document;
     try {
       d.cookie = "cookietest=1; SameSite=Strict;";
-      var result = d.cookie.indexOf("cookietest=") !== -1;
+      const result = d.cookie.indexOf("cookietest=") !== -1;
       d.cookie = "cookietest=1; SameSite=Strict; expires=Thu, 01-Jan-1970 00:00:01 GMT";
       return result;
     } catch (e) {
@@ -2000,7 +1938,7 @@
     }
   }
   function getFilters() {
-    var fromB64 = atob;
+    const fromB64 = atob;
     return {
       abpIndo: [
         "#Iklan-Melayang",
@@ -2262,116 +2200,100 @@
       ]
     };
   }
-  function getDomBlockers(_a) {
-    var _b = _a === void 0 ? {} : _a, debug = _b.debug;
-    return __awaiter(this, void 0, void 0, function() {
-      var filters, filterNames, allSelectors, blockedSelectors, activeBlockers;
-      var _c;
-      return __generator(this, function(_d) {
-        switch (_d.label) {
-          case 0:
-            if (!isApplicable()) {
-              return [2, void 0];
-            }
-            filters = getFilters();
-            filterNames = Object.keys(filters);
-            allSelectors = (_c = []).concat.apply(_c, filterNames.map(function(filterName) {
-              return filters[filterName];
-            }));
-            return [4, getBlockedSelectors(allSelectors)];
-          case 1:
-            blockedSelectors = _d.sent();
-            if (debug) {
-              printDebug(filters, blockedSelectors);
-            }
-            activeBlockers = filterNames.filter(function(filterName) {
-              var selectors = filters[filterName];
-              var blockedCount = countTruthy(selectors.map(function(selector) {
-                return blockedSelectors[selector];
-              }));
-              return blockedCount > selectors.length * 0.6;
-            });
-            activeBlockers.sort();
-            return [2, activeBlockers];
-        }
-      });
+  async function getDomBlockers({ debug } = {}) {
+    if (!isApplicable()) {
+      return void 0;
+    }
+    const filters = getFilters();
+    const filterNames = Object.keys(filters);
+    const allSelectors = [].concat(...filterNames.map((filterName) => filters[filterName]));
+    const blockedSelectors = await getBlockedSelectors(allSelectors);
+    if (debug) {
+      printDebug(filters, blockedSelectors);
+    }
+    const activeBlockers = filterNames.filter((filterName) => {
+      const selectors = filters[filterName];
+      const blockedCount = countTruthy(selectors.map((selector) => blockedSelectors[selector]));
+      return blockedCount > selectors.length * 0.6;
     });
+    activeBlockers.sort();
+    return activeBlockers;
   }
   function isApplicable() {
     return isWebKit() || isAndroid();
   }
-  function getBlockedSelectors(selectors) {
+  async function getBlockedSelectors(selectors) {
     var _a;
-    return __awaiter(this, void 0, void 0, function() {
-      var d, root, elements, blockedSelectors, i, element, holder, i;
-      return __generator(this, function(_b) {
-        switch (_b.label) {
-          case 0:
-            d = document;
-            root = d.createElement("div");
-            elements = new Array(selectors.length);
-            blockedSelectors = {};
-            forceShow(root);
-            for (i = 0; i < selectors.length; ++i) {
-              element = selectorToElement(selectors[i]);
-              if (element.tagName === "DIALOG") {
-                element.show();
-              }
-              holder = d.createElement("div");
-              forceShow(holder);
-              holder.appendChild(element);
-              root.appendChild(holder);
-              elements[i] = element;
-            }
-            _b.label = 1;
-          case 1:
-            if (!!d.body) return [3, 3];
-            return [4, wait(50)];
-          case 2:
-            _b.sent();
-            return [3, 1];
-          case 3:
-            d.body.appendChild(root);
-            try {
-              for (i = 0; i < selectors.length; ++i) {
-                if (!elements[i].offsetParent) {
-                  blockedSelectors[selectors[i]] = true;
-                }
-              }
-            } finally {
-              (_a = root.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(root);
-            }
-            return [2, blockedSelectors];
+    const d = document;
+    const root = d.createElement("div");
+    const elements = new Array(selectors.length);
+    const blockedSelectors = {};
+    forceShow(root);
+    for (let i = 0; i < selectors.length; ++i) {
+      const element = selectorToElement(selectors[i]);
+      if (element.tagName === "DIALOG") {
+        element.show();
+      }
+      const holder = d.createElement("div");
+      forceShow(holder);
+      holder.appendChild(element);
+      root.appendChild(holder);
+      elements[i] = element;
+    }
+    while (!d.body) {
+      await wait(50);
+    }
+    d.body.appendChild(root);
+    try {
+      for (let i = 0; i < selectors.length; ++i) {
+        if (!elements[i].offsetParent) {
+          blockedSelectors[selectors[i]] = true;
         }
-      });
-    });
+      }
+    } finally {
+      (_a = root.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(root);
+    }
+    return blockedSelectors;
   }
   function forceShow(element) {
+    element.style.setProperty("visibility", "hidden", "important");
     element.style.setProperty("display", "block", "important");
   }
   function printDebug(filters, blockedSelectors) {
-    var message = "DOM blockers debug:\n```";
-    for (var _i = 0, _a = Object.keys(filters); _i < _a.length; _i++) {
-      var filterName = _a[_i];
-      message += "\n".concat(filterName, ":");
-      for (var _b = 0, _c = filters[filterName]; _b < _c.length; _b++) {
-        var selector = _c[_b];
-        message += "\n  ".concat(blockedSelectors[selector] ? "\u{1F6AB}" : "\u27A1\uFE0F", " ").concat(selector);
+    let message = "DOM blockers debug:\n```";
+    for (const filterName of Object.keys(filters)) {
+      message += `
+${filterName}:`;
+      for (const selector of filters[filterName]) {
+        message += `
+  ${blockedSelectors[selector] ? "\u{1F6AB}" : "\u27A1\uFE0F"} ${selector}`;
       }
     }
-    console.log("".concat(message, "\n```"));
+    console.log(`${message}
+\`\`\``);
   }
   function getColorGamut() {
-    for (var _i = 0, _a = ["rec2020", "p3", "srgb"]; _i < _a.length; _i++) {
-      var gamut = _a[_i];
-      if (matchMedia("(color-gamut: ".concat(gamut, ")")).matches) {
+    for (const gamut of ["rec2020", "p3", "srgb"]) {
+      if (matchMedia(`(color-gamut: ${gamut})`).matches) {
         return gamut;
       }
     }
     return void 0;
   }
   function areColorsInverted() {
-    if (doesMatch$4("inverted")) {
+    if (doesMatch$5("inverted")) {
+      return true;
+    }
+    if (doesMatch$5("none")) {
+      return false;
+    }
+    return void 0;
+  }
+  function doesMatch$5(value) {
+    return matchMedia(`(inverted-colors: ${value})`).matches;
+  }
+  function areColorsForced() {
+    if (doesMatch$4("active")) {
       return true;
     }
     if (doesMatch$4("none")) {
@@ -2380,51 +2302,51 @@
     return void 0;
   }
   function doesMatch$4(value) {
-    return matchMedia("(inverted-colors: ".concat(value, ")")).matches;
-  }
-  function areColorsForced() {
-    if (doesMatch$3("active")) {
-      return true;
-    }
-    if (doesMatch$3("none")) {
-      return false;
-    }
-    return void 0;
-  }
-  function doesMatch$3(value) {
-    return matchMedia("(forced-colors: ".concat(value, ")")).matches;
+    return matchMedia(`(forced-colors: ${value})`).matches;
   }
   var maxValueToCheck = 100;
   function getMonochromeDepth() {
     if (!matchMedia("(min-monochrome: 0)").matches) {
       return void 0;
     }
-    for (var i = 0; i <= maxValueToCheck; ++i) {
-      if (matchMedia("(max-monochrome: ".concat(i, ")")).matches) {
+    for (let i = 0; i <= maxValueToCheck; ++i) {
+      if (matchMedia(`(max-monochrome: ${i})`).matches) {
         return i;
       }
     }
     throw new Error("Too high value");
   }
   function getContrastPreference() {
-    if (doesMatch$2("no-preference")) {
+    if (doesMatch$3("no-preference")) {
       return 0;
     }
-    if (doesMatch$2("high") || doesMatch$2("more")) {
+    if (doesMatch$3("high") || doesMatch$3("more")) {
       return 1;
     }
-    if (doesMatch$2("low") || doesMatch$2("less")) {
+    if (doesMatch$3("low") || doesMatch$3("less")) {
       return -1;
     }
-    if (doesMatch$2("forced")) {
+    if (doesMatch$3("forced")) {
       return 10;
     }
     return void 0;
   }
-  function doesMatch$2(value) {
-    return matchMedia("(prefers-contrast: ".concat(value, ")")).matches;
+  function doesMatch$3(value) {
+    return matchMedia(`(prefers-contrast: ${value})`).matches;
   }
   function isMotionReduced() {
+    if (doesMatch$2("reduce")) {
+      return true;
+    }
+    if (doesMatch$2("no-preference")) {
+      return false;
+    }
+    return void 0;
+  }
+  function doesMatch$2(value) {
+    return matchMedia(`(prefers-reduced-motion: ${value})`).matches;
+  }
+  function isTransparencyReduced() {
     if (doesMatch$1("reduce")) {
       return true;
     }
@@ -2434,7 +2356,7 @@
     return void 0;
   }
   function doesMatch$1(value) {
-    return matchMedia("(prefers-reduced-motion: ".concat(value, ")")).matches;
+    return matchMedia(`(prefers-reduced-transparency: ${value})`).matches;
   }
   function isHDR() {
     if (doesMatch("high")) {
@@ -2446,55 +2368,35 @@
     return void 0;
   }
   function doesMatch(value) {
-    return matchMedia("(dynamic-range: ".concat(value, ")")).matches;
+    return matchMedia(`(dynamic-range: ${value})`).matches;
   }
   var M = Math;
-  var fallbackFn = function() {
-    return 0;
-  };
+  var fallbackFn = () => 0;
   function getMathFingerprint() {
-    var acos = M.acos || fallbackFn;
-    var acosh = M.acosh || fallbackFn;
-    var asin = M.asin || fallbackFn;
-    var asinh = M.asinh || fallbackFn;
-    var atanh = M.atanh || fallbackFn;
-    var atan = M.atan || fallbackFn;
-    var sin = M.sin || fallbackFn;
-    var sinh = M.sinh || fallbackFn;
-    var cos = M.cos || fallbackFn;
-    var cosh = M.cosh || fallbackFn;
-    var tan = M.tan || fallbackFn;
-    var tanh = M.tanh || fallbackFn;
-    var exp = M.exp || fallbackFn;
-    var expm1 = M.expm1 || fallbackFn;
-    var log1p = M.log1p || fallbackFn;
-    var powPI = function(value) {
-      return M.pow(M.PI, value);
-    };
-    var acoshPf = function(value) {
-      return M.log(value + M.sqrt(value * value - 1));
-    };
-    var asinhPf = function(value) {
-      return M.log(value + M.sqrt(value * value + 1));
-    };
-    var atanhPf = function(value) {
-      return M.log((1 + value) / (1 - value)) / 2;
-    };
-    var sinhPf = function(value) {
-      return M.exp(value) - 1 / M.exp(value) / 2;
-    };
-    var coshPf = function(value) {
-      return (M.exp(value) + 1 / M.exp(value)) / 2;
-    };
-    var expm1Pf = function(value) {
-      return M.exp(value) - 1;
-    };
-    var tanhPf = function(value) {
-      return (M.exp(2 * value) - 1) / (M.exp(2 * value) + 1);
-    };
-    var log1pPf = function(value) {
-      return M.log(1 + value);
-    };
+    const acos = M.acos || fallbackFn;
+    const acosh = M.acosh || fallbackFn;
+    const asin = M.asin || fallbackFn;
+    const asinh = M.asinh || fallbackFn;
+    const atanh = M.atanh || fallbackFn;
+    const atan = M.atan || fallbackFn;
+    const sin = M.sin || fallbackFn;
+    const sinh = M.sinh || fallbackFn;
+    const cos = M.cos || fallbackFn;
+    const cosh = M.cosh || fallbackFn;
+    const tan = M.tan || fallbackFn;
+    const tanh = M.tanh || fallbackFn;
+    const exp = M.exp || fallbackFn;
+    const expm1 = M.expm1 || fallbackFn;
+    const log1p = M.log1p || fallbackFn;
+    const powPI = (value) => M.pow(M.PI, value);
+    const acoshPf = (value) => M.log(value + M.sqrt(value * value - 1));
+    const asinhPf = (value) => M.log(value + M.sqrt(value * value + 1));
+    const atanhPf = (value) => M.log((1 + value) / (1 - value)) / 2;
+    const sinhPf = (value) => M.exp(value) - 1 / M.exp(value) / 2;
+    const coshPf = (value) => (M.exp(value) + 1 / M.exp(value)) / 2;
+    const expm1Pf = (value) => M.exp(value) - 1;
+    const tanhPf = (value) => (M.exp(2 * value) - 1) / (M.exp(2 * value) + 1);
+    const log1pPf = (value) => M.log(1 + value);
     return {
       acos: acos(0.12312423423423424),
       acosh: acosh(1e308),
@@ -2546,92 +2448,387 @@
     system: [{ fontFamily: "system-ui" }]
   };
   function getFontPreferences() {
-    return withNaturalFonts(function(document2, container) {
-      var elements = {};
-      var sizes = {};
-      for (var _i = 0, _a = Object.keys(presets); _i < _a.length; _i++) {
-        var key = _a[_i];
-        var _b = presets[key], _c = _b[0], style = _c === void 0 ? {} : _c, _d = _b[1], text = _d === void 0 ? defaultText : _d;
-        var element = document2.createElement("span");
+    return withNaturalFonts((document2, container, iframeWindow) => {
+      const elements = {};
+      const sizes = {};
+      for (const key of Object.keys(presets)) {
+        const [style = {}, text = defaultText] = presets[key];
+        const element = document2.createElement("span");
         element.textContent = text;
         element.style.whiteSpace = "nowrap";
-        for (var _e = 0, _f = Object.keys(style); _e < _f.length; _e++) {
-          var name_1 = _f[_e];
-          var value = style[name_1];
+        for (const name10 of Object.keys(style)) {
+          const value = style[name10];
           if (value !== void 0) {
-            element.style[name_1] = value;
+            element.style[name10] = value;
           }
         }
         elements[key] = element;
-        container.appendChild(document2.createElement("br"));
-        container.appendChild(element);
+        container.append(document2.createElement("br"), element);
       }
-      for (var _g = 0, _h = Object.keys(presets); _g < _h.length; _g++) {
-        var key = _h[_g];
-        sizes[key] = elements[key].getBoundingClientRect().width;
+      const shouldNormalizeMeasurement = isChromium() && isChromium128OrNewer();
+      for (const key of Object.keys(presets)) {
+        const rawWidth = elements[key].getBoundingClientRect().width;
+        sizes[key] = shouldNormalizeMeasurement ? normalizeFontMeasurement(rawWidth * iframeWindow.devicePixelRatio) : rawWidth;
       }
       return sizes;
     });
   }
-  function withNaturalFonts(action, containerWidthPx) {
-    if (containerWidthPx === void 0) {
-      containerWidthPx = 4e3;
-    }
-    return withIframe(function(_, iframeWindow) {
-      var iframeDocument = iframeWindow.document;
-      var iframeBody = iframeDocument.body;
-      var bodyStyle = iframeBody.style;
-      bodyStyle.width = "".concat(containerWidthPx, "px");
+  function normalizeFontMeasurement(value) {
+    const decimals = isAndroid() ? 0 : 3;
+    const pow = Math.pow(10, decimals);
+    return Math.floor(value * pow) / pow;
+  }
+  function withNaturalFonts(action, containerWidthPx = 4e3) {
+    return withIframe((_, iframeWindow) => {
+      const iframeDocument = iframeWindow.document;
+      const iframeBody = iframeDocument.body;
+      const bodyStyle = iframeBody.style;
+      bodyStyle.width = `${containerWidthPx}px`;
       bodyStyle.webkitTextSizeAdjust = bodyStyle.textSizeAdjust = "none";
       if (isChromium()) {
-        iframeBody.style.zoom = "".concat(1 / iframeWindow.devicePixelRatio);
+        iframeBody.style.zoom = `${1 / iframeWindow.devicePixelRatio}`;
       } else if (isWebKit()) {
         iframeBody.style.zoom = "reset";
       }
-      var linesOfText = iframeDocument.createElement("div");
-      linesOfText.textContent = __spreadArray([], Array(containerWidthPx / 20 << 0), true).map(function() {
-        return "word";
-      }).join(" ");
+      const linesOfText = iframeDocument.createElement("div");
+      linesOfText.textContent = [...Array(containerWidthPx / 20 << 0)].map(() => "word").join(" ");
       iframeBody.appendChild(linesOfText);
-      return action(iframeDocument, iframeBody);
+      return action(iframeDocument, iframeBody, iframeWindow);
     }, '<!doctype html><html><head><meta name="viewport" content="width=device-width, initial-scale=1">');
-  }
-  function getVideoCard() {
-    var _a;
-    var canvas = document.createElement("canvas");
-    var gl = (_a = canvas.getContext("webgl")) !== null && _a !== void 0 ? _a : canvas.getContext("experimental-webgl");
-    if (gl && "getExtension" in gl) {
-      var debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
-      if (debugInfo) {
-        return {
-          vendor: (gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) || "").toString(),
-          renderer: (gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) || "").toString()
-        };
-      }
-    }
-    return void 0;
   }
   function isPdfViewerEnabled() {
     return navigator.pdfViewerEnabled;
   }
   function getArchitecture() {
-    var f = new Float32Array(1);
-    var u8 = new Uint8Array(f.buffer);
+    const f = new Float32Array(1);
+    const u8 = new Uint8Array(f.buffer);
     f[0] = Infinity;
     f[0] = f[0] - f[0];
     return u8[3];
   }
+  function getApplePayState() {
+    const { ApplePaySession } = window;
+    if (typeof (ApplePaySession === null || ApplePaySession === void 0 ? void 0 : ApplePaySession.canMakePayments) !== "function") {
+      return -1;
+    }
+    if (willPrintConsoleError()) {
+      return -3;
+    }
+    try {
+      return ApplePaySession.canMakePayments() ? 1 : 0;
+    } catch (error2) {
+      return getStateFromError(error2);
+    }
+  }
+  var willPrintConsoleError = isAnyParentCrossOrigin;
+  function getStateFromError(error2) {
+    if (error2 instanceof Error && error2.name === "InvalidAccessError" && /\bfrom\b.*\binsecure\b/i.test(error2.message)) {
+      return -2;
+    }
+    throw error2;
+  }
+  function getPrivateClickMeasurement() {
+    var _a;
+    const link = document.createElement("a");
+    const sourceId = (_a = link.attributionSourceId) !== null && _a !== void 0 ? _a : link.attributionsourceid;
+    return sourceId === void 0 ? void 0 : String(sourceId);
+  }
+  var STATUS_NO_GL_CONTEXT = -1;
+  var STATUS_GET_PARAMETER_NOT_A_FUNCTION = -2;
+  var validContextParameters = /* @__PURE__ */ new Set([
+    10752,
+    2849,
+    2884,
+    2885,
+    2886,
+    2928,
+    2929,
+    2930,
+    2931,
+    2932,
+    2960,
+    2961,
+    2962,
+    2963,
+    2964,
+    2965,
+    2966,
+    2967,
+    2968,
+    2978,
+    3024,
+    3042,
+    3088,
+    3089,
+    3106,
+    3107,
+    32773,
+    32777,
+    32777,
+    32823,
+    32824,
+    32936,
+    32937,
+    32938,
+    32939,
+    32968,
+    32969,
+    32970,
+    32971,
+    3317,
+    33170,
+    3333,
+    3379,
+    3386,
+    33901,
+    33902,
+    34016,
+    34024,
+    34076,
+    3408,
+    3410,
+    3411,
+    3412,
+    3413,
+    3414,
+    3415,
+    34467,
+    34816,
+    34817,
+    34818,
+    34819,
+    34877,
+    34921,
+    34930,
+    35660,
+    35661,
+    35724,
+    35738,
+    35739,
+    36003,
+    36004,
+    36005,
+    36347,
+    36348,
+    36349,
+    37440,
+    37441,
+    37443,
+    7936,
+    7937,
+    7938
+    // SAMPLE_ALPHA_TO_COVERAGE (32926) and SAMPLE_COVERAGE (32928) are excluded because they trigger a console warning
+    // in IE, Chrome ≤ 59 and Safari ≤ 13 and give no entropy.
+  ]);
+  var validExtensionParams = /* @__PURE__ */ new Set([
+    34047,
+    35723,
+    36063,
+    34852,
+    34853,
+    34854,
+    34229,
+    36392,
+    36795,
+    38449
+    // MAX_VIEWS_OVR
+  ]);
+  var shaderTypes = ["FRAGMENT_SHADER", "VERTEX_SHADER"];
+  var precisionTypes = ["LOW_FLOAT", "MEDIUM_FLOAT", "HIGH_FLOAT", "LOW_INT", "MEDIUM_INT", "HIGH_INT"];
+  var rendererInfoExtensionName = "WEBGL_debug_renderer_info";
+  var polygonModeExtensionName = "WEBGL_polygon_mode";
+  function getWebGlBasics({ cache }) {
+    var _a, _b, _c, _d, _e, _f;
+    const gl = getWebGLContext(cache);
+    if (!gl) {
+      return STATUS_NO_GL_CONTEXT;
+    }
+    if (!isValidParameterGetter(gl)) {
+      return STATUS_GET_PARAMETER_NOT_A_FUNCTION;
+    }
+    const debugExtension = shouldAvoidDebugRendererInfo() ? null : gl.getExtension(rendererInfoExtensionName);
+    return {
+      version: ((_a = gl.getParameter(gl.VERSION)) === null || _a === void 0 ? void 0 : _a.toString()) || "",
+      vendor: ((_b = gl.getParameter(gl.VENDOR)) === null || _b === void 0 ? void 0 : _b.toString()) || "",
+      vendorUnmasked: debugExtension ? (_c = gl.getParameter(debugExtension.UNMASKED_VENDOR_WEBGL)) === null || _c === void 0 ? void 0 : _c.toString() : "",
+      renderer: ((_d = gl.getParameter(gl.RENDERER)) === null || _d === void 0 ? void 0 : _d.toString()) || "",
+      rendererUnmasked: debugExtension ? (_e = gl.getParameter(debugExtension.UNMASKED_RENDERER_WEBGL)) === null || _e === void 0 ? void 0 : _e.toString() : "",
+      shadingLanguageVersion: ((_f = gl.getParameter(gl.SHADING_LANGUAGE_VERSION)) === null || _f === void 0 ? void 0 : _f.toString()) || ""
+    };
+  }
+  function getWebGlExtensions({ cache }) {
+    const gl = getWebGLContext(cache);
+    if (!gl) {
+      return STATUS_NO_GL_CONTEXT;
+    }
+    if (!isValidParameterGetter(gl)) {
+      return STATUS_GET_PARAMETER_NOT_A_FUNCTION;
+    }
+    const extensions = gl.getSupportedExtensions();
+    const contextAttributes = gl.getContextAttributes();
+    const unsupportedExtensions = [];
+    const attributes = [];
+    const parameters = [];
+    const extensionParameters = [];
+    const shaderPrecisions = [];
+    if (contextAttributes) {
+      for (const attributeName of Object.keys(contextAttributes)) {
+        attributes.push(`${attributeName}=${contextAttributes[attributeName]}`);
+      }
+    }
+    const constants = getConstantsFromPrototype(gl);
+    for (const constant of constants) {
+      const code = gl[constant];
+      parameters.push(`${constant}=${code}${validContextParameters.has(code) ? `=${gl.getParameter(code)}` : ""}`);
+    }
+    if (extensions) {
+      for (const name10 of extensions) {
+        if (name10 === rendererInfoExtensionName && shouldAvoidDebugRendererInfo() || name10 === polygonModeExtensionName && shouldAvoidPolygonModeExtensions()) {
+          continue;
+        }
+        const extension = gl.getExtension(name10);
+        if (!extension) {
+          unsupportedExtensions.push(name10);
+          continue;
+        }
+        for (const constant of getConstantsFromPrototype(extension)) {
+          const code = extension[constant];
+          extensionParameters.push(`${constant}=${code}${validExtensionParams.has(code) ? `=${gl.getParameter(code)}` : ""}`);
+        }
+      }
+    }
+    for (const shaderType of shaderTypes) {
+      for (const precisionType of precisionTypes) {
+        const shaderPrecision = getShaderPrecision(gl, shaderType, precisionType);
+        shaderPrecisions.push(`${shaderType}.${precisionType}=${shaderPrecision.join(",")}`);
+      }
+    }
+    extensionParameters.sort();
+    parameters.sort();
+    return {
+      contextAttributes: attributes,
+      parameters,
+      shaderPrecisions,
+      extensions,
+      extensionParameters,
+      unsupportedExtensions
+    };
+  }
+  function getWebGLContext(cache) {
+    if (cache.webgl) {
+      return cache.webgl.context;
+    }
+    const canvas = document.createElement("canvas");
+    let context;
+    canvas.addEventListener("webglCreateContextError", () => context = void 0);
+    for (const type of ["webgl", "experimental-webgl"]) {
+      try {
+        context = canvas.getContext(type);
+      } catch (_a) {
+      }
+      if (context) {
+        break;
+      }
+    }
+    cache.webgl = { context };
+    return context;
+  }
+  function getShaderPrecision(gl, shaderType, precisionType) {
+    const shaderPrecision = gl.getShaderPrecisionFormat(gl[shaderType], gl[precisionType]);
+    return shaderPrecision ? [shaderPrecision.rangeMin, shaderPrecision.rangeMax, shaderPrecision.precision] : [];
+  }
+  function getConstantsFromPrototype(obj) {
+    const keys = Object.keys(obj.__proto__);
+    return keys.filter(isConstantLike);
+  }
+  function isConstantLike(key) {
+    return typeof key === "string" && !key.match(/[^A-Z0-9_x]/);
+  }
+  function shouldAvoidDebugRendererInfo() {
+    return isGecko();
+  }
+  function shouldAvoidPolygonModeExtensions() {
+    return isChromium() || isWebKit();
+  }
+  function isValidParameterGetter(gl) {
+    return typeof gl.getParameter === "function";
+  }
+  function getAudioContextBaseLatency() {
+    const isAllowedPlatform = isAndroid() || isWebKit();
+    if (!isAllowedPlatform) {
+      return -2;
+    }
+    if (!window.AudioContext) {
+      return -1;
+    }
+    const latency = new AudioContext().baseLatency;
+    if (latency === null || latency === void 0) {
+      return -1;
+    }
+    if (!isFinite(latency)) {
+      return -3;
+    }
+    return latency;
+  }
+  function getDateTimeLocale() {
+    if (!window.Intl) {
+      return -1;
+    }
+    const DateTimeFormat = window.Intl.DateTimeFormat;
+    if (!DateTimeFormat) {
+      return -2;
+    }
+    const locale = DateTimeFormat().resolvedOptions().locale;
+    if (!locale && locale !== "") {
+      return -3;
+    }
+    return locale;
+  }
+  function isGreaseBrand(brand) {
+    return /not/i.test(brand);
+  }
+  async function getUserAgentData() {
+    const uaData = navigator.userAgentData;
+    if (!uaData) {
+      return void 0;
+    }
+    const filteredBrands = uaData.brands.filter(({ brand }) => !isGreaseBrand(brand)).map(({ brand }) => brand);
+    const brands = filteredBrands.length > 1 ? filteredBrands.filter((b) => b !== "Chromium") : filteredBrands;
+    const result = {
+      brands,
+      mobile: uaData.mobile,
+      platform: uaData.platform
+    };
+    if (uaData.getHighEntropyValues) {
+      try {
+        const highEntropy = await uaData.getHighEntropyValues(["architecture", "bitness", "model", "platformVersion"]);
+        result.architecture = highEntropy.architecture;
+        result.bitness = highEntropy.bitness;
+        result.model = highEntropy.model;
+        result.platformVersion = highEntropy.platformVersion;
+      } catch (error2) {
+        if (error2 instanceof DOMException && error2.name === "NotAllowedError") {
+          result.highEntropyStatus = "not_allowed";
+        } else {
+          throw error2;
+        }
+      }
+    }
+    return result;
+  }
   var sources = {
     // READ FIRST:
-    // See https://github.com/fingerprintjs/fingerprintjs/blob/master/contributing.md#how-to-make-an-entropy-source
+    // See https://github.com/fingerprintjs/fingerprintjs/blob/master/contributing.md#how-to-add-an-entropy-source
     // to learn how entropy source works and how to make your own.
     // The sources run in this exact order.
     // The asynchronous sources are at the start to run in parallel with other sources.
+    userAgentData: getUserAgentData,
     fonts: getFonts,
     domBlockers: getDomBlockers,
     fontPreferences: getFontPreferences,
     audio: getAudioFingerprint,
-    screenFrame: getRoundedScreenFrame,
+    screenFrame: getScreenFrame,
+    canvas: getCanvasFingerprint,
     osCpu: getOsCpu,
     languages: getLanguages,
     colorDepth: getColorDepth,
@@ -2646,7 +2843,6 @@
     cpuClass: getCpuClass,
     platform: getPlatform,
     plugins: getPlugins,
-    canvas: getCanvasFingerprint,
     touchSupport: getTouchSupport,
     vendor: getVendor,
     vendorFlavors: getVendorFlavors,
@@ -2657,29 +2853,37 @@
     monochrome: getMonochromeDepth,
     contrast: getContrastPreference,
     reducedMotion: isMotionReduced,
+    reducedTransparency: isTransparencyReduced,
     hdr: isHDR,
     math: getMathFingerprint,
-    videoCard: getVideoCard,
     pdfViewerEnabled: isPdfViewerEnabled,
-    architecture: getArchitecture
+    architecture: getArchitecture,
+    applePay: getApplePayState,
+    privateClickMeasurement: getPrivateClickMeasurement,
+    audioBaseLatency: getAudioContextBaseLatency,
+    dateTimeLocale: getDateTimeLocale,
+    // Some sources can affect other sources (e.g. WebGL can affect canvas), so it's important to run these sources
+    // after other sources.
+    webGlBasics: getWebGlBasics,
+    webGlExtensions: getWebGlExtensions
   };
   function loadBuiltinSources(options) {
     return loadSources(sources, options, []);
   }
-  var commentTemplate = "$ if upgrade to Pro: https://fpjs.dev/pro";
+  var commentTemplate = "$ if upgrade to Pro: https://fingerprint.com/github/?utm_source=oss&utm_medium=referral&utm_campaign=confidence_score";
   function getConfidence(components) {
-    var openConfidenceScore = getOpenConfidenceScore(components);
-    var proConfidenceScore = deriveProConfidenceScore(openConfidenceScore);
-    return { score: openConfidenceScore, comment: commentTemplate.replace(/\$/g, "".concat(proConfidenceScore)) };
+    const openConfidenceScore = getOpenConfidenceScore(components);
+    const proConfidenceScore = deriveProConfidenceScore(openConfidenceScore);
+    return { score: openConfidenceScore, comment: commentTemplate.replace(/\$/g, `${proConfidenceScore}`) };
   }
   function getOpenConfidenceScore(components) {
     if (isAndroid()) {
       return 0.4;
     }
     if (isWebKit()) {
-      return isDesktopSafari() ? 0.5 : 0.3;
+      return isDesktopWebKit() && !(isWebKit616OrNewer() && isSafariWebKit()) ? 0.5 : 0.3;
     }
-    var platform = components.platform.value || "";
+    const platform = "value" in components.platform ? components.platform.value : "";
     if (/^Win/.test(platform)) {
       return 0.6;
     }
@@ -2692,17 +2896,16 @@
     return round(0.99 + 0.01 * openConfidenceScore, 1e-4);
   }
   function componentsToCanonicalString(components) {
-    var result = "";
-    for (var _i = 0, _a = Object.keys(components).sort(); _i < _a.length; _i++) {
-      var componentKey = _a[_i];
-      var component = components[componentKey];
-      var value = component.error ? "error" : JSON.stringify(component.value);
-      result += "".concat(result ? "|" : "").concat(componentKey.replace(/([:|\\])/g, "\\$1"), ":").concat(value);
+    let result = "";
+    for (const componentKey of Object.keys(components).sort()) {
+      const component = components[componentKey];
+      const value = "error" in component ? "error" : JSON.stringify(component.value);
+      result += `${result ? "|" : ""}${componentKey.replace(/([:|\\])/g, "\\$1")}:${value}`;
     }
     return result;
   }
   function componentsToDebugString(components) {
-    return JSON.stringify(components, function(_key, value) {
+    return JSON.stringify(components, (_key, value) => {
       if (value instanceof Error) {
         return errorToObject(value);
       }
@@ -2713,8 +2916,8 @@
     return x64hash128(componentsToCanonicalString(components));
   }
   function makeLazyGetResult(components) {
-    var visitorIdCache;
-    var confidence = getConfidence(components);
+    let visitorIdCache;
+    const confidence = getConfidence(components);
     return {
       get visitorId() {
         if (visitorIdCache === void 0) {
@@ -2730,33 +2933,28 @@
       version
     };
   }
-  function prepareForSources(delayFallback) {
-    if (delayFallback === void 0) {
-      delayFallback = 50;
-    }
+  function prepareForSources(delayFallback = 50) {
     return requestIdleCallbackIfAvailable(delayFallback, delayFallback * 2);
   }
   function makeAgent(getComponents, debug) {
-    var creationTime = Date.now();
+    const creationTime = Date.now();
     return {
-      get: function(options) {
-        return __awaiter(this, void 0, void 0, function() {
-          var startTime, components, result;
-          return __generator(this, function(_a) {
-            switch (_a.label) {
-              case 0:
-                startTime = Date.now();
-                return [4, getComponents()];
-              case 1:
-                components = _a.sent();
-                result = makeLazyGetResult(components);
-                if (debug || (options === null || options === void 0 ? void 0 : options.debug)) {
-                  console.log("Copy the text below to get the debug data:\n\n```\nversion: ".concat(result.version, "\nuserAgent: ").concat(navigator.userAgent, "\ntimeBetweenLoadAndGet: ").concat(startTime - creationTime, "\nvisitorId: ").concat(result.visitorId, "\ncomponents: ").concat(componentsToDebugString(components), "\n```"));
-                }
-                return [2, result];
-            }
-          });
-        });
+      async get(options) {
+        const startTime = Date.now();
+        const components = await getComponents();
+        const result = makeLazyGetResult(components);
+        if (debug || (options === null || options === void 0 ? void 0 : options.debug)) {
+          console.log(`Copy the text below to get the debug data:
+
+\`\`\`
+version: ${result.version}
+userAgent: ${navigator.userAgent}
+timeBetweenLoadAndGet: ${startTime - creationTime}
+visitorId: ${result.visitorId}
+components: ${componentsToDebugString(components)}
+\`\`\``);
+        }
+        return result;
       }
     };
   }
@@ -2765,36 +2963,26 @@
       return;
     }
     try {
-      var request = new XMLHttpRequest();
-      request.open("get", "https://m1.openfpcdn.io/fingerprintjs/v".concat(version, "/npm-monitoring"), true);
+      const request = new XMLHttpRequest();
+      request.open("get", `https://m1.openfpcdn.io/fingerprintjs/v${version}/npm-monitoring`, true);
       request.send();
     } catch (error2) {
       console.error(error2);
     }
   }
-  function load(_a) {
-    var _b = _a === void 0 ? {} : _a, delayFallback = _b.delayFallback, debug = _b.debug, _c = _b.monitoring, monitoring = _c === void 0 ? true : _c;
-    return __awaiter(this, void 0, void 0, function() {
-      var getComponents;
-      return __generator(this, function(_d) {
-        switch (_d.label) {
-          case 0:
-            if (monitoring) {
-              monitor();
-            }
-            return [4, prepareForSources(delayFallback)];
-          case 1:
-            _d.sent();
-            getComponents = loadBuiltinSources({ debug });
-            return [2, makeAgent(getComponents, debug)];
-        }
-      });
-    });
+  async function load(options = {}) {
+    const { delayFallback, debug, monitoring = true } = options;
+    if (monitoring) {
+      monitor();
+    }
+    await prepareForSources(delayFallback);
+    const getComponents = loadBuiltinSources({ cache: {}, debug });
+    return makeAgent(getComponents, debug);
   }
 
-  // node_modules/@firebase/app/dist/esm/index.esm2017.js
-  var index_esm2017_exports = {};
-  __export(index_esm2017_exports, {
+  // node_modules/@firebase/app/dist/esm/index.esm.js
+  var index_esm_exports = {};
+  __export(index_esm_exports, {
     FirebaseError: () => FirebaseError,
     SDK_VERSION: () => SDK_VERSION,
     _DEFAULT_ENTRY_NAME: () => DEFAULT_ENTRY_NAME2,
@@ -2804,18 +2992,26 @@
     _clearComponents: () => _clearComponents,
     _components: () => _components,
     _getProvider: () => _getProvider,
+    _isFirebaseApp: () => _isFirebaseApp,
+    _isFirebaseServerApp: () => _isFirebaseServerApp,
+    _isFirebaseServerAppSettings: () => _isFirebaseServerAppSettings,
     _registerComponent: () => _registerComponent,
     _removeServiceInstance: () => _removeServiceInstance,
+    _serverApps: () => _serverApps,
     deleteApp: () => deleteApp,
     getApp: () => getApp,
     getApps: () => getApps,
     initializeApp: () => initializeApp,
+    initializeServerApp: () => initializeServerApp,
     onLog: () => onLog,
     registerVersion: () => registerVersion,
     setLogLevel: () => setLogLevel2
   });
 
-  // node_modules/@firebase/util/dist/index.esm2017.js
+  // node_modules/@firebase/util/dist/postinstall.mjs
+  var getDefaultsFromPostinstall = () => void 0;
+
+  // node_modules/@firebase/util/dist/index.esm.js
   var CONSTANTS = {
     /**
      * @define {boolean} Whether this is the client Node.js SDK.
@@ -3156,16 +3352,13 @@
   };
   var getDefaults = () => {
     try {
-      return getDefaultsFromGlobal() || getDefaultsFromEnvVariable() || getDefaultsFromCookie();
+      return getDefaultsFromPostinstall() || getDefaultsFromGlobal() || getDefaultsFromEnvVariable() || getDefaultsFromCookie();
     } catch (e) {
       console.info(`Unable to get __FIREBASE_DEFAULTS__ due to: ${e}`);
       return;
     }
   };
-  var getDefaultEmulatorHost = (productName) => {
-    var _a, _b;
-    return (_b = (_a = getDefaults()) === null || _a === void 0 ? void 0 : _a.emulatorHosts) === null || _b === void 0 ? void 0 : _b[productName];
-  };
+  var getDefaultEmulatorHost = (productName) => getDefaults()?.emulatorHosts?.[productName];
   var getDefaultEmulatorHostnameAndPort = (productName) => {
     const host = getDefaultEmulatorHost(productName);
     if (!host) {
@@ -3182,14 +3375,8 @@
       return [host.substring(0, separatorIndex), port];
     }
   };
-  var getDefaultAppConfig = () => {
-    var _a;
-    return (_a = getDefaults()) === null || _a === void 0 ? void 0 : _a.config;
-  };
-  var getExperimentalSetting = (name10) => {
-    var _a;
-    return (_a = getDefaults()) === null || _a === void 0 ? void 0 : _a[`_${name10}`];
-  };
+  var getDefaultAppConfig = () => getDefaults()?.config;
+  var getExperimentalSetting = (name10) => getDefaults()?.[`_${name10}`];
   var Deferred = class {
     constructor() {
       this.reject = () => {
@@ -3202,7 +3389,7 @@
       });
     }
     /**
-     * Our API internals are not promiseified and cannot because our callback APIs have subtle expectations around
+     * Our API internals are not promisified and cannot because our callback APIs have subtle expectations around
      * invoking promises inline, which Promises are forbidden to do. This method accepts an optional node-style callback
      * and returns a node-style callback which will resolve or reject the Deferred's promise.
      */
@@ -3239,7 +3426,7 @@
     if (!sub) {
       throw new Error("mockUserToken must contain 'sub' or 'user_id' field!");
     }
-    const payload = Object.assign({
+    const payload = {
       // Set all required fields to decent defaults
       iss: `https://securetoken.google.com/${project}`,
       aud: project,
@@ -3251,8 +3438,10 @@
       firebase: {
         sign_in_provider: "custom",
         identities: {}
-      }
-    }, token);
+      },
+      // Override with user options
+      ...token
+    };
     const signature = "";
     return [
       base64urlEncodeWithoutPadding(JSON.stringify(header)),
@@ -3273,8 +3462,7 @@
     !!(window["cordova"] || window["phonegap"] || window["PhoneGap"]) && /ios|iphone|ipod|ipad|android|blackberry|iemobile/i.test(getUA());
   }
   function isNode() {
-    var _a;
-    const forceEnvironment = (_a = getDefaults()) === null || _a === void 0 ? void 0 : _a.forceEnvironment;
+    const forceEnvironment = getDefaults()?.forceEnvironment;
     if (forceEnvironment === "node") {
       return true;
     } else if (forceEnvironment === "browser") {
@@ -3287,7 +3475,13 @@
     }
   }
   function isBrowser() {
-    return typeof self === "object" && self.self === self;
+    return typeof window !== "undefined" || isWebWorker();
+  }
+  function isWebWorker() {
+    return typeof WorkerGlobalScope !== "undefined" && typeof self !== "undefined" && self instanceof WorkerGlobalScope;
+  }
+  function isCloudflareWorker() {
+    return typeof navigator !== "undefined" && navigator.userAgent === "Cloudflare-Workers";
   }
   function isBrowserExtension() {
     const runtime = typeof chrome === "object" ? chrome.runtime : typeof browser === "object" ? browser.runtime : void 0;
@@ -3327,8 +3521,7 @@
           preExist = false;
         };
         request.onerror = () => {
-          var _a;
-          reject(((_a = request.error) === null || _a === void 0 ? void 0 : _a.message) || "");
+          reject(request.error?.message || "");
         };
       } catch (error2) {
         reject(error2);
@@ -3697,7 +3890,7 @@
     /**
      * Subscribe function that can be used to add an Observer to the fan-out list.
      *
-     * - We require that no event is sent to a subscriber sychronously to their
+     * - We require that no event is sent to a subscriber synchronously to their
      *   call to subscribe().
      */
     subscribe(nextOrObserver, error2, complete) {
@@ -3879,8 +4072,22 @@
       return service;
     }
   }
+  function isCloudWorkstation(url) {
+    try {
+      const host = url.startsWith("http://") || url.startsWith("https://") ? new URL(url).hostname : url;
+      return host.endsWith(".cloudworkstations.dev");
+    } catch {
+      return false;
+    }
+  }
+  async function pingServer(endpoint) {
+    const result = await fetch(endpoint, {
+      credentials: "include"
+    });
+    return result.ok;
+  }
 
-  // node_modules/@firebase/component/dist/esm/index.esm2017.js
+  // node_modules/@firebase/component/dist/esm/index.esm.js
   var Component = class {
     /**
      *
@@ -3926,7 +4133,7 @@
       this.onInitCallbacks = /* @__PURE__ */ new Map();
     }
     /**
-     * @param identifier A provider can provide mulitple instances of a service
+     * @param identifier A provider can provide multiple instances of a service
      * if this.component.multipleInstances is true.
      */
     get(identifier) {
@@ -3949,9 +4156,8 @@
       return this.instancesDeferred.get(normalizedIdentifier).promise;
     }
     getImmediate(options) {
-      var _a;
-      const normalizedIdentifier = this.normalizeInstanceIdentifier(options === null || options === void 0 ? void 0 : options.identifier);
-      const optional = (_a = options === null || options === void 0 ? void 0 : options.optional) !== null && _a !== void 0 ? _a : false;
+      const normalizedIdentifier = this.normalizeInstanceIdentifier(options?.identifier);
+      const optional = options?.optional ?? false;
       if (this.isInitialized(normalizedIdentifier) || this.shouldAutoInitialize()) {
         try {
           return this.getOrInitializeService({
@@ -4056,9 +4262,8 @@
      * @returns a function to unregister the callback
      */
     onInit(callback, identifier) {
-      var _a;
       const normalizedIdentifier = this.normalizeInstanceIdentifier(identifier);
-      const existingCallbacks = (_a = this.onInitCallbacks.get(normalizedIdentifier)) !== null && _a !== void 0 ? _a : /* @__PURE__ */ new Set();
+      const existingCallbacks = this.onInitCallbacks.get(normalizedIdentifier) ?? /* @__PURE__ */ new Set();
       existingCallbacks.add(callback);
       this.onInitCallbacks.set(normalizedIdentifier, existingCallbacks);
       const existingInstance = this.instances.get(normalizedIdentifier);
@@ -4081,7 +4286,7 @@
       for (const callback of callbacks) {
         try {
           callback(instance, identifier);
-        } catch (_a) {
+        } catch {
         }
       }
     }
@@ -4098,7 +4303,7 @@
         if (this.component.onInstanceCreated) {
           try {
             this.component.onInstanceCreated(this.container, instanceIdentifier, instance);
-          } catch (_a) {
+          } catch {
           }
         }
       }
@@ -4169,7 +4374,7 @@
     }
   };
 
-  // node_modules/@firebase/logger/dist/esm/index.esm2017.js
+  // node_modules/@firebase/logger/dist/esm/index.esm.js
   var instances = [];
   var LogLevel;
   (function(LogLevel2) {
@@ -4306,7 +4511,7 @@
               }
             }
           }).filter((arg) => arg).join(" ");
-          if (level >= (customLogLevel !== null && customLogLevel !== void 0 ? customLogLevel : instance2.logLevel)) {
+          if (level >= (customLogLevel ?? instance2.logLevel)) {
             logCallback({
               level: LogLevel[level].toLowerCase(),
               message,
@@ -4526,7 +4731,7 @@
     has: (target, prop) => !!getMethod(target, prop) || oldTraps.has(target, prop)
   }));
 
-  // node_modules/@firebase/app/dist/esm/index.esm2017.js
+  // node_modules/@firebase/app/dist/esm/index.esm.js
   var PlatformLoggerServiceImpl = class {
     constructor(container) {
       this.container = container;
@@ -4547,66 +4752,72 @@
   };
   function isVersionServiceProvider(provider) {
     const component = provider.getComponent();
-    return (component === null || component === void 0 ? void 0 : component.type) === "VERSION";
+    return component?.type === "VERSION";
   }
-  var name$o = "@firebase/app";
-  var version$1 = "0.9.13";
+  var name$q = "@firebase/app";
+  var version$1 = "0.14.12";
   var logger = new Logger("@firebase/app");
-  var name$n = "@firebase/app-compat";
-  var name$m = "@firebase/analytics-compat";
-  var name$l = "@firebase/analytics";
-  var name$k = "@firebase/app-check-compat";
-  var name$j = "@firebase/app-check";
-  var name$i = "@firebase/auth";
-  var name$h = "@firebase/auth-compat";
-  var name$g = "@firebase/database";
-  var name$f = "@firebase/database-compat";
-  var name$e = "@firebase/functions";
-  var name$d = "@firebase/functions-compat";
-  var name$c = "@firebase/installations";
-  var name$b = "@firebase/installations-compat";
-  var name$a = "@firebase/messaging";
-  var name$9 = "@firebase/messaging-compat";
-  var name$8 = "@firebase/performance";
-  var name$7 = "@firebase/performance-compat";
-  var name$6 = "@firebase/remote-config";
-  var name$5 = "@firebase/remote-config-compat";
-  var name$4 = "@firebase/storage";
-  var name$3 = "@firebase/storage-compat";
-  var name$2 = "@firebase/firestore";
+  var name$p = "@firebase/app-compat";
+  var name$o = "@firebase/analytics-compat";
+  var name$n = "@firebase/analytics";
+  var name$m = "@firebase/app-check-compat";
+  var name$l = "@firebase/app-check";
+  var name$k = "@firebase/auth";
+  var name$j = "@firebase/auth-compat";
+  var name$i = "@firebase/database";
+  var name$h = "@firebase/data-connect";
+  var name$g = "@firebase/database-compat";
+  var name$f = "@firebase/functions";
+  var name$e = "@firebase/functions-compat";
+  var name$d = "@firebase/installations";
+  var name$c = "@firebase/installations-compat";
+  var name$b = "@firebase/messaging";
+  var name$a = "@firebase/messaging-compat";
+  var name$9 = "@firebase/performance";
+  var name$8 = "@firebase/performance-compat";
+  var name$7 = "@firebase/remote-config";
+  var name$6 = "@firebase/remote-config-compat";
+  var name$5 = "@firebase/storage";
+  var name$4 = "@firebase/storage-compat";
+  var name$3 = "@firebase/firestore";
+  var name$2 = "@firebase/ai";
   var name$1 = "@firebase/firestore-compat";
   var name = "firebase";
-  var version2 = "9.23.0";
+  var version2 = "12.13.0";
   var DEFAULT_ENTRY_NAME2 = "[DEFAULT]";
   var PLATFORM_LOG_STRING = {
-    [name$o]: "fire-core",
-    [name$n]: "fire-core-compat",
-    [name$l]: "fire-analytics",
-    [name$m]: "fire-analytics-compat",
-    [name$j]: "fire-app-check",
-    [name$k]: "fire-app-check-compat",
-    [name$i]: "fire-auth",
-    [name$h]: "fire-auth-compat",
-    [name$g]: "fire-rtdb",
-    [name$f]: "fire-rtdb-compat",
-    [name$e]: "fire-fn",
-    [name$d]: "fire-fn-compat",
-    [name$c]: "fire-iid",
-    [name$b]: "fire-iid-compat",
-    [name$a]: "fire-fcm",
-    [name$9]: "fire-fcm-compat",
-    [name$8]: "fire-perf",
-    [name$7]: "fire-perf-compat",
-    [name$6]: "fire-rc",
-    [name$5]: "fire-rc-compat",
-    [name$4]: "fire-gcs",
-    [name$3]: "fire-gcs-compat",
-    [name$2]: "fire-fst",
+    [name$q]: "fire-core",
+    [name$p]: "fire-core-compat",
+    [name$n]: "fire-analytics",
+    [name$o]: "fire-analytics-compat",
+    [name$l]: "fire-app-check",
+    [name$m]: "fire-app-check-compat",
+    [name$k]: "fire-auth",
+    [name$j]: "fire-auth-compat",
+    [name$i]: "fire-rtdb",
+    [name$h]: "fire-data-connect",
+    [name$g]: "fire-rtdb-compat",
+    [name$f]: "fire-fn",
+    [name$e]: "fire-fn-compat",
+    [name$d]: "fire-iid",
+    [name$c]: "fire-iid-compat",
+    [name$b]: "fire-fcm",
+    [name$a]: "fire-fcm-compat",
+    [name$9]: "fire-perf",
+    [name$8]: "fire-perf-compat",
+    [name$7]: "fire-rc",
+    [name$6]: "fire-rc-compat",
+    [name$5]: "fire-gcs",
+    [name$4]: "fire-gcs-compat",
+    [name$3]: "fire-fst",
     [name$1]: "fire-fst-compat",
+    [name$2]: "fire-vertex",
     "fire-js": "fire-js",
+    // Platform identifier for JS SDK.
     [name]: "fire-js-all"
   };
   var _apps = /* @__PURE__ */ new Map();
+  var _serverApps = /* @__PURE__ */ new Map();
   var _components = /* @__PURE__ */ new Map();
   function _addComponent(app, component) {
     try {
@@ -4628,6 +4839,9 @@
     for (const app of _apps.values()) {
       _addComponent(app, component);
     }
+    for (const serverApp of _serverApps.values()) {
+      _addComponent(serverApp, component);
+    }
     return true;
   }
   function _getProvider(app, name10) {
@@ -4640,6 +4854,21 @@
   function _removeServiceInstance(app, name10, instanceIdentifier = DEFAULT_ENTRY_NAME2) {
     _getProvider(app, name10).clearInstance(instanceIdentifier);
   }
+  function _isFirebaseApp(obj) {
+    return obj.options !== void 0;
+  }
+  function _isFirebaseServerAppSettings(obj) {
+    if (_isFirebaseApp(obj)) {
+      return false;
+    }
+    return "authIdToken" in obj || "appCheckToken" in obj || "releaseOnDeref" in obj || "automaticDataCollectionEnabled" in obj;
+  }
+  function _isFirebaseServerApp(obj) {
+    if (obj === null || obj === void 0) {
+      return false;
+    }
+    return obj.settings !== void 0;
+  }
   function _clearComponents() {
     _components.clear();
   }
@@ -4651,7 +4880,7 @@
     [
       "bad-app-name"
       /* AppError.BAD_APP_NAME */
-    ]: "Illegal App name: '{$appName}",
+    ]: "Illegal App name: '{$appName}'",
     [
       "duplicate-app"
       /* AppError.DUPLICATE_APP */
@@ -4660,6 +4889,10 @@
       "app-deleted"
       /* AppError.APP_DELETED */
     ]: "Firebase App named '{$appName}' already deleted",
+    [
+      "server-app-deleted"
+      /* AppError.SERVER_APP_DELETED */
+    ]: "Firebase Server App has been deleted",
     [
       "no-options"
       /* AppError.NO_OPTIONS */
@@ -4687,14 +4920,22 @@
     [
       "idb-delete"
       /* AppError.IDB_DELETE */
-    ]: "Error thrown when deleting from IndexedDB. Original error: {$originalErrorMessage}."
+    ]: "Error thrown when deleting from IndexedDB. Original error: {$originalErrorMessage}.",
+    [
+      "finalization-registry-not-supported"
+      /* AppError.FINALIZATION_REGISTRY_NOT_SUPPORTED */
+    ]: "FirebaseServerApp deleteOnDeref field defined but the JS runtime does not support FinalizationRegistry.",
+    [
+      "invalid-server-app-environment"
+      /* AppError.INVALID_SERVER_APP_ENVIRONMENT */
+    ]: "FirebaseServerApp is not for use in browser environments."
   };
   var ERROR_FACTORY = new ErrorFactory("app", "Firebase", ERRORS);
   var FirebaseAppImpl = class {
     constructor(options, config3, container) {
       this._isDeleted = false;
-      this._options = Object.assign({}, options);
-      this._config = Object.assign({}, config3);
+      this._options = { ...options };
+      this._config = { ...config3 };
       this._name = config3.name;
       this._automaticDataCollectionEnabled = config3.automaticDataCollectionEnabled;
       this._container = container;
@@ -4744,6 +4985,106 @@
       }
     }
   };
+  function validateTokenTTL(base64Token, tokenName) {
+    const secondPart = base64Decode(base64Token.split(".")[1]);
+    if (secondPart === null) {
+      console.error(`FirebaseServerApp ${tokenName} is invalid: second part could not be parsed.`);
+      return;
+    }
+    const expClaim = JSON.parse(secondPart).exp;
+    if (expClaim === void 0) {
+      console.error(`FirebaseServerApp ${tokenName} is invalid: expiration claim could not be parsed`);
+      return;
+    }
+    const exp = JSON.parse(secondPart).exp * 1e3;
+    const now = (/* @__PURE__ */ new Date()).getTime();
+    const diff = exp - now;
+    if (diff <= 0) {
+      console.error(`FirebaseServerApp ${tokenName} is invalid: the token has expired.`);
+    }
+  }
+  var FirebaseServerAppImpl = class extends FirebaseAppImpl {
+    constructor(options, serverConfig, name10, container) {
+      const automaticDataCollectionEnabled = serverConfig.automaticDataCollectionEnabled !== void 0 ? serverConfig.automaticDataCollectionEnabled : true;
+      const config3 = {
+        name: name10,
+        automaticDataCollectionEnabled
+      };
+      if (options.apiKey !== void 0) {
+        super(options, config3, container);
+      } else {
+        const appImpl = options;
+        super(appImpl.options, config3, container);
+      }
+      this._serverConfig = {
+        automaticDataCollectionEnabled,
+        ...serverConfig
+      };
+      if (this._serverConfig.authIdToken) {
+        validateTokenTTL(this._serverConfig.authIdToken, "authIdToken");
+      }
+      if (this._serverConfig.appCheckToken) {
+        validateTokenTTL(this._serverConfig.appCheckToken, "appCheckToken");
+      }
+      this._finalizationRegistry = null;
+      if (typeof FinalizationRegistry !== "undefined") {
+        this._finalizationRegistry = new FinalizationRegistry(() => {
+          this.automaticCleanup();
+        });
+      }
+      this._refCount = 0;
+      this.incRefCount(this._serverConfig.releaseOnDeref);
+      this._serverConfig.releaseOnDeref = void 0;
+      serverConfig.releaseOnDeref = void 0;
+      registerVersion(name$q, version$1, "serverapp");
+    }
+    toJSON() {
+      return void 0;
+    }
+    get refCount() {
+      return this._refCount;
+    }
+    // Increment the reference count of this server app. If an object is provided, register it
+    // with the finalization registry.
+    incRefCount(obj) {
+      if (this.isDeleted) {
+        return;
+      }
+      this._refCount++;
+      if (obj !== void 0 && this._finalizationRegistry !== null) {
+        this._finalizationRegistry.register(obj, this);
+      }
+    }
+    // Decrement the reference count.
+    decRefCount() {
+      if (this.isDeleted) {
+        return 0;
+      }
+      return --this._refCount;
+    }
+    // Invoked by the FinalizationRegistry callback to note that this app should go through its
+    // reference counts and delete itself if no reference count remain. The coordinating logic that
+    // handles this is in deleteApp(...).
+    automaticCleanup() {
+      void deleteApp(this);
+    }
+    get settings() {
+      this.checkDestroyed();
+      return this._serverConfig;
+    }
+    /**
+     * This function will throw an Error if the App has already been deleted -
+     * use before performing API actions on the App.
+     */
+    checkDestroyed() {
+      if (this.isDeleted) {
+        throw ERROR_FACTORY.create(
+          "server-app-deleted"
+          /* AppError.SERVER_APP_DELETED */
+        );
+      }
+    }
+  };
   var SDK_VERSION = version2;
   function initializeApp(_options, rawConfig = {}) {
     let options = _options;
@@ -4751,7 +5092,11 @@
       const name11 = rawConfig;
       rawConfig = { name: name11 };
     }
-    const config3 = Object.assign({ name: DEFAULT_ENTRY_NAME2, automaticDataCollectionEnabled: false }, rawConfig);
+    const config3 = {
+      name: DEFAULT_ENTRY_NAME2,
+      automaticDataCollectionEnabled: true,
+      ...rawConfig
+    };
     const name10 = config3.name;
     if (typeof name10 !== "string" || !name10) {
       throw ERROR_FACTORY.create("bad-app-name", {
@@ -4781,6 +5126,63 @@
     _apps.set(name10, newApp);
     return newApp;
   }
+  function initializeServerApp(_options, _serverAppConfig = {}) {
+    if (isBrowser() && !isWebWorker()) {
+      throw ERROR_FACTORY.create(
+        "invalid-server-app-environment"
+        /* AppError.INVALID_SERVER_APP_ENVIRONMENT */
+      );
+    }
+    let firebaseOptions;
+    let serverAppSettings = _serverAppConfig || {};
+    if (_options) {
+      if (_isFirebaseApp(_options)) {
+        firebaseOptions = _options.options;
+      } else if (_isFirebaseServerAppSettings(_options)) {
+        serverAppSettings = _options;
+      } else {
+        firebaseOptions = _options;
+      }
+    }
+    if (serverAppSettings.automaticDataCollectionEnabled === void 0) {
+      serverAppSettings.automaticDataCollectionEnabled = true;
+    }
+    firebaseOptions || (firebaseOptions = getDefaultAppConfig());
+    if (!firebaseOptions) {
+      throw ERROR_FACTORY.create(
+        "no-options"
+        /* AppError.NO_OPTIONS */
+      );
+    }
+    const nameObj = {
+      ...serverAppSettings,
+      ...firebaseOptions
+    };
+    if (nameObj.releaseOnDeref !== void 0) {
+      delete nameObj.releaseOnDeref;
+    }
+    const hashCode = (s) => {
+      return [...s].reduce((hash, c) => Math.imul(31, hash) + c.charCodeAt(0) | 0, 0);
+    };
+    if (serverAppSettings.releaseOnDeref !== void 0) {
+      if (typeof FinalizationRegistry === "undefined") {
+        throw ERROR_FACTORY.create("finalization-registry-not-supported", {});
+      }
+    }
+    const nameString = "" + hashCode(JSON.stringify(nameObj));
+    const existingApp = _serverApps.get(nameString);
+    if (existingApp) {
+      existingApp.incRefCount(serverAppSettings.releaseOnDeref);
+      return existingApp;
+    }
+    const container = new ComponentContainer(nameString);
+    for (const component of _components.values()) {
+      container.addComponent(component);
+    }
+    const newApp = new FirebaseServerAppImpl(firebaseOptions, serverAppSettings, nameString, container);
+    _serverApps.set(nameString, newApp);
+    return newApp;
+  }
   function getApp(name10 = DEFAULT_ENTRY_NAME2) {
     const app = _apps.get(name10);
     if (!app && name10 === DEFAULT_ENTRY_NAME2 && getDefaultAppConfig()) {
@@ -4795,16 +5197,25 @@
     return Array.from(_apps.values());
   }
   async function deleteApp(app) {
+    let cleanupProviders = false;
     const name10 = app.name;
     if (_apps.has(name10)) {
+      cleanupProviders = true;
       _apps.delete(name10);
+    } else if (_serverApps.has(name10)) {
+      const firebaseServerApp = app;
+      if (firebaseServerApp.decRefCount() <= 0) {
+        _serverApps.delete(name10);
+        cleanupProviders = true;
+      }
+    }
+    if (cleanupProviders) {
       await Promise.all(app.container.getProviders().map((provider) => provider.delete()));
       app.isDeleted = true;
     }
   }
   function registerVersion(libraryKeyOrName, version11, variant) {
-    var _a;
-    let library = (_a = PLATFORM_LOG_STRING[libraryKeyOrName]) !== null && _a !== void 0 ? _a : libraryKeyOrName;
+    let library = PLATFORM_LOG_STRING[libraryKeyOrName] ?? libraryKeyOrName;
     if (variant) {
       library += `-${variant}`;
     }
@@ -4855,7 +5266,11 @@
         upgrade: (db, oldVersion) => {
           switch (oldVersion) {
             case 0:
-              db.createObjectStore(STORE_NAME);
+              try {
+                db.createObjectStore(STORE_NAME);
+              } catch (e) {
+                console.warn(e);
+              }
           }
         }
       }).catch((e) => {
@@ -4869,14 +5284,16 @@
   async function readHeartbeatsFromIndexedDB(app) {
     try {
       const db = await getDbPromise();
-      const result = await db.transaction(STORE_NAME).objectStore(STORE_NAME).get(computeKey(app));
+      const tx = db.transaction(STORE_NAME);
+      const result = await tx.objectStore(STORE_NAME).get(computeKey(app));
+      await tx.done;
       return result;
     } catch (e) {
       if (e instanceof FirebaseError) {
         logger.warn(e.message);
       } else {
         const idbGetError = ERROR_FACTORY.create("idb-get", {
-          originalErrorMessage: e === null || e === void 0 ? void 0 : e.message
+          originalErrorMessage: e?.message
         });
         logger.warn(idbGetError.message);
       }
@@ -4894,7 +5311,7 @@
         logger.warn(e.message);
       } else {
         const idbGetError = ERROR_FACTORY.create("idb-set", {
-          originalErrorMessage: e === null || e === void 0 ? void 0 : e.message
+          originalErrorMessage: e?.message
         });
         logger.warn(idbGetError.message);
       }
@@ -4904,7 +5321,7 @@
     return `${app.name}!${app.options.appId}`;
   }
   var MAX_HEADER_BYTES = 1024;
-  var STORED_HEARTBEAT_RETENTION_MAX_MILLIS = 30 * 24 * 60 * 60 * 1e3;
+  var MAX_NUM_STORED_HEARTBEATS = 30;
   var HeartbeatServiceImpl = class {
     constructor(container) {
       this.container = container;
@@ -4924,23 +5341,29 @@
      * already logged, subsequent calls to this function in the same day will be ignored.
      */
     async triggerHeartbeat() {
-      const platformLogger = this.container.getProvider("platform-logger").getImmediate();
-      const agent = platformLogger.getPlatformInfoString();
-      const date = getUTCDateString();
-      if (this._heartbeatsCache === null) {
-        this._heartbeatsCache = await this._heartbeatsCachePromise;
+      try {
+        const platformLogger = this.container.getProvider("platform-logger").getImmediate();
+        const agent = platformLogger.getPlatformInfoString();
+        const date = getUTCDateString();
+        if (this._heartbeatsCache?.heartbeats == null) {
+          this._heartbeatsCache = await this._heartbeatsCachePromise;
+          if (this._heartbeatsCache?.heartbeats == null) {
+            return;
+          }
+        }
+        if (this._heartbeatsCache.lastSentHeartbeatDate === date || this._heartbeatsCache.heartbeats.some((singleDateHeartbeat) => singleDateHeartbeat.date === date)) {
+          return;
+        } else {
+          this._heartbeatsCache.heartbeats.push({ date, agent });
+          if (this._heartbeatsCache.heartbeats.length > MAX_NUM_STORED_HEARTBEATS) {
+            const earliestHeartbeatIdx = getEarliestHeartbeatIdx(this._heartbeatsCache.heartbeats);
+            this._heartbeatsCache.heartbeats.splice(earliestHeartbeatIdx, 1);
+          }
+        }
+        return this._storage.overwrite(this._heartbeatsCache);
+      } catch (e) {
+        logger.warn(e);
       }
-      if (this._heartbeatsCache.lastSentHeartbeatDate === date || this._heartbeatsCache.heartbeats.some((singleDateHeartbeat) => singleDateHeartbeat.date === date)) {
-        return;
-      } else {
-        this._heartbeatsCache.heartbeats.push({ date, agent });
-      }
-      this._heartbeatsCache.heartbeats = this._heartbeatsCache.heartbeats.filter((singleDateHeartbeat) => {
-        const hbTimestamp = new Date(singleDateHeartbeat.date).valueOf();
-        const now = Date.now();
-        return now - hbTimestamp <= STORED_HEARTBEAT_RETENTION_MAX_MILLIS;
-      });
-      return this._storage.overwrite(this._heartbeatsCache);
     }
     /**
      * Returns a base64 encoded string which can be attached to the heartbeat-specific header directly.
@@ -4950,24 +5373,29 @@
      * returns an empty string.
      */
     async getHeartbeatsHeader() {
-      if (this._heartbeatsCache === null) {
-        await this._heartbeatsCachePromise;
-      }
-      if (this._heartbeatsCache === null || this._heartbeatsCache.heartbeats.length === 0) {
+      try {
+        if (this._heartbeatsCache === null) {
+          await this._heartbeatsCachePromise;
+        }
+        if (this._heartbeatsCache?.heartbeats == null || this._heartbeatsCache.heartbeats.length === 0) {
+          return "";
+        }
+        const date = getUTCDateString();
+        const { heartbeatsToSend, unsentEntries } = extractHeartbeatsForHeader(this._heartbeatsCache.heartbeats);
+        const headerString = base64urlEncodeWithoutPadding(JSON.stringify({ version: 2, heartbeats: heartbeatsToSend }));
+        this._heartbeatsCache.lastSentHeartbeatDate = date;
+        if (unsentEntries.length > 0) {
+          this._heartbeatsCache.heartbeats = unsentEntries;
+          await this._storage.overwrite(this._heartbeatsCache);
+        } else {
+          this._heartbeatsCache.heartbeats = [];
+          void this._storage.overwrite(this._heartbeatsCache);
+        }
+        return headerString;
+      } catch (e) {
+        logger.warn(e);
         return "";
       }
-      const date = getUTCDateString();
-      const { heartbeatsToSend, unsentEntries } = extractHeartbeatsForHeader(this._heartbeatsCache.heartbeats);
-      const headerString = base64urlEncodeWithoutPadding(JSON.stringify({ version: 2, heartbeats: heartbeatsToSend }));
-      this._heartbeatsCache.lastSentHeartbeatDate = date;
-      if (unsentEntries.length > 0) {
-        this._heartbeatsCache.heartbeats = unsentEntries;
-        await this._storage.overwrite(this._heartbeatsCache);
-      } else {
-        this._heartbeatsCache.heartbeats = [];
-        void this._storage.overwrite(this._heartbeatsCache);
-      }
-      return headerString;
     }
   };
   function getUTCDateString() {
@@ -5023,33 +5451,35 @@
         return { heartbeats: [] };
       } else {
         const idbHeartbeatObject = await readHeartbeatsFromIndexedDB(this.app);
-        return idbHeartbeatObject || { heartbeats: [] };
+        if (idbHeartbeatObject?.heartbeats) {
+          return idbHeartbeatObject;
+        } else {
+          return { heartbeats: [] };
+        }
       }
     }
     // overwrite the storage with the provided heartbeats
     async overwrite(heartbeatsObject) {
-      var _a;
       const canUseIndexedDB = await this._canUseIndexedDBPromise;
       if (!canUseIndexedDB) {
         return;
       } else {
         const existingHeartbeatsObject = await this.read();
         return writeHeartbeatsToIndexedDB(this.app, {
-          lastSentHeartbeatDate: (_a = heartbeatsObject.lastSentHeartbeatDate) !== null && _a !== void 0 ? _a : existingHeartbeatsObject.lastSentHeartbeatDate,
+          lastSentHeartbeatDate: heartbeatsObject.lastSentHeartbeatDate ?? existingHeartbeatsObject.lastSentHeartbeatDate,
           heartbeats: heartbeatsObject.heartbeats
         });
       }
     }
     // add heartbeats
     async add(heartbeatsObject) {
-      var _a;
       const canUseIndexedDB = await this._canUseIndexedDBPromise;
       if (!canUseIndexedDB) {
         return;
       } else {
         const existingHeartbeatsObject = await this.read();
         return writeHeartbeatsToIndexedDB(this.app, {
-          lastSentHeartbeatDate: (_a = heartbeatsObject.lastSentHeartbeatDate) !== null && _a !== void 0 ? _a : existingHeartbeatsObject.lastSentHeartbeatDate,
+          lastSentHeartbeatDate: heartbeatsObject.lastSentHeartbeatDate ?? existingHeartbeatsObject.lastSentHeartbeatDate,
           heartbeats: [
             ...existingHeartbeatsObject.heartbeats,
             ...heartbeatsObject.heartbeats
@@ -5064,6 +5494,20 @@
       JSON.stringify({ version: 2, heartbeats: heartbeatsCache })
     ).length;
   }
+  function getEarliestHeartbeatIdx(heartbeats) {
+    if (heartbeats.length === 0) {
+      return -1;
+    }
+    let earliestHeartbeatIdx = 0;
+    let earliestHeartbeatDate = heartbeats[0].date;
+    for (let i = 1; i < heartbeats.length; i++) {
+      if (heartbeats[i].date < earliestHeartbeatDate) {
+        earliestHeartbeatDate = heartbeats[i].date;
+        earliestHeartbeatIdx = i;
+      }
+    }
+    return earliestHeartbeatIdx;
+  }
   function registerCoreComponents(variant) {
     _registerComponent(new Component(
       "platform-logger",
@@ -5077,215 +5521,15 @@
       "PRIVATE"
       /* ComponentType.PRIVATE */
     ));
-    registerVersion(name$o, version$1, variant);
-    registerVersion(name$o, version$1, "esm2017");
+    registerVersion(name$q, version$1, variant);
+    registerVersion(name$q, version$1, "esm2020");
     registerVersion("fire-js", "");
   }
   registerCoreComponents("");
 
-  // node_modules/@firebase/installations/node_modules/idb/build/wrap-idb-value.js
-  var instanceOfAny2 = (object, constructors) => constructors.some((c) => object instanceof c);
-  var idbProxyableTypes2;
-  var cursorAdvanceMethods2;
-  function getIdbProxyableTypes2() {
-    return idbProxyableTypes2 || (idbProxyableTypes2 = [
-      IDBDatabase,
-      IDBObjectStore,
-      IDBIndex,
-      IDBCursor,
-      IDBTransaction
-    ]);
-  }
-  function getCursorAdvanceMethods2() {
-    return cursorAdvanceMethods2 || (cursorAdvanceMethods2 = [
-      IDBCursor.prototype.advance,
-      IDBCursor.prototype.continue,
-      IDBCursor.prototype.continuePrimaryKey
-    ]);
-  }
-  var cursorRequestMap2 = /* @__PURE__ */ new WeakMap();
-  var transactionDoneMap2 = /* @__PURE__ */ new WeakMap();
-  var transactionStoreNamesMap2 = /* @__PURE__ */ new WeakMap();
-  var transformCache2 = /* @__PURE__ */ new WeakMap();
-  var reverseTransformCache2 = /* @__PURE__ */ new WeakMap();
-  function promisifyRequest2(request) {
-    const promise = new Promise((resolve, reject) => {
-      const unlisten = () => {
-        request.removeEventListener("success", success);
-        request.removeEventListener("error", error2);
-      };
-      const success = () => {
-        resolve(wrap2(request.result));
-        unlisten();
-      };
-      const error2 = () => {
-        reject(request.error);
-        unlisten();
-      };
-      request.addEventListener("success", success);
-      request.addEventListener("error", error2);
-    });
-    promise.then((value) => {
-      if (value instanceof IDBCursor) {
-        cursorRequestMap2.set(value, request);
-      }
-    }).catch(() => {
-    });
-    reverseTransformCache2.set(promise, request);
-    return promise;
-  }
-  function cacheDonePromiseForTransaction2(tx) {
-    if (transactionDoneMap2.has(tx))
-      return;
-    const done = new Promise((resolve, reject) => {
-      const unlisten = () => {
-        tx.removeEventListener("complete", complete);
-        tx.removeEventListener("error", error2);
-        tx.removeEventListener("abort", error2);
-      };
-      const complete = () => {
-        resolve();
-        unlisten();
-      };
-      const error2 = () => {
-        reject(tx.error || new DOMException("AbortError", "AbortError"));
-        unlisten();
-      };
-      tx.addEventListener("complete", complete);
-      tx.addEventListener("error", error2);
-      tx.addEventListener("abort", error2);
-    });
-    transactionDoneMap2.set(tx, done);
-  }
-  var idbProxyTraps2 = {
-    get(target, prop, receiver) {
-      if (target instanceof IDBTransaction) {
-        if (prop === "done")
-          return transactionDoneMap2.get(target);
-        if (prop === "objectStoreNames") {
-          return target.objectStoreNames || transactionStoreNamesMap2.get(target);
-        }
-        if (prop === "store") {
-          return receiver.objectStoreNames[1] ? void 0 : receiver.objectStore(receiver.objectStoreNames[0]);
-        }
-      }
-      return wrap2(target[prop]);
-    },
-    set(target, prop, value) {
-      target[prop] = value;
-      return true;
-    },
-    has(target, prop) {
-      if (target instanceof IDBTransaction && (prop === "done" || prop === "store")) {
-        return true;
-      }
-      return prop in target;
-    }
-  };
-  function replaceTraps2(callback) {
-    idbProxyTraps2 = callback(idbProxyTraps2);
-  }
-  function wrapFunction2(func) {
-    if (func === IDBDatabase.prototype.transaction && !("objectStoreNames" in IDBTransaction.prototype)) {
-      return function(storeNames, ...args) {
-        const tx = func.call(unwrap2(this), storeNames, ...args);
-        transactionStoreNamesMap2.set(tx, storeNames.sort ? storeNames.sort() : [storeNames]);
-        return wrap2(tx);
-      };
-    }
-    if (getCursorAdvanceMethods2().includes(func)) {
-      return function(...args) {
-        func.apply(unwrap2(this), args);
-        return wrap2(cursorRequestMap2.get(this));
-      };
-    }
-    return function(...args) {
-      return wrap2(func.apply(unwrap2(this), args));
-    };
-  }
-  function transformCachableValue2(value) {
-    if (typeof value === "function")
-      return wrapFunction2(value);
-    if (value instanceof IDBTransaction)
-      cacheDonePromiseForTransaction2(value);
-    if (instanceOfAny2(value, getIdbProxyableTypes2()))
-      return new Proxy(value, idbProxyTraps2);
-    return value;
-  }
-  function wrap2(value) {
-    if (value instanceof IDBRequest)
-      return promisifyRequest2(value);
-    if (transformCache2.has(value))
-      return transformCache2.get(value);
-    const newValue = transformCachableValue2(value);
-    if (newValue !== value) {
-      transformCache2.set(value, newValue);
-      reverseTransformCache2.set(newValue, value);
-    }
-    return newValue;
-  }
-  var unwrap2 = (value) => reverseTransformCache2.get(value);
-
-  // node_modules/@firebase/installations/node_modules/idb/build/index.js
-  function openDB2(name10, version11, { blocked, upgrade, blocking, terminated } = {}) {
-    const request = indexedDB.open(name10, version11);
-    const openPromise = wrap2(request);
-    if (upgrade) {
-      request.addEventListener("upgradeneeded", (event) => {
-        upgrade(wrap2(request.result), event.oldVersion, event.newVersion, wrap2(request.transaction));
-      });
-    }
-    if (blocked)
-      request.addEventListener("blocked", () => blocked());
-    openPromise.then((db) => {
-      if (terminated)
-        db.addEventListener("close", () => terminated());
-      if (blocking)
-        db.addEventListener("versionchange", () => blocking());
-    }).catch(() => {
-    });
-    return openPromise;
-  }
-  var readMethods2 = ["get", "getKey", "getAll", "getAllKeys", "count"];
-  var writeMethods2 = ["put", "add", "delete", "clear"];
-  var cachedMethods2 = /* @__PURE__ */ new Map();
-  function getMethod2(target, prop) {
-    if (!(target instanceof IDBDatabase && !(prop in target) && typeof prop === "string")) {
-      return;
-    }
-    if (cachedMethods2.get(prop))
-      return cachedMethods2.get(prop);
-    const targetFuncName = prop.replace(/FromIndex$/, "");
-    const useIndex = prop !== targetFuncName;
-    const isWrite = writeMethods2.includes(targetFuncName);
-    if (
-      // Bail if the target doesn't exist on the target. Eg, getAll isn't in Edge.
-      !(targetFuncName in (useIndex ? IDBIndex : IDBObjectStore).prototype) || !(isWrite || readMethods2.includes(targetFuncName))
-    ) {
-      return;
-    }
-    const method = async function(storeName, ...args) {
-      const tx = this.transaction(storeName, isWrite ? "readwrite" : "readonly");
-      let target2 = tx.store;
-      if (useIndex)
-        target2 = target2.index(args.shift());
-      return (await Promise.all([
-        target2[targetFuncName](...args),
-        isWrite && tx.done
-      ]))[0];
-    };
-    cachedMethods2.set(prop, method);
-    return method;
-  }
-  replaceTraps2((oldTraps) => ({
-    ...oldTraps,
-    get: (target, prop, receiver) => getMethod2(target, prop) || oldTraps.get(target, prop, receiver),
-    has: (target, prop) => !!getMethod2(target, prop) || oldTraps.has(target, prop)
-  }));
-
-  // node_modules/@firebase/installations/dist/esm/index.esm2017.js
+  // node_modules/@firebase/installations/dist/esm/index.esm.js
   var name2 = "@firebase/installations";
-  var version3 = "0.6.4";
+  var version3 = "0.6.22";
   var PENDING_TIMEOUT_MS = 1e4;
   var PACKAGE_VERSION = `w:${version3}`;
   var INTERNAL_AUTH_VERSION = "FIS_v2";
@@ -5428,7 +5672,7 @@
       fidByteArray[0] = 112 + fidByteArray[0] % 16;
       const fid = encode(fidByteArray);
       return VALID_FID_PATTERN.test(fid) ? fid : INVALID_FID;
-    } catch (_a) {
+    } catch {
       return INVALID_FID;
     }
   }
@@ -5483,7 +5727,7 @@
   var dbPromise2 = null;
   function getDbPromise2() {
     if (!dbPromise2) {
-      dbPromise2 = openDB2(DATABASE_NAME, DATABASE_VERSION, {
+      dbPromise2 = openDB(DATABASE_NAME, DATABASE_VERSION, {
         upgrade: (db, oldVersion) => {
           switch (oldVersion) {
             case 0:
@@ -5729,10 +5973,13 @@
       }
       const oldAuthToken = oldEntry.authToken;
       if (hasAuthTokenRequestTimedOut(oldAuthToken)) {
-        return Object.assign(Object.assign({}, oldEntry), { authToken: {
-          requestStatus: 0
-          /* RequestStatus.NOT_STARTED */
-        } });
+        return {
+          ...oldEntry,
+          authToken: {
+            requestStatus: 0
+            /* RequestStatus.NOT_STARTED */
+          }
+        };
       }
       return oldEntry;
     });
@@ -5740,17 +5987,23 @@
   async function fetchAuthTokenFromServer(installations, installationEntry) {
     try {
       const authToken = await generateAuthTokenRequest(installations, installationEntry);
-      const updatedInstallationEntry = Object.assign(Object.assign({}, installationEntry), { authToken });
+      const updatedInstallationEntry = {
+        ...installationEntry,
+        authToken
+      };
       await set(installations.appConfig, updatedInstallationEntry);
       return authToken;
     } catch (e) {
       if (isServerError(e) && (e.customData.serverCode === 401 || e.customData.serverCode === 404)) {
         await remove(installations.appConfig);
       } else {
-        const updatedInstallationEntry = Object.assign(Object.assign({}, installationEntry), { authToken: {
-          requestStatus: 0
-          /* RequestStatus.NOT_STARTED */
-        } });
+        const updatedInstallationEntry = {
+          ...installationEntry,
+          authToken: {
+            requestStatus: 0
+            /* RequestStatus.NOT_STARTED */
+          }
+        };
         await set(installations.appConfig, updatedInstallationEntry);
       }
       throw e;
@@ -5771,7 +6024,10 @@
       requestStatus: 1,
       requestTime: Date.now()
     };
-    return Object.assign(Object.assign({}, oldEntry), { authToken: inProgressAuthToken });
+    return {
+      ...oldEntry,
+      authToken: inProgressAuthToken
+    };
   }
   function hasAuthTokenRequestTimedOut(authToken) {
     return authToken.requestStatus === 1 && authToken.requestTime + PENDING_TIMEOUT_MS < Date.now();
@@ -5866,9 +6122,9 @@
   }
   registerInstallations();
   registerVersion(name2, version3);
-  registerVersion(name2, version3, "esm2017");
+  registerVersion(name2, version3, "esm2020");
 
-  // node_modules/@firebase/analytics/dist/esm/index.esm2017.js
+  // node_modules/@firebase/analytics/dist/esm/index.esm.js
   var ANALYTICS_TYPE = "analytics";
   var GA_FID_KEY = "firebase_id";
   var ORIGIN_KEY = "origin";
@@ -5884,7 +6140,7 @@
     [
       "already-initialized"
       /* AnalyticsError.ALREADY_INITIALIZED */
-    ]: "initializeAnalytics() cannot be called again with different options than those it was initially called with. It can be called again with the same options to return the existing instance, or getAnalytics() can be used to get a reference to the already-intialized instance.",
+    ]: "initializeAnalytics() cannot be called again with different options than those it was initially called with. It can be called again with the same options to return the existing instance, or getAnalytics() can be used to get a reference to the already-initialized instance.",
     [
       "already-initialized-settings"
       /* AnalyticsError.ALREADY_INITIALIZED_SETTINGS */
@@ -5953,7 +6209,7 @@
     });
     const script = document.createElement("script");
     const gtagScriptURL = `${GTAG_URL}?l=${dataLayerName2}&id=${measurementId}`;
-    script.src = trustedTypesPolicy ? trustedTypesPolicy === null || trustedTypesPolicy === void 0 ? void 0 : trustedTypesPolicy.createScriptURL(gtagScriptURL) : gtagScriptURL;
+    script.src = trustedTypesPolicy ? trustedTypesPolicy?.createScriptURL(gtagScriptURL) : gtagScriptURL;
     script.async = true;
     document.head.appendChild(script);
   }
@@ -6022,8 +6278,8 @@
           const [measurementId, gtagParams] = args;
           await gtagOnConfig(gtagCore, initializationPromisesMap2, dynamicConfigPromisesList2, measurementIdToAppId2, measurementId, gtagParams);
         } else if (command === "consent") {
-          const [gtagParams] = args;
-          gtagCore("consent", "update", gtagParams);
+          const [consentAction, gtagParams] = args;
+          gtagCore("consent", consentAction, gtagParams);
         } else if (command === "get") {
           const [measurementId, fieldName, callback] = args;
           gtagCore("get", measurementId, fieldName, callback);
@@ -6086,7 +6342,6 @@
     });
   }
   async function fetchDynamicConfig(appFields) {
-    var _a;
     const { appId, apiKey } = appFields;
     const request = {
       method: "GET",
@@ -6098,7 +6353,7 @@
       let errorMessage = "";
       try {
         const jsonResponse = await response.json();
-        if ((_a = jsonResponse.error) === null || _a === void 0 ? void 0 : _a.message) {
+        if (jsonResponse.error?.message) {
           errorMessage = jsonResponse.error.message;
         }
       } catch (_ignored) {
@@ -6141,13 +6396,12 @@
     return attemptFetchDynamicConfigWithRetry({ appId, apiKey, measurementId }, throttleMetadata, signal, retryData);
   }
   async function attemptFetchDynamicConfigWithRetry(appFields, { throttleEndTimeMillis, backoffCount }, signal, retryData = defaultRetryData) {
-    var _a;
     const { appId, measurementId } = appFields;
     try {
       await setAbortableTimeout(signal, throttleEndTimeMillis);
     } catch (e) {
       if (measurementId) {
-        logger2.warn(`Timed out fetching this Firebase app's measurement ID from the server. Falling back to the measurement ID ${measurementId} provided in the "measurementId" field in the local Firebase config. [${e === null || e === void 0 ? void 0 : e.message}]`);
+        logger2.warn(`Timed out fetching this Firebase app's measurement ID from the server. Falling back to the measurement ID ${measurementId} provided in the "measurementId" field in the local Firebase config. [${e?.message}]`);
         return { appId, measurementId };
       }
       throw e;
@@ -6161,13 +6415,13 @@
       if (!isRetriableError(error2)) {
         retryData.deleteThrottleMetadata(appId);
         if (measurementId) {
-          logger2.warn(`Failed to fetch this Firebase app's measurement ID from the server. Falling back to the measurement ID ${measurementId} provided in the "measurementId" field in the local Firebase config. [${error2 === null || error2 === void 0 ? void 0 : error2.message}]`);
+          logger2.warn(`Failed to fetch this Firebase app's measurement ID from the server. Falling back to the measurement ID ${measurementId} provided in the "measurementId" field in the local Firebase config. [${error2?.message}]`);
           return { appId, measurementId };
         } else {
           throw e;
         }
       }
-      const backoffMillis = Number((_a = error2 === null || error2 === void 0 ? void 0 : error2.customData) === null || _a === void 0 ? void 0 : _a.httpStatus) === 503 ? calculateBackoffMillis(backoffCount, retryData.intervalMillis, LONG_RETRY_FACTOR) : calculateBackoffMillis(backoffCount, retryData.intervalMillis);
+      const backoffMillis = Number(error2?.customData?.httpStatus) === 503 ? calculateBackoffMillis(backoffCount, retryData.intervalMillis, LONG_RETRY_FACTOR) : calculateBackoffMillis(backoffCount, retryData.intervalMillis);
       const throttleMetadata = {
         throttleEndTimeMillis: Date.now() + backoffMillis,
         backoffCount: backoffCount + 1
@@ -6214,8 +6468,27 @@
       return;
     } else {
       const measurementId = await initializationPromise;
-      const params = Object.assign(Object.assign({}, eventParams), { "send_to": measurementId });
+      const params = {
+        ...eventParams,
+        "send_to": measurementId
+      };
       gtagFunction("event", eventName, params);
+    }
+  }
+  async function setUserProperties$1(gtagFunction, initializationPromise, properties, options) {
+    if (options && options.global) {
+      const flatProperties = {};
+      for (const key of Object.keys(properties)) {
+        flatProperties[`user_properties.${key}`] = properties[key];
+      }
+      gtagFunction("set", flatProperties);
+      return Promise.resolve();
+    } else {
+      const measurementId = await initializationPromise;
+      gtagFunction("config", measurementId, {
+        update: true,
+        "user_properties": properties
+      });
     }
   }
   var defaultConsentSettingsForInit;
@@ -6236,7 +6509,7 @@
         await validateIndexedDBOpenable();
       } catch (e) {
         logger2.warn(ERROR_FACTORY3.create("indexeddb-unavailable", {
-          errorInfo: e === null || e === void 0 ? void 0 : e.toString()
+          errorInfo: e?.toString()
         }).message);
         return false;
       }
@@ -6244,7 +6517,6 @@
     return true;
   }
   async function _initializeAnalytics(app, dynamicConfigPromisesList2, measurementIdToAppId2, installations, gtagCore, dataLayerName2, options) {
-    var _a;
     const dynamicConfigPromise = fetchDynamicConfigWithRetry(app);
     dynamicConfigPromise.then((config3) => {
       measurementIdToAppId2[config3.measurementId] = config3.appId;
@@ -6272,7 +6544,7 @@
       _setConsentDefaultForInit(void 0);
     }
     gtagCore("js", /* @__PURE__ */ new Date());
-    const configProperties = (_a = options === null || options === void 0 ? void 0 : options.config) !== null && _a !== void 0 ? _a : {};
+    const configProperties = options?.config ?? {};
     configProperties[ORIGIN_KEY] = "firebase";
     configProperties.update = true;
     if (fid != null) {
@@ -6369,12 +6641,16 @@
     const analyticsInstance = analyticsProvider.initialize({ options });
     return analyticsInstance;
   }
+  function setUserProperties(analyticsInstance, properties, options) {
+    analyticsInstance = getModularInstance(analyticsInstance);
+    setUserProperties$1(wrappedGtagFunction, initializationPromisesMap[analyticsInstance.app.options.appId], properties, options).catch((e) => logger2.error(e));
+  }
   function logEvent(analyticsInstance, eventName, eventParams, options) {
     analyticsInstance = getModularInstance(analyticsInstance);
     logEvent$1(wrappedGtagFunction, initializationPromisesMap[analyticsInstance.app.options.appId], eventName, eventParams, options).catch((e) => logger2.error(e));
   }
   var name3 = "@firebase/analytics";
-  var version4 = "0.10.0";
+  var version4 = "0.10.22";
   function registerAnalytics() {
     _registerComponent(new Component(
       ANALYTICS_TYPE,
@@ -6393,12 +6669,13 @@
       /* ComponentType.PRIVATE */
     ));
     registerVersion(name3, version4);
-    registerVersion(name3, version4, "esm2017");
+    registerVersion(name3, version4, "esm2020");
     function internalFactory2(container) {
       try {
         const analytics = container.getProvider(ANALYTICS_TYPE).getImmediate();
         return {
-          logEvent: (eventName, eventParams, options) => logEvent(analytics, eventName, eventParams, options)
+          logEvent: (eventName, eventParams, options) => logEvent(analytics, eventName, eventParams, options),
+          setUserProperties: (properties, options) => setUserProperties(analytics, properties, options)
         };
       } catch (e) {
         throw ERROR_FACTORY3.create("interop-component-reg-failed", {
@@ -6411,7 +6688,7 @@
 
   // node_modules/firebase/app/dist/esm/index.esm.js
   var name4 = "firebase";
-  var version5 = "9.23.0";
+  var version5 = "12.13.0";
   registerVersion(name4, version5, "app");
 
   // ns-hugo-imp:/home/runner/work/slides/slides/assets/scripts/utils/url.ts
@@ -6424,7 +6701,7 @@
     );
   };
 
-  // node_modules/@firebase/auth/dist/esm2017/index-e3d5d3f4.js
+  // node_modules/@firebase/auth/dist/esm/index-907e9a1a.js
   var ProviderId = {
     /** Facebook provider ID */
     FACEBOOK: "facebook.com",
@@ -6538,7 +6815,7 @@
       [
         "invalid-app-id"
         /* AuthErrorCode.INVALID_APP_ID */
-      ]: "The mobile app identifier is not registed for the current project.",
+      ]: "The mobile app identifier is not registered for the current project.",
       [
         "invalid-user-token"
         /* AuthErrorCode.INVALID_AUTH */
@@ -6585,8 +6862,8 @@
       ]: "The SHA-1 certificate hash provided is invalid.",
       [
         "invalid-credential"
-        /* AuthErrorCode.INVALID_IDP_RESPONSE */
-      ]: "The supplied auth credential is malformed or has expired.",
+        /* AuthErrorCode.INVALID_CREDENTIAL */
+      ]: "The supplied auth credential is incorrect, malformed or has expired.",
       [
         "invalid-message-payload"
         /* AuthErrorCode.INVALID_MESSAGE_PAYLOAD */
@@ -6874,7 +7151,19 @@
       [
         "invalid-recaptcha-version"
         /* AuthErrorCode.INVALID_RECAPTCHA_VERSION */
-      ]: "The reCAPTCHA version is invalid when sending request to the backend."
+      ]: "The reCAPTCHA version is invalid when sending request to the backend.",
+      [
+        "unsupported-password-policy-schema-version"
+        /* AuthErrorCode.UNSUPPORTED_PASSWORD_POLICY_SCHEMA_VERSION */
+      ]: "The password policy received from the backend uses a schema version that is not supported by this version of the Firebase SDK.",
+      [
+        "password-does-not-meet-requirements"
+        /* AuthErrorCode.PASSWORD_DOES_NOT_MEET_REQUIREMENTS */
+      ]: "The password does not meet the requirements.",
+      [
+        "invalid-hosting-link-domain"
+        /* AuthErrorCode.INVALID_HOSTING_LINK_DOMAIN */
+      ]: "The provided Hosting link domain is not configured in Firebase Hosting or is not owned by the current project. This cannot be a default Hosting domain (`web.app` or `firebaseapp.com`)."
     };
   }
   function _prodErrorMap() {
@@ -6906,11 +7195,17 @@
     return createErrorInternal(authOrCode, ...rest);
   }
   function _errorWithCustomMessage(auth2, code, message) {
-    const errorMap = Object.assign(Object.assign({}, prodErrorMap()), { [code]: message });
+    const errorMap = {
+      ...prodErrorMap(),
+      [code]: message
+    };
     const factory2 = new ErrorFactory("auth", "Firebase", errorMap);
     return factory2.create(code, {
       appName: auth2.name
     });
+  }
+  function _serverAppCurrentUserOperationNotSupportedError(auth2) {
+    return _errorWithCustomMessage(auth2, "operation-not-supported-in-this-environment", "Operations that alter the current user are not supported in conjunction with FirebaseServerApp");
   }
   function _assertInstanceOf(auth2, object, instance) {
     const constructorInstance = instance;
@@ -6952,15 +7247,13 @@
     }
   }
   function _getCurrentUrl() {
-    var _a;
-    return typeof self !== "undefined" && ((_a = self.location) === null || _a === void 0 ? void 0 : _a.href) || "";
+    return typeof self !== "undefined" && self.location?.href || "";
   }
   function _isHttpOrHttps() {
     return _getCurrentScheme() === "http:" || _getCurrentScheme() === "https:";
   }
   function _getCurrentScheme() {
-    var _a;
-    return typeof self !== "undefined" && ((_a = self.location) === null || _a === void 0 ? void 0 : _a.protocol) || null;
+    return typeof self !== "undefined" && self.location?.protocol || null;
   }
   function _isOnline() {
     if (typeof navigator !== "undefined" && navigator && "onLine" in navigator && typeof navigator.onLine === "boolean" && // Apply only for traditional web apps and Chrome extensions.
@@ -7025,6 +7318,12 @@
       if (typeof self !== "undefined" && "fetch" in self) {
         return self.fetch;
       }
+      if (typeof globalThis !== "undefined" && globalThis.fetch) {
+        return globalThis.fetch;
+      }
+      if (typeof fetch !== "undefined") {
+        return fetch;
+      }
       debugFail("Could not find fetch implementation, make sure you call FetchProvider.initialize() with an appropriate polyfill");
     }
     static headers() {
@@ -7034,6 +7333,12 @@
       if (typeof self !== "undefined" && "Headers" in self) {
         return self.Headers;
       }
+      if (typeof globalThis !== "undefined" && globalThis.Headers) {
+        return globalThis.Headers;
+      }
+      if (typeof Headers !== "undefined") {
+        return Headers;
+      }
       debugFail("Could not find Headers implementation, make sure you call FetchProvider.initialize() with an appropriate polyfill");
     }
     static response() {
@@ -7042,6 +7347,12 @@
       }
       if (typeof self !== "undefined" && "Response" in self) {
         return self.Response;
+      }
+      if (typeof globalThis !== "undefined" && globalThis.Response) {
+        return globalThis.Response;
+      }
+      if (typeof Response !== "undefined") {
+        return Response;
       }
       debugFail("Could not find Response implementation, make sure you call FetchProvider.initialize() with an appropriate polyfill");
     }
@@ -7077,6 +7388,12 @@
       "MISSING_PASSWORD"
       /* ServerError.MISSING_PASSWORD */
     ]: "missing-password",
+    // Thrown if Email Enumeration Protection is enabled in the project and the email or password is
+    // invalid.
+    [
+      "INVALID_LOGIN_CREDENTIALS"
+      /* ServerError.INVALID_LOGIN_CREDENTIALS */
+    ]: "invalid-credential",
     // Sign up with email and password errors.
     [
       "EMAIL_EXISTS"
@@ -7148,6 +7465,10 @@
       "TOO_MANY_ATTEMPTS_TRY_LATER"
       /* ServerError.TOO_MANY_ATTEMPTS_TRY_LATER */
     ]: "too-many-requests",
+    [
+      "PASSWORD_DOES_NOT_MEET_REQUIREMENTS"
+      /* ServerError.PASSWORD_DOES_NOT_MEET_REQUIREMENTS */
+    ]: "password-does-not-meet-requirements",
     // Phone Auth related errors.
     [
       "INVALID_CODE"
@@ -7255,10 +7576,22 @@
     ]: "invalid-req-type"
     /* AuthErrorCode.INVALID_REQ_TYPE */
   };
+  var CookieAuthProxiedEndpoints = [
+    "/v1/accounts:signInWithCustomToken",
+    "/v1/accounts:signInWithEmailLink",
+    "/v1/accounts:signInWithIdp",
+    "/v1/accounts:signInWithPassword",
+    "/v1/accounts:signInWithPhoneNumber",
+    "/v1/token"
+    /* Endpoint.TOKEN */
+  ];
   var DEFAULT_API_TIMEOUT_MS = new Delay(3e4, 6e4);
   function _addTidIfNecessary(auth2, request) {
     if (auth2.tenantId && !request.tenantId) {
-      return Object.assign(Object.assign({}, request), { tenantId: auth2.tenantId });
+      return {
+        ...request,
+        tenantId: auth2.tenantId
+      };
     }
     return request;
   }
@@ -7275,7 +7608,10 @@
           };
         }
       }
-      const query = querystring(Object.assign({ key: auth2.config.apiKey }, params)).slice(1);
+      const query = querystring({
+        key: auth2.config.apiKey,
+        ...params
+      }).slice(1);
       const headers = await auth2._getAdditionalHeaders();
       headers[
         "Content-Type"
@@ -7287,16 +7623,23 @@
           /* HttpHeader.X_FIREBASE_LOCALE */
         ] = auth2.languageCode;
       }
-      return FetchProvider.fetch()(_getFinalTarget(auth2, auth2.config.apiHost, path, query), Object.assign({
+      const fetchArgs = {
         method,
         headers,
-        referrerPolicy: "no-referrer"
-      }, body));
+        ...body
+      };
+      if (!isCloudflareWorker()) {
+        fetchArgs.referrerPolicy = "no-referrer";
+      }
+      if (auth2.emulatorConfig && isCloudWorkstation(auth2.emulatorConfig.host)) {
+        fetchArgs.credentials = "include";
+      }
+      return FetchProvider.fetch()(await _getFinalTarget(auth2, auth2.config.apiHost, path, query), fetchArgs);
     });
   }
   async function _performFetchWithErrorHandling(auth2, customErrorMap, fetchFn) {
     auth2._canInitEmulator = false;
-    const errorMap = Object.assign(Object.assign({}, SERVER_ERROR_MAP), customErrorMap);
+    const errorMap = { ...SERVER_ERROR_MAP, ...customErrorMap };
     try {
       const networkTimeout = new NetworkTimeout(auth2);
       const response = await Promise.race([
@@ -7343,14 +7686,35 @@
     }
     return serverResponse;
   }
-  function _getFinalTarget(auth2, host, path, query) {
+  async function _getFinalTarget(auth2, host, path, query) {
     const base = `${host}${path}?${query}`;
-    if (!auth2.config.emulator) {
-      return `${auth2.config.apiScheme}://${base}`;
+    const authInternal = auth2;
+    const finalTarget = authInternal.config.emulator ? _emulatorUrl(auth2.config, base) : `${auth2.config.apiScheme}://${base}`;
+    if (CookieAuthProxiedEndpoints.includes(path)) {
+      await authInternal._persistenceManagerAvailable;
+      if (authInternal._getPersistenceType() === "COOKIE") {
+        const cookiePersistence = authInternal._getPersistence();
+        return cookiePersistence._getFinalTarget(finalTarget).toString();
+      }
     }
-    return _emulatorUrl(auth2.config, base);
+    return finalTarget;
+  }
+  function _parseEnforcementState(enforcementStateStr) {
+    switch (enforcementStateStr) {
+      case "ENFORCE":
+        return "ENFORCE";
+      case "AUDIT":
+        return "AUDIT";
+      case "OFF":
+        return "OFF";
+      default:
+        return "ENFORCEMENT_STATE_UNSPECIFIED";
+    }
   }
   var NetworkTimeout = class {
+    clearNetworkTimeout() {
+      clearTimeout(this.timer);
+    }
     constructor(auth2) {
       this.auth = auth2;
       this.timer = null;
@@ -7363,9 +7727,6 @@
           ));
         }, DEFAULT_API_TIMEOUT_MS.get());
       });
-    }
-    clearNetworkTimeout() {
-      clearTimeout(this.timer);
     }
   };
   function _makeTaggedError(auth2, code, response) {
@@ -7381,6 +7742,75 @@
     const error2 = _createError(auth2, code, errorParams);
     error2.customData._tokenResponse = response;
     return error2;
+  }
+  function isV2(grecaptcha2) {
+    return grecaptcha2 !== void 0 && grecaptcha2.getResponse !== void 0;
+  }
+  function isEnterprise(grecaptcha2) {
+    return grecaptcha2 !== void 0 && grecaptcha2.enterprise !== void 0;
+  }
+  var RecaptchaConfig = class {
+    constructor(response) {
+      this.siteKey = "";
+      this.recaptchaEnforcementState = [];
+      if (response.recaptchaKey === void 0) {
+        throw new Error("recaptchaKey undefined");
+      }
+      this.siteKey = response.recaptchaKey.split("/")[3];
+      this.recaptchaEnforcementState = response.recaptchaEnforcementState;
+    }
+    /**
+     * Returns the reCAPTCHA Enterprise enforcement state for the given provider.
+     *
+     * @param providerStr - The provider whose enforcement state is to be returned.
+     * @returns The reCAPTCHA Enterprise enforcement state for the given provider.
+     */
+    getProviderEnforcementState(providerStr) {
+      if (!this.recaptchaEnforcementState || this.recaptchaEnforcementState.length === 0) {
+        return null;
+      }
+      for (const recaptchaEnforcementState of this.recaptchaEnforcementState) {
+        if (recaptchaEnforcementState.provider && recaptchaEnforcementState.provider === providerStr) {
+          return _parseEnforcementState(recaptchaEnforcementState.enforcementState);
+        }
+      }
+      return null;
+    }
+    /**
+     * Returns true if the reCAPTCHA Enterprise enforcement state for the provider is set to ENFORCE or AUDIT.
+     *
+     * @param providerStr - The provider whose enablement state is to be returned.
+     * @returns Whether or not reCAPTCHA Enterprise protection is enabled for the given provider.
+     */
+    isProviderEnabled(providerStr) {
+      return this.getProviderEnforcementState(providerStr) === "ENFORCE" || this.getProviderEnforcementState(providerStr) === "AUDIT";
+    }
+    /**
+     * Returns true if reCAPTCHA Enterprise protection is enabled in at least one provider, otherwise
+     * returns false.
+     *
+     * @returns Whether or not reCAPTCHA Enterprise protection is enabled for at least one provider.
+     */
+    isAnyProviderEnabled() {
+      return this.isProviderEnabled(
+        "EMAIL_PASSWORD_PROVIDER"
+        /* RecaptchaAuthProvider.EMAIL_PASSWORD_PROVIDER */
+      ) || this.isProviderEnabled(
+        "PHONE_PROVIDER"
+        /* RecaptchaAuthProvider.PHONE_PROVIDER */
+      );
+    }
+  };
+  async function getRecaptchaParams(auth2) {
+    return (await _performApiRequest(
+      auth2,
+      "GET",
+      "/v1/recaptchaParams"
+      /* Endpoint.GET_RECAPTCHA_PARAM */
+    )).recaptchaSiteKey || "";
+  }
+  async function getRecaptchaConfig(auth2, request) {
+    return _performApiRequest(auth2, "GET", "/v2/recaptchaConfig", _addTidIfNecessary(auth2, request));
   }
   async function deleteAccount(auth2, request) {
     return _performApiRequest(auth2, "POST", "/v1/accounts:delete", request);
@@ -7415,7 +7845,7 @@
       /* AuthErrorCode.INTERNAL_ERROR */
     );
     const firebase2 = typeof claims.firebase === "object" ? claims.firebase : void 0;
-    const signInProvider = firebase2 === null || firebase2 === void 0 ? void 0 : firebase2["sign_in_provider"];
+    const signInProvider = firebase2?.["sign_in_provider"];
     return {
       claims,
       token,
@@ -7423,7 +7853,7 @@
       issuedAtTime: utcTimestampToDateString(secondsStringToMilliseconds(claims.iat)),
       expirationTime: utcTimestampToDateString(secondsStringToMilliseconds(claims.exp)),
       signInProvider: signInProvider || null,
-      signInSecondFactor: (firebase2 === null || firebase2 === void 0 ? void 0 : firebase2["sign_in_second_factor"]) || null
+      signInSecondFactor: firebase2?.["sign_in_second_factor"] || null
     };
   }
   function secondsStringToMilliseconds(seconds) {
@@ -7443,7 +7873,7 @@
       }
       return JSON.parse(decoded);
     } catch (e) {
-      _logError("Caught error parsing JWT payload as JSON", e === null || e === void 0 ? void 0 : e.toString());
+      _logError("Caught error parsing JWT payload as JSON", e?.toString());
       return null;
     }
   }
@@ -7508,7 +7938,6 @@
       }
     }
     getInterval(wasError) {
-      var _a;
       if (wasError) {
         const interval = this.errorBackoff;
         this.errorBackoff = Math.min(
@@ -7519,7 +7948,7 @@
         return interval;
       } else {
         this.errorBackoff = 3e4;
-        const expTime = (_a = this.user.stsTokenManager.expirationTime) !== null && _a !== void 0 ? _a : 0;
+        const expTime = this.user.stsTokenManager.expirationTime ?? 0;
         const interval = expTime - Date.now() - 3e5;
         return Math.max(0, interval);
       }
@@ -7537,7 +7966,7 @@
       try {
         await this.user.getIdToken(true);
       } catch (e) {
-        if ((e === null || e === void 0 ? void 0 : e.code) === `auth/${"network-request-failed"}`) {
+        if (e?.code === `auth/${"network-request-failed"}`) {
           this.schedule(
             /* wasError */
             true
@@ -7571,22 +8000,21 @@
     }
   };
   async function _reloadWithoutSaving(user) {
-    var _a;
     const auth2 = user.auth;
     const idToken = await user.getIdToken();
     const response = await _logoutIfInvalidated(user, getAccountInfo(auth2, { idToken }));
     _assert(
-      response === null || response === void 0 ? void 0 : response.users.length,
+      response?.users.length,
       auth2,
       "internal-error"
       /* AuthErrorCode.INTERNAL_ERROR */
     );
     const coreAccount = response.users[0];
     user._notifyReloadListener(coreAccount);
-    const newProviderData = ((_a = coreAccount.providerUserInfo) === null || _a === void 0 ? void 0 : _a.length) ? extractProviderData(coreAccount.providerUserInfo) : [];
+    const newProviderData = coreAccount.providerUserInfo?.length ? extractProviderData(coreAccount.providerUserInfo) : [];
     const providerData = mergeProviderData(user.providerData, newProviderData);
     const oldIsAnonymous = user.isAnonymous;
-    const newIsAnonymous = !(user.email && coreAccount.passwordHash) && !(providerData === null || providerData === void 0 ? void 0 : providerData.length);
+    const newIsAnonymous = !(user.email && coreAccount.passwordHash) && !providerData?.length;
     const isAnonymous = !oldIsAnonymous ? false : newIsAnonymous;
     const updates = {
       uid: coreAccount.localId,
@@ -7613,8 +8041,7 @@
     return [...deduped, ...newData];
   }
   function extractProviderData(providers) {
-    return providers.map((_a) => {
-      var { providerId } = _a, provider = __rest(_a, ["providerId"]);
+    return providers.map(({ providerId, ...provider }) => {
       return {
         providerId,
         uid: provider.rawId || "",
@@ -7632,23 +8059,30 @@
         "refresh_token": refreshToken
       }).slice(1);
       const { tokenApiHost, apiKey } = auth2.config;
-      const url = _getFinalTarget(auth2, tokenApiHost, "/v1/token", `key=${apiKey}`);
+      const url = await _getFinalTarget(auth2, tokenApiHost, "/v1/token", `key=${apiKey}`);
       const headers = await auth2._getAdditionalHeaders();
       headers[
         "Content-Type"
         /* HttpHeader.CONTENT_TYPE */
       ] = "application/x-www-form-urlencoded";
-      return FetchProvider.fetch()(url, {
+      const options = {
         method: "POST",
         headers,
         body
-      });
+      };
+      if (auth2.emulatorConfig && isCloudWorkstation(auth2.emulatorConfig.host)) {
+        options.credentials = "include";
+      }
+      return FetchProvider.fetch()(url, options);
     });
     return {
       accessToken: response.access_token,
       expiresIn: response.expires_in,
       refreshToken: response.refresh_token
     };
+  }
+  async function revokeToken(auth2, request) {
+    return _performApiRequest(auth2, "POST", "/v2/accounts:revokeToken", _addTidIfNecessary(auth2, request));
   }
   var StsTokenManager = class _StsTokenManager {
     constructor() {
@@ -7678,16 +8112,25 @@
       const expiresIn = "expiresIn" in response && typeof response.expiresIn !== "undefined" ? Number(response.expiresIn) : _tokenExpiresIn(response.idToken);
       this.updateTokensAndExpiration(response.idToken, response.refreshToken, expiresIn);
     }
-    async getToken(auth2, forceRefresh = false) {
+    updateFromIdToken(idToken) {
       _assert(
-        !this.accessToken || this.refreshToken,
+        idToken.length !== 0,
+        "internal-error"
+        /* AuthErrorCode.INTERNAL_ERROR */
+      );
+      const expiresIn = _tokenExpiresIn(idToken);
+      this.updateTokensAndExpiration(idToken, null, expiresIn);
+    }
+    async getToken(auth2, forceRefresh = false) {
+      if (!forceRefresh && this.accessToken && !this.isExpired) {
+        return this.accessToken;
+      }
+      _assert(
+        this.refreshToken,
         auth2,
         "user-token-expired"
         /* AuthErrorCode.TOKEN_EXPIRED */
       );
-      if (!forceRefresh && this.accessToken && !this.isExpired) {
-        return this.accessToken;
-      }
       if (this.refreshToken) {
         await this.refresh(auth2, this.refreshToken);
         return this.accessToken;
@@ -7752,8 +8195,7 @@
     _assert(typeof assertion === "string" || typeof assertion === "undefined", "internal-error", { appName });
   }
   var UserImpl = class _UserImpl {
-    constructor(_a) {
-      var { uid, auth: auth2, stsTokenManager } = _a, opt = __rest(_a, ["uid", "auth", "stsTokenManager"]);
+    constructor({ uid, auth: auth2, stsTokenManager, ...opt }) {
       this.providerId = "firebase";
       this.proactiveRefresh = new ProactiveRefresh(this);
       this.reloadUserInfo = null;
@@ -7810,12 +8252,16 @@
       this.phoneNumber = user.phoneNumber;
       this.isAnonymous = user.isAnonymous;
       this.tenantId = user.tenantId;
-      this.providerData = user.providerData.map((userInfo) => Object.assign({}, userInfo));
+      this.providerData = user.providerData.map((userInfo) => ({ ...userInfo }));
       this.metadata._copy(user.metadata);
       this.stsTokenManager._assign(user.stsTokenManager);
     }
     _clone(auth2) {
-      const newUser = new _UserImpl(Object.assign(Object.assign({}, this), { auth: auth2, stsTokenManager: this.stsTokenManager._clone() }));
+      const newUser = new _UserImpl({
+        ...this,
+        auth: auth2,
+        stsTokenManager: this.stsTokenManager._clone()
+      });
       newUser.metadata._copy(this.metadata);
       return newUser;
     }
@@ -7860,13 +8306,16 @@
       }
     }
     async delete() {
+      if (_isFirebaseServerApp(this.auth.app)) {
+        return Promise.reject(_serverAppCurrentUserOperationNotSupportedError(this.auth));
+      }
       const idToken = await this.getIdToken();
       await _logoutIfInvalidated(this, deleteAccount(this.auth, { idToken }));
       this.stsTokenManager.clearRefreshToken();
       return this.auth.signOut();
     }
     toJSON() {
-      return Object.assign(Object.assign({
+      return {
         uid: this.uid,
         email: this.email || void 0,
         emailVerified: this.emailVerified,
@@ -7875,30 +8324,31 @@
         photoURL: this.photoURL || void 0,
         phoneNumber: this.phoneNumber || void 0,
         tenantId: this.tenantId || void 0,
-        providerData: this.providerData.map((userInfo) => Object.assign({}, userInfo)),
+        providerData: this.providerData.map((userInfo) => ({ ...userInfo })),
         stsTokenManager: this.stsTokenManager.toJSON(),
         // Redirect event ID must be maintained in case there is a pending
         // redirect event.
-        _redirectEventId: this._redirectEventId
-      }, this.metadata.toJSON()), {
+        _redirectEventId: this._redirectEventId,
+        ...this.metadata.toJSON(),
         // Required for compatibility with the legacy SDK (go/firebase-auth-sdk-persistence-parsing):
         apiKey: this.auth.config.apiKey,
         appName: this.auth.name
-      });
+        // Missing authDomain will be tolerated by the legacy SDK.
+        // stsTokenManager.apiKey isn't actually required (despite the legacy SDK persisting it).
+      };
     }
     get refreshToken() {
       return this.stsTokenManager.refreshToken || "";
     }
     static _fromJSON(auth2, object) {
-      var _a, _b, _c, _d, _e, _f, _g, _h;
-      const displayName = (_a = object.displayName) !== null && _a !== void 0 ? _a : void 0;
-      const email = (_b = object.email) !== null && _b !== void 0 ? _b : void 0;
-      const phoneNumber = (_c = object.phoneNumber) !== null && _c !== void 0 ? _c : void 0;
-      const photoURL = (_d = object.photoURL) !== null && _d !== void 0 ? _d : void 0;
-      const tenantId = (_e = object.tenantId) !== null && _e !== void 0 ? _e : void 0;
-      const _redirectEventId = (_f = object._redirectEventId) !== null && _f !== void 0 ? _f : void 0;
-      const createdAt = (_g = object.createdAt) !== null && _g !== void 0 ? _g : void 0;
-      const lastLoginAt = (_h = object.lastLoginAt) !== null && _h !== void 0 ? _h : void 0;
+      const displayName = object.displayName ?? void 0;
+      const email = object.email ?? void 0;
+      const phoneNumber = object.phoneNumber ?? void 0;
+      const photoURL = object.photoURL ?? void 0;
+      const tenantId = object.tenantId ?? void 0;
+      const _redirectEventId = object._redirectEventId ?? void 0;
+      const createdAt = object.createdAt ?? void 0;
+      const lastLoginAt = object.lastLoginAt ?? void 0;
       const { uid, emailVerified, isAnonymous, providerData, stsTokenManager: plainObjectTokenManager } = object;
       _assert(
         uid && plainObjectTokenManager,
@@ -7948,7 +8398,7 @@
         lastLoginAt
       });
       if (providerData && Array.isArray(providerData)) {
-        user.providerData = providerData.map((userInfo) => Object.assign({}, userInfo));
+        user.providerData = providerData.map((userInfo) => ({ ...userInfo }));
       }
       if (_redirectEventId) {
         user._redirectEventId = _redirectEventId;
@@ -7970,6 +8420,43 @@
         isAnonymous
       });
       await _reloadWithoutSaving(user);
+      return user;
+    }
+    /**
+     * Initialize a User from an idToken server response
+     * @param auth
+     * @param idTokenResponse
+     */
+    static async _fromGetAccountInfoResponse(auth2, response, idToken) {
+      const coreAccount = response.users[0];
+      _assert(
+        coreAccount.localId !== void 0,
+        "internal-error"
+        /* AuthErrorCode.INTERNAL_ERROR */
+      );
+      const providerData = coreAccount.providerUserInfo !== void 0 ? extractProviderData(coreAccount.providerUserInfo) : [];
+      const isAnonymous = !(coreAccount.email && coreAccount.passwordHash) && !providerData?.length;
+      const stsTokenManager = new StsTokenManager();
+      stsTokenManager.updateFromIdToken(idToken);
+      const user = new _UserImpl({
+        uid: coreAccount.localId,
+        auth: auth2,
+        stsTokenManager,
+        isAnonymous
+      });
+      const updates = {
+        uid: coreAccount.localId,
+        displayName: coreAccount.displayName || null,
+        photoURL: coreAccount.photoUrl || null,
+        email: coreAccount.email || null,
+        emailVerified: coreAccount.emailVerified || false,
+        phoneNumber: coreAccount.phoneNumber || null,
+        tenantId: coreAccount.tenantId || null,
+        providerData,
+        metadata: new UserMetadata(coreAccount.createdAt, coreAccount.lastLoginAt),
+        isAnonymous: !(coreAccount.email && coreAccount.passwordHash) && !providerData?.length
+      };
+      Object.assign(user, updates);
       return user;
     }
   };
@@ -8031,7 +8518,17 @@
     }
     async getCurrentUser() {
       const blob = await this.persistence._get(this.fullUserKey);
-      return blob ? UserImpl._fromJSON(this.auth, blob) : null;
+      if (!blob) {
+        return null;
+      }
+      if (typeof blob === "string") {
+        const response = await getAccountInfo(this.auth, { idToken: blob }).catch(() => void 0);
+        if (!response) {
+          return null;
+        }
+        return UserImpl._fromGetAccountInfoResponse(this.auth, response, blob);
+      }
+      return UserImpl._fromJSON(this.auth, blob);
     }
     removeCurrentUser() {
       return this.persistence._remove(this.fullUserKey);
@@ -8070,14 +8567,25 @@
         try {
           const blob = await persistence._get(key);
           if (blob) {
-            const user = UserImpl._fromJSON(auth2, blob);
+            let user;
+            if (typeof blob === "string") {
+              const response = await getAccountInfo(auth2, {
+                idToken: blob
+              }).catch(() => void 0);
+              if (!response) {
+                break;
+              }
+              user = await UserImpl._fromGetAccountInfoResponse(auth2, response, blob);
+            } else {
+              user = UserImpl._fromJSON(auth2, blob);
+            }
             if (persistence !== selectedPersistence) {
               userToMigrate = user;
             }
             selectedPersistence = persistence;
             break;
           }
-        } catch (_a) {
+        } catch {
         }
       }
       const migrationHierarchy = availablePersistences.filter((p) => p._shouldAllowMigration);
@@ -8092,7 +8600,7 @@
         if (persistence !== selectedPersistence) {
           try {
             await persistence._remove(key);
-          } catch (_a) {
+          } catch {
           }
         }
       }));
@@ -8126,7 +8634,7 @@
     } else {
       const re = /([a-zA-Z\d\.]+)\/[a-zA-Z\d\.]*$/;
       const matches = userAgent.match(re);
-      if ((matches === null || matches === void 0 ? void 0 : matches.length) === 2) {
+      if (matches?.length === 2) {
         return matches[1];
       }
     }
@@ -8161,21 +8669,13 @@
     return /(iPad|iPhone|iPod).*OS 7_\d/i.test(ua) || /(iPad|iPhone|iPod).*OS 8_\d/i.test(ua);
   }
   function _isIOSStandalone(ua = getUA()) {
-    var _a;
-    return _isIOS(ua) && !!((_a = window.navigator) === null || _a === void 0 ? void 0 : _a.standalone);
+    return _isIOS(ua) && !!window.navigator?.standalone;
   }
   function _isIE10() {
     return isIE() && document.documentMode === 10;
   }
   function _isMobileBrowser(ua = getUA()) {
     return _isIOS(ua) || _isAndroid(ua) || _isWebOS(ua) || _isBlackBerry(ua) || /windows phone/i.test(ua) || _isIEMobile(ua);
-  }
-  function _isIframe() {
-    try {
-      return !!(window && window !== window.top);
-    } catch (e) {
-      return false;
-    }
   }
   function _getClientVersion(clientPlatform, frameworks = []) {
     let reportedPlatform;
@@ -8192,60 +8692,867 @@
     const reportedFrameworks = frameworks.length ? frameworks.join(",") : "FirebaseCore-web";
     return `${reportedPlatform}/${"JsCore"}/${SDK_VERSION}/${reportedFrameworks}`;
   }
-  async function getRecaptchaParams(auth2) {
-    return (await _performApiRequest(
-      auth2,
-      "GET",
-      "/v1/recaptchaParams"
-      /* Endpoint.GET_RECAPTCHA_PARAM */
-    )).recaptchaSiteKey || "";
-  }
-  async function getRecaptchaConfig(auth2, request) {
-    return _performApiRequest(auth2, "GET", "/v2/recaptchaConfig", _addTidIfNecessary(auth2, request));
-  }
-  function isV2(grecaptcha2) {
-    return grecaptcha2 !== void 0 && grecaptcha2.getResponse !== void 0;
-  }
-  function isEnterprise(grecaptcha2) {
-    return grecaptcha2 !== void 0 && grecaptcha2.enterprise !== void 0;
-  }
-  var RecaptchaConfig = class {
-    constructor(response) {
-      this.siteKey = "";
-      this.emailPasswordEnabled = false;
-      if (response.recaptchaKey === void 0) {
-        throw new Error("recaptchaKey undefined");
+  var AuthMiddlewareQueue = class {
+    constructor(auth2) {
+      this.auth = auth2;
+      this.queue = [];
+    }
+    pushCallback(callback, onAbort) {
+      const wrappedCallback = (user) => new Promise((resolve, reject) => {
+        try {
+          const result = callback(user);
+          resolve(result);
+        } catch (e) {
+          reject(e);
+        }
+      });
+      wrappedCallback.onAbort = onAbort;
+      this.queue.push(wrappedCallback);
+      const index = this.queue.length - 1;
+      return () => {
+        this.queue[index] = () => Promise.resolve();
+      };
+    }
+    async runMiddleware(nextUser) {
+      if (this.auth.currentUser === nextUser) {
+        return;
       }
-      this.siteKey = response.recaptchaKey.split("/")[3];
-      this.emailPasswordEnabled = response.recaptchaEnforcementState.some((enforcementState) => enforcementState.provider === "EMAIL_PASSWORD_PROVIDER" && enforcementState.enforcementState !== "OFF");
+      const onAbortStack = [];
+      try {
+        for (const beforeStateCallback of this.queue) {
+          await beforeStateCallback(nextUser);
+          if (beforeStateCallback.onAbort) {
+            onAbortStack.push(beforeStateCallback.onAbort);
+          }
+        }
+      } catch (e) {
+        onAbortStack.reverse();
+        for (const onAbort of onAbortStack) {
+          try {
+            onAbort();
+          } catch (_) {
+          }
+        }
+        throw this.auth._errorFactory.create("login-blocked", {
+          originalMessage: e?.message
+        });
+      }
     }
   };
-  function getScriptParentElement() {
-    var _a, _b;
-    return (_b = (_a = document.getElementsByTagName("head")) === null || _a === void 0 ? void 0 : _a[0]) !== null && _b !== void 0 ? _b : document;
+  async function _getPasswordPolicy(auth2, request = {}) {
+    return _performApiRequest(auth2, "GET", "/v2/passwordPolicy", _addTidIfNecessary(auth2, request));
+  }
+  var MINIMUM_MIN_PASSWORD_LENGTH = 6;
+  var PasswordPolicyImpl = class {
+    constructor(response) {
+      const responseOptions = response.customStrengthOptions;
+      this.customStrengthOptions = {};
+      this.customStrengthOptions.minPasswordLength = responseOptions.minPasswordLength ?? MINIMUM_MIN_PASSWORD_LENGTH;
+      if (responseOptions.maxPasswordLength) {
+        this.customStrengthOptions.maxPasswordLength = responseOptions.maxPasswordLength;
+      }
+      if (responseOptions.containsLowercaseCharacter !== void 0) {
+        this.customStrengthOptions.containsLowercaseLetter = responseOptions.containsLowercaseCharacter;
+      }
+      if (responseOptions.containsUppercaseCharacter !== void 0) {
+        this.customStrengthOptions.containsUppercaseLetter = responseOptions.containsUppercaseCharacter;
+      }
+      if (responseOptions.containsNumericCharacter !== void 0) {
+        this.customStrengthOptions.containsNumericCharacter = responseOptions.containsNumericCharacter;
+      }
+      if (responseOptions.containsNonAlphanumericCharacter !== void 0) {
+        this.customStrengthOptions.containsNonAlphanumericCharacter = responseOptions.containsNonAlphanumericCharacter;
+      }
+      this.enforcementState = response.enforcementState;
+      if (this.enforcementState === "ENFORCEMENT_STATE_UNSPECIFIED") {
+        this.enforcementState = "OFF";
+      }
+      this.allowedNonAlphanumericCharacters = response.allowedNonAlphanumericCharacters?.join("") ?? "";
+      this.forceUpgradeOnSignin = response.forceUpgradeOnSignin ?? false;
+      this.schemaVersion = response.schemaVersion;
+    }
+    validatePassword(password) {
+      const status = {
+        isValid: true,
+        passwordPolicy: this
+      };
+      this.validatePasswordLengthOptions(password, status);
+      this.validatePasswordCharacterOptions(password, status);
+      status.isValid && (status.isValid = status.meetsMinPasswordLength ?? true);
+      status.isValid && (status.isValid = status.meetsMaxPasswordLength ?? true);
+      status.isValid && (status.isValid = status.containsLowercaseLetter ?? true);
+      status.isValid && (status.isValid = status.containsUppercaseLetter ?? true);
+      status.isValid && (status.isValid = status.containsNumericCharacter ?? true);
+      status.isValid && (status.isValid = status.containsNonAlphanumericCharacter ?? true);
+      return status;
+    }
+    /**
+     * Validates that the password meets the length options for the policy.
+     *
+     * @param password Password to validate.
+     * @param status Validation status.
+     */
+    validatePasswordLengthOptions(password, status) {
+      const minPasswordLength = this.customStrengthOptions.minPasswordLength;
+      const maxPasswordLength = this.customStrengthOptions.maxPasswordLength;
+      if (minPasswordLength) {
+        status.meetsMinPasswordLength = password.length >= minPasswordLength;
+      }
+      if (maxPasswordLength) {
+        status.meetsMaxPasswordLength = password.length <= maxPasswordLength;
+      }
+    }
+    /**
+     * Validates that the password meets the character options for the policy.
+     *
+     * @param password Password to validate.
+     * @param status Validation status.
+     */
+    validatePasswordCharacterOptions(password, status) {
+      this.updatePasswordCharacterOptionsStatuses(
+        status,
+        /* containsLowercaseCharacter= */
+        false,
+        /* containsUppercaseCharacter= */
+        false,
+        /* containsNumericCharacter= */
+        false,
+        /* containsNonAlphanumericCharacter= */
+        false
+      );
+      let passwordChar;
+      for (let i = 0; i < password.length; i++) {
+        passwordChar = password.charAt(i);
+        this.updatePasswordCharacterOptionsStatuses(
+          status,
+          /* containsLowercaseCharacter= */
+          passwordChar >= "a" && passwordChar <= "z",
+          /* containsUppercaseCharacter= */
+          passwordChar >= "A" && passwordChar <= "Z",
+          /* containsNumericCharacter= */
+          passwordChar >= "0" && passwordChar <= "9",
+          /* containsNonAlphanumericCharacter= */
+          this.allowedNonAlphanumericCharacters.includes(passwordChar)
+        );
+      }
+    }
+    /**
+     * Updates the running validation status with the statuses for the character options.
+     * Expected to be called each time a character is processed to update each option status
+     * based on the current character.
+     *
+     * @param status Validation status.
+     * @param containsLowercaseCharacter Whether the character is a lowercase letter.
+     * @param containsUppercaseCharacter Whether the character is an uppercase letter.
+     * @param containsNumericCharacter Whether the character is a numeric character.
+     * @param containsNonAlphanumericCharacter Whether the character is a non-alphanumeric character.
+     */
+    updatePasswordCharacterOptionsStatuses(status, containsLowercaseCharacter, containsUppercaseCharacter, containsNumericCharacter, containsNonAlphanumericCharacter) {
+      if (this.customStrengthOptions.containsLowercaseLetter) {
+        status.containsLowercaseLetter || (status.containsLowercaseLetter = containsLowercaseCharacter);
+      }
+      if (this.customStrengthOptions.containsUppercaseLetter) {
+        status.containsUppercaseLetter || (status.containsUppercaseLetter = containsUppercaseCharacter);
+      }
+      if (this.customStrengthOptions.containsNumericCharacter) {
+        status.containsNumericCharacter || (status.containsNumericCharacter = containsNumericCharacter);
+      }
+      if (this.customStrengthOptions.containsNonAlphanumericCharacter) {
+        status.containsNonAlphanumericCharacter || (status.containsNonAlphanumericCharacter = containsNonAlphanumericCharacter);
+      }
+    }
+  };
+  var AuthImpl = class {
+    constructor(app, heartbeatServiceProvider, appCheckServiceProvider, config3) {
+      this.app = app;
+      this.heartbeatServiceProvider = heartbeatServiceProvider;
+      this.appCheckServiceProvider = appCheckServiceProvider;
+      this.config = config3;
+      this.currentUser = null;
+      this.emulatorConfig = null;
+      this.operations = Promise.resolve();
+      this.authStateSubscription = new Subscription(this);
+      this.idTokenSubscription = new Subscription(this);
+      this.beforeStateQueue = new AuthMiddlewareQueue(this);
+      this.redirectUser = null;
+      this.isProactiveRefreshEnabled = false;
+      this.EXPECTED_PASSWORD_POLICY_SCHEMA_VERSION = 1;
+      this._canInitEmulator = true;
+      this._isInitialized = false;
+      this._deleted = false;
+      this._initializationPromise = null;
+      this._popupRedirectResolver = null;
+      this._errorFactory = _DEFAULT_AUTH_ERROR_FACTORY;
+      this._agentRecaptchaConfig = null;
+      this._tenantRecaptchaConfigs = {};
+      this._projectPasswordPolicy = null;
+      this._tenantPasswordPolicies = {};
+      this._resolvePersistenceManagerAvailable = void 0;
+      this.lastNotifiedUid = void 0;
+      this.languageCode = null;
+      this.tenantId = null;
+      this.settings = { appVerificationDisabledForTesting: false };
+      this.frameworks = [];
+      this.name = app.name;
+      this.clientVersion = config3.sdkClientVersion;
+      this._persistenceManagerAvailable = new Promise((resolve) => this._resolvePersistenceManagerAvailable = resolve);
+    }
+    _initializeWithPersistence(persistenceHierarchy, popupRedirectResolver) {
+      if (popupRedirectResolver) {
+        this._popupRedirectResolver = _getInstance(popupRedirectResolver);
+      }
+      this._initializationPromise = this.queue(async () => {
+        if (this._deleted) {
+          return;
+        }
+        this.persistenceManager = await PersistenceUserManager.create(this, persistenceHierarchy);
+        this._resolvePersistenceManagerAvailable?.();
+        if (this._deleted) {
+          return;
+        }
+        if (this._popupRedirectResolver?._shouldInitProactively) {
+          try {
+            await this._popupRedirectResolver._initialize(this);
+          } catch (e) {
+          }
+        }
+        await this.initializeCurrentUser(popupRedirectResolver);
+        this.lastNotifiedUid = this.currentUser?.uid || null;
+        if (this._deleted) {
+          return;
+        }
+        this._isInitialized = true;
+      });
+      return this._initializationPromise;
+    }
+    /**
+     * If the persistence is changed in another window, the user manager will let us know
+     */
+    async _onStorageEvent() {
+      if (this._deleted) {
+        return;
+      }
+      const user = await this.assertedPersistence.getCurrentUser();
+      if (!this.currentUser && !user) {
+        return;
+      }
+      if (this.currentUser && user && this.currentUser.uid === user.uid) {
+        this._currentUser._assign(user);
+        await this.currentUser.getIdToken();
+        return;
+      }
+      await this._updateCurrentUser(
+        user,
+        /* skipBeforeStateCallbacks */
+        true
+      );
+    }
+    async initializeCurrentUserFromIdToken(idToken) {
+      try {
+        const response = await getAccountInfo(this, { idToken });
+        const user = await UserImpl._fromGetAccountInfoResponse(this, response, idToken);
+        await this.directlySetCurrentUser(user);
+      } catch (err) {
+        console.warn("FirebaseServerApp could not login user with provided authIdToken: ", err);
+        await this.directlySetCurrentUser(null);
+      }
+    }
+    async initializeCurrentUser(popupRedirectResolver) {
+      if (_isFirebaseServerApp(this.app)) {
+        const idToken = this.app.settings.authIdToken;
+        if (idToken) {
+          return new Promise((resolve) => {
+            setTimeout(() => this.initializeCurrentUserFromIdToken(idToken).then(resolve, resolve));
+          });
+        } else {
+          return this.directlySetCurrentUser(null);
+        }
+      }
+      const previouslyStoredUser = await this.assertedPersistence.getCurrentUser();
+      let futureCurrentUser = previouslyStoredUser;
+      let needsTocheckMiddleware = false;
+      if (popupRedirectResolver && this.config.authDomain) {
+        await this.getOrInitRedirectPersistenceManager();
+        const redirectUserEventId = this.redirectUser?._redirectEventId;
+        const storedUserEventId = futureCurrentUser?._redirectEventId;
+        const result = await this.tryRedirectSignIn(popupRedirectResolver);
+        if ((!redirectUserEventId || redirectUserEventId === storedUserEventId) && result?.user) {
+          futureCurrentUser = result.user;
+          needsTocheckMiddleware = true;
+        }
+      }
+      if (!futureCurrentUser) {
+        return this.directlySetCurrentUser(null);
+      }
+      if (!futureCurrentUser._redirectEventId) {
+        if (needsTocheckMiddleware) {
+          try {
+            await this.beforeStateQueue.runMiddleware(futureCurrentUser);
+          } catch (e) {
+            futureCurrentUser = previouslyStoredUser;
+            this._popupRedirectResolver._overrideRedirectResult(this, () => Promise.reject(e));
+          }
+        }
+        if (futureCurrentUser) {
+          return this.reloadAndSetCurrentUserOrClear(futureCurrentUser);
+        } else {
+          return this.directlySetCurrentUser(null);
+        }
+      }
+      _assert(
+        this._popupRedirectResolver,
+        this,
+        "argument-error"
+        /* AuthErrorCode.ARGUMENT_ERROR */
+      );
+      await this.getOrInitRedirectPersistenceManager();
+      if (this.redirectUser && this.redirectUser._redirectEventId === futureCurrentUser._redirectEventId) {
+        return this.directlySetCurrentUser(futureCurrentUser);
+      }
+      return this.reloadAndSetCurrentUserOrClear(futureCurrentUser);
+    }
+    async tryRedirectSignIn(redirectResolver) {
+      let result = null;
+      try {
+        result = await this._popupRedirectResolver._completeRedirectFn(this, redirectResolver, true);
+      } catch (e) {
+        await this._setRedirectUser(null);
+      }
+      return result;
+    }
+    async reloadAndSetCurrentUserOrClear(user) {
+      try {
+        await _reloadWithoutSaving(user);
+      } catch (e) {
+        if (e?.code !== `auth/${"network-request-failed"}`) {
+          return this.directlySetCurrentUser(null);
+        }
+      }
+      return this.directlySetCurrentUser(user);
+    }
+    useDeviceLanguage() {
+      this.languageCode = _getUserLanguage();
+    }
+    async _delete() {
+      this._deleted = true;
+    }
+    async updateCurrentUser(userExtern) {
+      if (_isFirebaseServerApp(this.app)) {
+        return Promise.reject(_serverAppCurrentUserOperationNotSupportedError(this));
+      }
+      const user = userExtern ? getModularInstance(userExtern) : null;
+      if (user) {
+        _assert(
+          user.auth.config.apiKey === this.config.apiKey,
+          this,
+          "invalid-user-token"
+          /* AuthErrorCode.INVALID_AUTH */
+        );
+      }
+      return this._updateCurrentUser(user && user._clone(this));
+    }
+    async _updateCurrentUser(user, skipBeforeStateCallbacks = false) {
+      if (this._deleted) {
+        return;
+      }
+      if (user) {
+        _assert(
+          this.tenantId === user.tenantId,
+          this,
+          "tenant-id-mismatch"
+          /* AuthErrorCode.TENANT_ID_MISMATCH */
+        );
+      }
+      if (!skipBeforeStateCallbacks) {
+        await this.beforeStateQueue.runMiddleware(user);
+      }
+      return this.queue(async () => {
+        await this.directlySetCurrentUser(user);
+        this.notifyAuthListeners();
+      });
+    }
+    async signOut() {
+      if (_isFirebaseServerApp(this.app)) {
+        return Promise.reject(_serverAppCurrentUserOperationNotSupportedError(this));
+      }
+      await this.beforeStateQueue.runMiddleware(null);
+      if (this.redirectPersistenceManager || this._popupRedirectResolver) {
+        await this._setRedirectUser(null);
+      }
+      return this._updateCurrentUser(
+        null,
+        /* skipBeforeStateCallbacks */
+        true
+      );
+    }
+    setPersistence(persistence) {
+      if (_isFirebaseServerApp(this.app)) {
+        return Promise.reject(_serverAppCurrentUserOperationNotSupportedError(this));
+      }
+      return this.queue(async () => {
+        await this.assertedPersistence.setPersistence(_getInstance(persistence));
+      });
+    }
+    _getRecaptchaConfig() {
+      if (this.tenantId == null) {
+        return this._agentRecaptchaConfig;
+      } else {
+        return this._tenantRecaptchaConfigs[this.tenantId];
+      }
+    }
+    async validatePassword(password) {
+      if (!this._getPasswordPolicyInternal()) {
+        await this._updatePasswordPolicy();
+      }
+      const passwordPolicy = this._getPasswordPolicyInternal();
+      if (passwordPolicy.schemaVersion !== this.EXPECTED_PASSWORD_POLICY_SCHEMA_VERSION) {
+        return Promise.reject(this._errorFactory.create("unsupported-password-policy-schema-version", {}));
+      }
+      return passwordPolicy.validatePassword(password);
+    }
+    _getPasswordPolicyInternal() {
+      if (this.tenantId === null) {
+        return this._projectPasswordPolicy;
+      } else {
+        return this._tenantPasswordPolicies[this.tenantId];
+      }
+    }
+    async _updatePasswordPolicy() {
+      const response = await _getPasswordPolicy(this);
+      const passwordPolicy = new PasswordPolicyImpl(response);
+      if (this.tenantId === null) {
+        this._projectPasswordPolicy = passwordPolicy;
+      } else {
+        this._tenantPasswordPolicies[this.tenantId] = passwordPolicy;
+      }
+    }
+    _getPersistenceType() {
+      return this.assertedPersistence.persistence.type;
+    }
+    _getPersistence() {
+      return this.assertedPersistence.persistence;
+    }
+    _updateErrorMap(errorMap) {
+      this._errorFactory = new ErrorFactory("auth", "Firebase", errorMap());
+    }
+    onAuthStateChanged(nextOrObserver, error2, completed) {
+      return this.registerStateListener(this.authStateSubscription, nextOrObserver, error2, completed);
+    }
+    beforeAuthStateChanged(callback, onAbort) {
+      return this.beforeStateQueue.pushCallback(callback, onAbort);
+    }
+    onIdTokenChanged(nextOrObserver, error2, completed) {
+      return this.registerStateListener(this.idTokenSubscription, nextOrObserver, error2, completed);
+    }
+    authStateReady() {
+      return new Promise((resolve, reject) => {
+        if (this.currentUser) {
+          resolve();
+        } else {
+          const unsubscribe = this.onAuthStateChanged(() => {
+            unsubscribe();
+            resolve();
+          }, reject);
+        }
+      });
+    }
+    /**
+     * Revokes the given access token. Currently only supports Apple OAuth access tokens.
+     */
+    async revokeAccessToken(token) {
+      if (this.currentUser) {
+        const idToken = await this.currentUser.getIdToken();
+        const request = {
+          providerId: "apple.com",
+          tokenType: "ACCESS_TOKEN",
+          token,
+          idToken
+        };
+        if (this.tenantId != null) {
+          request.tenantId = this.tenantId;
+        }
+        await revokeToken(this, request);
+      }
+    }
+    toJSON() {
+      return {
+        apiKey: this.config.apiKey,
+        authDomain: this.config.authDomain,
+        appName: this.name,
+        currentUser: this._currentUser?.toJSON()
+      };
+    }
+    async _setRedirectUser(user, popupRedirectResolver) {
+      const redirectManager = await this.getOrInitRedirectPersistenceManager(popupRedirectResolver);
+      return user === null ? redirectManager.removeCurrentUser() : redirectManager.setCurrentUser(user);
+    }
+    async getOrInitRedirectPersistenceManager(popupRedirectResolver) {
+      if (!this.redirectPersistenceManager) {
+        const resolver = popupRedirectResolver && _getInstance(popupRedirectResolver) || this._popupRedirectResolver;
+        _assert(
+          resolver,
+          this,
+          "argument-error"
+          /* AuthErrorCode.ARGUMENT_ERROR */
+        );
+        this.redirectPersistenceManager = await PersistenceUserManager.create(
+          this,
+          [_getInstance(resolver._redirectPersistence)],
+          "redirectUser"
+          /* KeyName.REDIRECT_USER */
+        );
+        this.redirectUser = await this.redirectPersistenceManager.getCurrentUser();
+      }
+      return this.redirectPersistenceManager;
+    }
+    async _redirectUserForId(id) {
+      if (this._isInitialized) {
+        await this.queue(async () => {
+        });
+      }
+      if (this._currentUser?._redirectEventId === id) {
+        return this._currentUser;
+      }
+      if (this.redirectUser?._redirectEventId === id) {
+        return this.redirectUser;
+      }
+      return null;
+    }
+    async _persistUserIfCurrent(user) {
+      if (user === this.currentUser) {
+        return this.queue(async () => this.directlySetCurrentUser(user));
+      }
+    }
+    /** Notifies listeners only if the user is current */
+    _notifyListenersIfCurrent(user) {
+      if (user === this.currentUser) {
+        this.notifyAuthListeners();
+      }
+    }
+    _key() {
+      return `${this.config.authDomain}:${this.config.apiKey}:${this.name}`;
+    }
+    _startProactiveRefresh() {
+      this.isProactiveRefreshEnabled = true;
+      if (this.currentUser) {
+        this._currentUser._startProactiveRefresh();
+      }
+    }
+    _stopProactiveRefresh() {
+      this.isProactiveRefreshEnabled = false;
+      if (this.currentUser) {
+        this._currentUser._stopProactiveRefresh();
+      }
+    }
+    /** Returns the current user cast as the internal type */
+    get _currentUser() {
+      return this.currentUser;
+    }
+    notifyAuthListeners() {
+      if (!this._isInitialized) {
+        return;
+      }
+      this.idTokenSubscription.next(this.currentUser);
+      const currentUid = this.currentUser?.uid ?? null;
+      if (this.lastNotifiedUid !== currentUid) {
+        this.lastNotifiedUid = currentUid;
+        this.authStateSubscription.next(this.currentUser);
+      }
+    }
+    registerStateListener(subscription, nextOrObserver, error2, completed) {
+      if (this._deleted) {
+        return () => {
+        };
+      }
+      const cb = typeof nextOrObserver === "function" ? nextOrObserver : nextOrObserver.next.bind(nextOrObserver);
+      let isUnsubscribed = false;
+      const promise = this._isInitialized ? Promise.resolve() : this._initializationPromise;
+      _assert(
+        promise,
+        this,
+        "internal-error"
+        /* AuthErrorCode.INTERNAL_ERROR */
+      );
+      promise.then(() => {
+        if (isUnsubscribed) {
+          return;
+        }
+        cb(this.currentUser);
+      });
+      if (typeof nextOrObserver === "function") {
+        const unsubscribe = subscription.addObserver(nextOrObserver, error2, completed);
+        return () => {
+          isUnsubscribed = true;
+          unsubscribe();
+        };
+      } else {
+        const unsubscribe = subscription.addObserver(nextOrObserver);
+        return () => {
+          isUnsubscribed = true;
+          unsubscribe();
+        };
+      }
+    }
+    /**
+     * Unprotected (from race conditions) method to set the current user. This
+     * should only be called from within a queued callback. This is necessary
+     * because the queue shouldn't rely on another queued callback.
+     */
+    async directlySetCurrentUser(user) {
+      if (this.currentUser && this.currentUser !== user) {
+        this._currentUser._stopProactiveRefresh();
+      }
+      if (user && this.isProactiveRefreshEnabled) {
+        user._startProactiveRefresh();
+      }
+      this.currentUser = user;
+      if (user) {
+        await this.assertedPersistence.setCurrentUser(user);
+      } else {
+        await this.assertedPersistence.removeCurrentUser();
+      }
+    }
+    queue(action) {
+      this.operations = this.operations.then(action, action);
+      return this.operations;
+    }
+    get assertedPersistence() {
+      _assert(
+        this.persistenceManager,
+        this,
+        "internal-error"
+        /* AuthErrorCode.INTERNAL_ERROR */
+      );
+      return this.persistenceManager;
+    }
+    _logFramework(framework) {
+      if (!framework || this.frameworks.includes(framework)) {
+        return;
+      }
+      this.frameworks.push(framework);
+      this.frameworks.sort();
+      this.clientVersion = _getClientVersion(this.config.clientPlatform, this._getFrameworks());
+    }
+    _getFrameworks() {
+      return this.frameworks;
+    }
+    async _getAdditionalHeaders() {
+      const headers = {
+        [
+          "X-Client-Version"
+          /* HttpHeader.X_CLIENT_VERSION */
+        ]: this.clientVersion
+      };
+      if (this.app.options.appId) {
+        headers[
+          "X-Firebase-gmpid"
+          /* HttpHeader.X_FIREBASE_GMPID */
+        ] = this.app.options.appId;
+      }
+      const heartbeatsHeader = await this.heartbeatServiceProvider.getImmediate({
+        optional: true
+      })?.getHeartbeatsHeader();
+      if (heartbeatsHeader) {
+        headers[
+          "X-Firebase-Client"
+          /* HttpHeader.X_FIREBASE_CLIENT */
+        ] = heartbeatsHeader;
+      }
+      const appCheckToken = await this._getAppCheckToken();
+      if (appCheckToken) {
+        headers[
+          "X-Firebase-AppCheck"
+          /* HttpHeader.X_FIREBASE_APP_CHECK */
+        ] = appCheckToken;
+      }
+      return headers;
+    }
+    async _getAppCheckToken() {
+      if (_isFirebaseServerApp(this.app) && this.app.settings.appCheckToken) {
+        return this.app.settings.appCheckToken;
+      }
+      const appCheckTokenResult = await this.appCheckServiceProvider.getImmediate({ optional: true })?.getToken();
+      if (appCheckTokenResult?.error) {
+        _logWarn(`Error while retrieving App Check token: ${appCheckTokenResult.error}`);
+      }
+      return appCheckTokenResult?.token;
+    }
+  };
+  function _castAuth(auth2) {
+    return getModularInstance(auth2);
+  }
+  var Subscription = class {
+    constructor(auth2) {
+      this.auth = auth2;
+      this.observer = null;
+      this.addObserver = createSubscribe((observer) => this.observer = observer);
+    }
+    get next() {
+      _assert(
+        this.observer,
+        this.auth,
+        "internal-error"
+        /* AuthErrorCode.INTERNAL_ERROR */
+      );
+      return this.observer.next.bind(this.observer);
+    }
+  };
+  var externalJSProvider = {
+    async loadJS() {
+      throw new Error("Unable to load external scripts");
+    },
+    recaptchaV2Script: "",
+    recaptchaEnterpriseScript: "",
+    gapiScript: ""
+  };
+  function _setExternalJSProvider(p) {
+    externalJSProvider = p;
   }
   function _loadJS(url) {
-    return new Promise((resolve, reject) => {
-      const el = document.createElement("script");
-      el.setAttribute("src", url);
-      el.onload = resolve;
-      el.onerror = (e) => {
-        const error2 = _createError(
-          "internal-error"
-          /* AuthErrorCode.INTERNAL_ERROR */
-        );
-        error2.customData = e;
-        reject(error2);
-      };
-      el.type = "text/javascript";
-      el.charset = "UTF-8";
-      getScriptParentElement().appendChild(el);
-    });
+    return externalJSProvider.loadJS(url);
+  }
+  function _recaptchaV2ScriptUrl() {
+    return externalJSProvider.recaptchaV2Script;
+  }
+  function _recaptchaEnterpriseScriptUrl() {
+    return externalJSProvider.recaptchaEnterpriseScript;
+  }
+  function _gapiScriptUrl() {
+    return externalJSProvider.gapiScript;
   }
   function _generateCallbackName(prefix) {
     return `__${prefix}${Math.floor(Math.random() * 1e6)}`;
   }
-  var RECAPTCHA_ENTERPRISE_URL = "https://www.google.com/recaptcha/enterprise.js?render=";
+  var _SOLVE_TIME_MS = 500;
+  var _EXPIRATION_TIME_MS = 6e4;
+  var _WIDGET_ID_START = 1e12;
+  var MockReCaptcha = class {
+    constructor(auth2) {
+      this.auth = auth2;
+      this.counter = _WIDGET_ID_START;
+      this._widgets = /* @__PURE__ */ new Map();
+    }
+    render(container, parameters) {
+      const id = this.counter;
+      this._widgets.set(id, new MockWidget(container, this.auth.name, parameters || {}));
+      this.counter++;
+      return id;
+    }
+    reset(optWidgetId) {
+      const id = optWidgetId || _WIDGET_ID_START;
+      void this._widgets.get(id)?.delete();
+      this._widgets.delete(id);
+    }
+    getResponse(optWidgetId) {
+      const id = optWidgetId || _WIDGET_ID_START;
+      return this._widgets.get(id)?.getResponse() || "";
+    }
+    async execute(optWidgetId) {
+      const id = optWidgetId || _WIDGET_ID_START;
+      void this._widgets.get(id)?.execute();
+      return "";
+    }
+  };
+  var MockGreCAPTCHATopLevel = class {
+    constructor() {
+      this.enterprise = new MockGreCAPTCHA();
+    }
+    ready(callback) {
+      callback();
+    }
+    execute(_siteKey, _options) {
+      return Promise.resolve("token");
+    }
+    render(_container, _parameters) {
+      return "";
+    }
+  };
+  var MockGreCAPTCHA = class {
+    ready(callback) {
+      callback();
+    }
+    execute(_siteKey, _options) {
+      return Promise.resolve("token");
+    }
+    render(_container, _parameters) {
+      return "";
+    }
+  };
+  var MockWidget = class {
+    constructor(containerOrId, appName, params) {
+      this.params = params;
+      this.timerId = null;
+      this.deleted = false;
+      this.responseToken = null;
+      this.clickHandler = () => {
+        this.execute();
+      };
+      const container = typeof containerOrId === "string" ? document.getElementById(containerOrId) : containerOrId;
+      _assert(container, "argument-error", { appName });
+      this.container = container;
+      this.isVisible = this.params.size !== "invisible";
+      if (this.isVisible) {
+        this.execute();
+      } else {
+        this.container.addEventListener("click", this.clickHandler);
+      }
+    }
+    getResponse() {
+      this.checkIfDeleted();
+      return this.responseToken;
+    }
+    delete() {
+      this.checkIfDeleted();
+      this.deleted = true;
+      if (this.timerId) {
+        clearTimeout(this.timerId);
+        this.timerId = null;
+      }
+      this.container.removeEventListener("click", this.clickHandler);
+    }
+    execute() {
+      this.checkIfDeleted();
+      if (this.timerId) {
+        return;
+      }
+      this.timerId = window.setTimeout(() => {
+        this.responseToken = generateRandomAlphaNumericString(50);
+        const { callback, "expired-callback": expiredCallback } = this.params;
+        if (callback) {
+          try {
+            callback(this.responseToken);
+          } catch (e) {
+          }
+        }
+        this.timerId = window.setTimeout(() => {
+          this.timerId = null;
+          this.responseToken = null;
+          if (expiredCallback) {
+            try {
+              expiredCallback();
+            } catch (e) {
+            }
+          }
+          if (this.isVisible) {
+            this.execute();
+          }
+        }, _EXPIRATION_TIME_MS);
+      }, _SOLVE_TIME_MS);
+    }
+    checkIfDeleted() {
+      if (this.deleted) {
+        throw new Error("reCAPTCHA mock was already deleted!");
+      }
+    }
+  };
+  function generateRandomAlphaNumericString(len) {
+    const chars = [];
+    const allowedChars = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    for (let i = 0; i < len; i++) {
+      chars.push(allowedChars.charAt(Math.floor(Math.random() * allowedChars.length)));
+    }
+    return chars.join("");
+  }
   var RECAPTCHA_ENTERPRISE_VERIFIER_TYPE = "recaptcha-enterprise";
   var FAKE_TOKEN = "NO_RECAPTCHA";
   var RecaptchaEnterpriseVerifier = class {
@@ -8309,6 +9616,10 @@
           reject(Error("No reCAPTCHA enterprise script loaded."));
         }
       }
+      if (this.auth.settings.appVerificationDisabledForTesting) {
+        const mockRecaptcha = new MockGreCAPTCHATopLevel();
+        return mockRecaptcha.execute("siteKey", { action: "verify" });
+      }
       return new Promise((resolve, reject) => {
         retrieveSiteKey(this.auth).then((siteKey) => {
           if (!forceRefresh && isEnterprise(window.grecaptcha)) {
@@ -8318,7 +9629,11 @@
               reject(new Error("RecaptchaVerifier is only supported in browser"));
               return;
             }
-            _loadJS(RECAPTCHA_ENTERPRISE_URL + siteKey).then(() => {
+            let url = _recaptchaEnterpriseScriptUrl();
+            if (url.length !== 0) {
+              url += siteKey;
+            }
+            _loadJS(url).then(() => {
               retrieveRecaptchaToken(siteKey, resolve, reject);
             }).catch((error2) => {
               reject(error2);
@@ -8330,16 +9645,48 @@
       });
     }
   };
-  async function injectRecaptchaFields(auth2, request, action, captchaResp = false) {
+  async function injectRecaptchaFields(auth2, request, action, isCaptchaResp = false, isFakeToken = false) {
     const verifier = new RecaptchaEnterpriseVerifier(auth2);
     let captchaResponse;
-    try {
-      captchaResponse = await verifier.verify(action);
-    } catch (error2) {
-      captchaResponse = await verifier.verify(action, true);
+    if (isFakeToken) {
+      captchaResponse = FAKE_TOKEN;
+    } else {
+      try {
+        captchaResponse = await verifier.verify(action);
+      } catch (error2) {
+        captchaResponse = await verifier.verify(action, true);
+      }
     }
-    const newRequest = Object.assign({}, request);
-    if (!captchaResp) {
+    const newRequest = { ...request };
+    if (action === "mfaSmsEnrollment" || action === "mfaSmsSignIn") {
+      if ("phoneEnrollmentInfo" in newRequest) {
+        const phoneNumber = newRequest.phoneEnrollmentInfo.phoneNumber;
+        const recaptchaToken = newRequest.phoneEnrollmentInfo.recaptchaToken;
+        Object.assign(newRequest, {
+          "phoneEnrollmentInfo": {
+            phoneNumber,
+            recaptchaToken,
+            captchaResponse,
+            "clientType": "CLIENT_TYPE_WEB",
+            "recaptchaVersion": "RECAPTCHA_ENTERPRISE"
+            /* RecaptchaVersion.ENTERPRISE */
+          }
+        });
+      } else if ("phoneSignInInfo" in newRequest) {
+        const recaptchaToken = newRequest.phoneSignInInfo.recaptchaToken;
+        Object.assign(newRequest, {
+          "phoneSignInInfo": {
+            recaptchaToken,
+            captchaResponse,
+            "clientType": "CLIENT_TYPE_WEB",
+            "recaptchaVersion": "RECAPTCHA_ENTERPRISE"
+            /* RecaptchaVersion.ENTERPRISE */
+          }
+        });
+      }
+      return newRequest;
+    }
+    if (!isCaptchaResp) {
       Object.assign(newRequest, { captchaResponse });
     } else {
       Object.assign(newRequest, { "captchaResp": captchaResponse });
@@ -8354,507 +9701,104 @@
     });
     return newRequest;
   }
-  var AuthMiddlewareQueue = class {
-    constructor(auth2) {
-      this.auth = auth2;
-      this.queue = [];
-    }
-    pushCallback(callback, onAbort) {
-      const wrappedCallback = (user) => new Promise((resolve, reject) => {
-        try {
-          const result = callback(user);
-          resolve(result);
-        } catch (e) {
-          reject(e);
-        }
-      });
-      wrappedCallback.onAbort = onAbort;
-      this.queue.push(wrappedCallback);
-      const index = this.queue.length - 1;
-      return () => {
-        this.queue[index] = () => Promise.resolve();
-      };
-    }
-    async runMiddleware(nextUser) {
-      if (this.auth.currentUser === nextUser) {
-        return;
-      }
-      const onAbortStack = [];
-      try {
-        for (const beforeStateCallback of this.queue) {
-          await beforeStateCallback(nextUser);
-          if (beforeStateCallback.onAbort) {
-            onAbortStack.push(beforeStateCallback.onAbort);
+  async function handleRecaptchaFlow(authInstance, request, actionName, actionMethod, recaptchaAuthProvider) {
+    if (recaptchaAuthProvider === "EMAIL_PASSWORD_PROVIDER") {
+      if (authInstance._getRecaptchaConfig()?.isProviderEnabled(
+        "EMAIL_PASSWORD_PROVIDER"
+        /* RecaptchaAuthProvider.EMAIL_PASSWORD_PROVIDER */
+      )) {
+        const requestWithRecaptcha = await injectRecaptchaFields(
+          authInstance,
+          request,
+          actionName,
+          actionName === "getOobCode"
+          /* RecaptchaActionName.GET_OOB_CODE */
+        );
+        return actionMethod(authInstance, requestWithRecaptcha);
+      } else {
+        return actionMethod(authInstance, request).catch(async (error2) => {
+          if (error2.code === `auth/${"missing-recaptcha-token"}`) {
+            console.log(`${actionName} is protected by reCAPTCHA Enterprise for this project. Automatically triggering the reCAPTCHA flow and restarting the flow.`);
+            const requestWithRecaptcha = await injectRecaptchaFields(
+              authInstance,
+              request,
+              actionName,
+              actionName === "getOobCode"
+              /* RecaptchaActionName.GET_OOB_CODE */
+            );
+            return actionMethod(authInstance, requestWithRecaptcha);
+          } else {
+            return Promise.reject(error2);
           }
-        }
-      } catch (e) {
-        onAbortStack.reverse();
-        for (const onAbort of onAbortStack) {
-          try {
-            onAbort();
-          } catch (_) {
-          }
-        }
-        throw this.auth._errorFactory.create("login-blocked", {
-          originalMessage: e === null || e === void 0 ? void 0 : e.message
         });
       }
-    }
-  };
-  var AuthImpl = class {
-    constructor(app, heartbeatServiceProvider, appCheckServiceProvider, config3) {
-      this.app = app;
-      this.heartbeatServiceProvider = heartbeatServiceProvider;
-      this.appCheckServiceProvider = appCheckServiceProvider;
-      this.config = config3;
-      this.currentUser = null;
-      this.emulatorConfig = null;
-      this.operations = Promise.resolve();
-      this.authStateSubscription = new Subscription(this);
-      this.idTokenSubscription = new Subscription(this);
-      this.beforeStateQueue = new AuthMiddlewareQueue(this);
-      this.redirectUser = null;
-      this.isProactiveRefreshEnabled = false;
-      this._canInitEmulator = true;
-      this._isInitialized = false;
-      this._deleted = false;
-      this._initializationPromise = null;
-      this._popupRedirectResolver = null;
-      this._errorFactory = _DEFAULT_AUTH_ERROR_FACTORY;
-      this._agentRecaptchaConfig = null;
-      this._tenantRecaptchaConfigs = {};
-      this.lastNotifiedUid = void 0;
-      this.languageCode = null;
-      this.tenantId = null;
-      this.settings = { appVerificationDisabledForTesting: false };
-      this.frameworks = [];
-      this.name = app.name;
-      this.clientVersion = config3.sdkClientVersion;
-    }
-    _initializeWithPersistence(persistenceHierarchy, popupRedirectResolver) {
-      if (popupRedirectResolver) {
-        this._popupRedirectResolver = _getInstance(popupRedirectResolver);
-      }
-      this._initializationPromise = this.queue(async () => {
-        var _a, _b;
-        if (this._deleted) {
-          return;
-        }
-        this.persistenceManager = await PersistenceUserManager.create(this, persistenceHierarchy);
-        if (this._deleted) {
-          return;
-        }
-        if ((_a = this._popupRedirectResolver) === null || _a === void 0 ? void 0 : _a._shouldInitProactively) {
-          try {
-            await this._popupRedirectResolver._initialize(this);
-          } catch (e) {
+    } else if (recaptchaAuthProvider === "PHONE_PROVIDER") {
+      if (authInstance._getRecaptchaConfig()?.isProviderEnabled(
+        "PHONE_PROVIDER"
+        /* RecaptchaAuthProvider.PHONE_PROVIDER */
+      )) {
+        const requestWithRecaptcha = await injectRecaptchaFields(authInstance, request, actionName);
+        return actionMethod(authInstance, requestWithRecaptcha).catch(async (error2) => {
+          if (authInstance._getRecaptchaConfig()?.getProviderEnforcementState(
+            "PHONE_PROVIDER"
+            /* RecaptchaAuthProvider.PHONE_PROVIDER */
+          ) === "AUDIT") {
+            if (error2.code === `auth/${"missing-recaptcha-token"}` || error2.code === `auth/${"invalid-app-credential"}`) {
+              console.log(`Failed to verify with reCAPTCHA Enterprise. Automatically triggering the reCAPTCHA v2 flow to complete the ${actionName} flow.`);
+              const requestWithRecaptchaFields = await injectRecaptchaFields(
+                authInstance,
+                request,
+                actionName,
+                false,
+                // isCaptchaResp
+                true
+                // isFakeToken
+              );
+              return actionMethod(authInstance, requestWithRecaptchaFields);
+            }
           }
-        }
-        await this.initializeCurrentUser(popupRedirectResolver);
-        this.lastNotifiedUid = ((_b = this.currentUser) === null || _b === void 0 ? void 0 : _b.uid) || null;
-        if (this._deleted) {
-          return;
-        }
-        this._isInitialized = true;
-      });
-      return this._initializationPromise;
-    }
-    /**
-     * If the persistence is changed in another window, the user manager will let us know
-     */
-    async _onStorageEvent() {
-      if (this._deleted) {
-        return;
-      }
-      const user = await this.assertedPersistence.getCurrentUser();
-      if (!this.currentUser && !user) {
-        return;
-      }
-      if (this.currentUser && user && this.currentUser.uid === user.uid) {
-        this._currentUser._assign(user);
-        await this.currentUser.getIdToken();
-        return;
-      }
-      await this._updateCurrentUser(
-        user,
-        /* skipBeforeStateCallbacks */
-        true
-      );
-    }
-    async initializeCurrentUser(popupRedirectResolver) {
-      var _a;
-      const previouslyStoredUser = await this.assertedPersistence.getCurrentUser();
-      let futureCurrentUser = previouslyStoredUser;
-      let needsTocheckMiddleware = false;
-      if (popupRedirectResolver && this.config.authDomain) {
-        await this.getOrInitRedirectPersistenceManager();
-        const redirectUserEventId = (_a = this.redirectUser) === null || _a === void 0 ? void 0 : _a._redirectEventId;
-        const storedUserEventId = futureCurrentUser === null || futureCurrentUser === void 0 ? void 0 : futureCurrentUser._redirectEventId;
-        const result = await this.tryRedirectSignIn(popupRedirectResolver);
-        if ((!redirectUserEventId || redirectUserEventId === storedUserEventId) && (result === null || result === void 0 ? void 0 : result.user)) {
-          futureCurrentUser = result.user;
-          needsTocheckMiddleware = true;
-        }
-      }
-      if (!futureCurrentUser) {
-        return this.directlySetCurrentUser(null);
-      }
-      if (!futureCurrentUser._redirectEventId) {
-        if (needsTocheckMiddleware) {
-          try {
-            await this.beforeStateQueue.runMiddleware(futureCurrentUser);
-          } catch (e) {
-            futureCurrentUser = previouslyStoredUser;
-            this._popupRedirectResolver._overrideRedirectResult(this, () => Promise.reject(e));
-          }
-        }
-        if (futureCurrentUser) {
-          return this.reloadAndSetCurrentUserOrClear(futureCurrentUser);
-        } else {
-          return this.directlySetCurrentUser(null);
-        }
-      }
-      _assert(
-        this._popupRedirectResolver,
-        this,
-        "argument-error"
-        /* AuthErrorCode.ARGUMENT_ERROR */
-      );
-      await this.getOrInitRedirectPersistenceManager();
-      if (this.redirectUser && this.redirectUser._redirectEventId === futureCurrentUser._redirectEventId) {
-        return this.directlySetCurrentUser(futureCurrentUser);
-      }
-      return this.reloadAndSetCurrentUserOrClear(futureCurrentUser);
-    }
-    async tryRedirectSignIn(redirectResolver) {
-      let result = null;
-      try {
-        result = await this._popupRedirectResolver._completeRedirectFn(this, redirectResolver, true);
-      } catch (e) {
-        await this._setRedirectUser(null);
-      }
-      return result;
-    }
-    async reloadAndSetCurrentUserOrClear(user) {
-      try {
-        await _reloadWithoutSaving(user);
-      } catch (e) {
-        if ((e === null || e === void 0 ? void 0 : e.code) !== `auth/${"network-request-failed"}`) {
-          return this.directlySetCurrentUser(null);
-        }
-      }
-      return this.directlySetCurrentUser(user);
-    }
-    useDeviceLanguage() {
-      this.languageCode = _getUserLanguage();
-    }
-    async _delete() {
-      this._deleted = true;
-    }
-    async updateCurrentUser(userExtern) {
-      const user = userExtern ? getModularInstance(userExtern) : null;
-      if (user) {
-        _assert(
-          user.auth.config.apiKey === this.config.apiKey,
-          this,
-          "invalid-user-token"
-          /* AuthErrorCode.INVALID_AUTH */
-        );
-      }
-      return this._updateCurrentUser(user && user._clone(this));
-    }
-    async _updateCurrentUser(user, skipBeforeStateCallbacks = false) {
-      if (this._deleted) {
-        return;
-      }
-      if (user) {
-        _assert(
-          this.tenantId === user.tenantId,
-          this,
-          "tenant-id-mismatch"
-          /* AuthErrorCode.TENANT_ID_MISMATCH */
-        );
-      }
-      if (!skipBeforeStateCallbacks) {
-        await this.beforeStateQueue.runMiddleware(user);
-      }
-      return this.queue(async () => {
-        await this.directlySetCurrentUser(user);
-        this.notifyAuthListeners();
-      });
-    }
-    async signOut() {
-      await this.beforeStateQueue.runMiddleware(null);
-      if (this.redirectPersistenceManager || this._popupRedirectResolver) {
-        await this._setRedirectUser(null);
-      }
-      return this._updateCurrentUser(
-        null,
-        /* skipBeforeStateCallbacks */
-        true
-      );
-    }
-    setPersistence(persistence) {
-      return this.queue(async () => {
-        await this.assertedPersistence.setPersistence(_getInstance(persistence));
-      });
-    }
-    async initializeRecaptchaConfig() {
-      const response = await getRecaptchaConfig(this, {
-        clientType: "CLIENT_TYPE_WEB",
-        version: "RECAPTCHA_ENTERPRISE"
-        /* RecaptchaVersion.ENTERPRISE */
-      });
-      const config3 = new RecaptchaConfig(response);
-      if (this.tenantId == null) {
-        this._agentRecaptchaConfig = config3;
-      } else {
-        this._tenantRecaptchaConfigs[this.tenantId] = config3;
-      }
-      if (config3.emailPasswordEnabled) {
-        const verifier = new RecaptchaEnterpriseVerifier(this);
-        void verifier.verify();
-      }
-    }
-    _getRecaptchaConfig() {
-      if (this.tenantId == null) {
-        return this._agentRecaptchaConfig;
-      } else {
-        return this._tenantRecaptchaConfigs[this.tenantId];
-      }
-    }
-    _getPersistence() {
-      return this.assertedPersistence.persistence.type;
-    }
-    _updateErrorMap(errorMap) {
-      this._errorFactory = new ErrorFactory("auth", "Firebase", errorMap());
-    }
-    onAuthStateChanged(nextOrObserver, error2, completed) {
-      return this.registerStateListener(this.authStateSubscription, nextOrObserver, error2, completed);
-    }
-    beforeAuthStateChanged(callback, onAbort) {
-      return this.beforeStateQueue.pushCallback(callback, onAbort);
-    }
-    onIdTokenChanged(nextOrObserver, error2, completed) {
-      return this.registerStateListener(this.idTokenSubscription, nextOrObserver, error2, completed);
-    }
-    toJSON() {
-      var _a;
-      return {
-        apiKey: this.config.apiKey,
-        authDomain: this.config.authDomain,
-        appName: this.name,
-        currentUser: (_a = this._currentUser) === null || _a === void 0 ? void 0 : _a.toJSON()
-      };
-    }
-    async _setRedirectUser(user, popupRedirectResolver) {
-      const redirectManager = await this.getOrInitRedirectPersistenceManager(popupRedirectResolver);
-      return user === null ? redirectManager.removeCurrentUser() : redirectManager.setCurrentUser(user);
-    }
-    async getOrInitRedirectPersistenceManager(popupRedirectResolver) {
-      if (!this.redirectPersistenceManager) {
-        const resolver = popupRedirectResolver && _getInstance(popupRedirectResolver) || this._popupRedirectResolver;
-        _assert(
-          resolver,
-          this,
-          "argument-error"
-          /* AuthErrorCode.ARGUMENT_ERROR */
-        );
-        this.redirectPersistenceManager = await PersistenceUserManager.create(
-          this,
-          [_getInstance(resolver._redirectPersistence)],
-          "redirectUser"
-          /* KeyName.REDIRECT_USER */
-        );
-        this.redirectUser = await this.redirectPersistenceManager.getCurrentUser();
-      }
-      return this.redirectPersistenceManager;
-    }
-    async _redirectUserForId(id) {
-      var _a, _b;
-      if (this._isInitialized) {
-        await this.queue(async () => {
+          return Promise.reject(error2);
         });
-      }
-      if (((_a = this._currentUser) === null || _a === void 0 ? void 0 : _a._redirectEventId) === id) {
-        return this._currentUser;
-      }
-      if (((_b = this.redirectUser) === null || _b === void 0 ? void 0 : _b._redirectEventId) === id) {
-        return this.redirectUser;
-      }
-      return null;
-    }
-    async _persistUserIfCurrent(user) {
-      if (user === this.currentUser) {
-        return this.queue(async () => this.directlySetCurrentUser(user));
-      }
-    }
-    /** Notifies listeners only if the user is current */
-    _notifyListenersIfCurrent(user) {
-      if (user === this.currentUser) {
-        this.notifyAuthListeners();
-      }
-    }
-    _key() {
-      return `${this.config.authDomain}:${this.config.apiKey}:${this.name}`;
-    }
-    _startProactiveRefresh() {
-      this.isProactiveRefreshEnabled = true;
-      if (this.currentUser) {
-        this._currentUser._startProactiveRefresh();
-      }
-    }
-    _stopProactiveRefresh() {
-      this.isProactiveRefreshEnabled = false;
-      if (this.currentUser) {
-        this._currentUser._stopProactiveRefresh();
-      }
-    }
-    /** Returns the current user cast as the internal type */
-    get _currentUser() {
-      return this.currentUser;
-    }
-    notifyAuthListeners() {
-      var _a, _b;
-      if (!this._isInitialized) {
-        return;
-      }
-      this.idTokenSubscription.next(this.currentUser);
-      const currentUid = (_b = (_a = this.currentUser) === null || _a === void 0 ? void 0 : _a.uid) !== null && _b !== void 0 ? _b : null;
-      if (this.lastNotifiedUid !== currentUid) {
-        this.lastNotifiedUid = currentUid;
-        this.authStateSubscription.next(this.currentUser);
-      }
-    }
-    registerStateListener(subscription, nextOrObserver, error2, completed) {
-      if (this._deleted) {
-        return () => {
-        };
-      }
-      const cb = typeof nextOrObserver === "function" ? nextOrObserver : nextOrObserver.next.bind(nextOrObserver);
-      const promise = this._isInitialized ? Promise.resolve() : this._initializationPromise;
-      _assert(
-        promise,
-        this,
-        "internal-error"
-        /* AuthErrorCode.INTERNAL_ERROR */
-      );
-      promise.then(() => cb(this.currentUser));
-      if (typeof nextOrObserver === "function") {
-        return subscription.addObserver(nextOrObserver, error2, completed);
       } else {
-        return subscription.addObserver(nextOrObserver);
+        const requestWithRecaptchaFields = await injectRecaptchaFields(
+          authInstance,
+          request,
+          actionName,
+          false,
+          // isCaptchaResp
+          true
+          // isFakeToken
+        );
+        return actionMethod(authInstance, requestWithRecaptchaFields);
       }
+    } else {
+      return Promise.reject(recaptchaAuthProvider + " provider is not supported.");
     }
-    /**
-     * Unprotected (from race conditions) method to set the current user. This
-     * should only be called from within a queued callback. This is necessary
-     * because the queue shouldn't rely on another queued callback.
-     */
-    async directlySetCurrentUser(user) {
-      if (this.currentUser && this.currentUser !== user) {
-        this._currentUser._stopProactiveRefresh();
-      }
-      if (user && this.isProactiveRefreshEnabled) {
-        user._startProactiveRefresh();
-      }
-      this.currentUser = user;
-      if (user) {
-        await this.assertedPersistence.setCurrentUser(user);
-      } else {
-        await this.assertedPersistence.removeCurrentUser();
-      }
-    }
-    queue(action) {
-      this.operations = this.operations.then(action, action);
-      return this.operations;
-    }
-    get assertedPersistence() {
-      _assert(
-        this.persistenceManager,
-        this,
-        "internal-error"
-        /* AuthErrorCode.INTERNAL_ERROR */
-      );
-      return this.persistenceManager;
-    }
-    _logFramework(framework) {
-      if (!framework || this.frameworks.includes(framework)) {
-        return;
-      }
-      this.frameworks.push(framework);
-      this.frameworks.sort();
-      this.clientVersion = _getClientVersion(this.config.clientPlatform, this._getFrameworks());
-    }
-    _getFrameworks() {
-      return this.frameworks;
-    }
-    async _getAdditionalHeaders() {
-      var _a;
-      const headers = {
-        [
-          "X-Client-Version"
-          /* HttpHeader.X_CLIENT_VERSION */
-        ]: this.clientVersion
-      };
-      if (this.app.options.appId) {
-        headers[
-          "X-Firebase-gmpid"
-          /* HttpHeader.X_FIREBASE_GMPID */
-        ] = this.app.options.appId;
-      }
-      const heartbeatsHeader = await ((_a = this.heartbeatServiceProvider.getImmediate({
-        optional: true
-      })) === null || _a === void 0 ? void 0 : _a.getHeartbeatsHeader());
-      if (heartbeatsHeader) {
-        headers[
-          "X-Firebase-Client"
-          /* HttpHeader.X_FIREBASE_CLIENT */
-        ] = heartbeatsHeader;
-      }
-      const appCheckToken = await this._getAppCheckToken();
-      if (appCheckToken) {
-        headers[
-          "X-Firebase-AppCheck"
-          /* HttpHeader.X_FIREBASE_APP_CHECK */
-        ] = appCheckToken;
-      }
-      return headers;
-    }
-    async _getAppCheckToken() {
-      var _a;
-      const appCheckTokenResult = await ((_a = this.appCheckServiceProvider.getImmediate({ optional: true })) === null || _a === void 0 ? void 0 : _a.getToken());
-      if (appCheckTokenResult === null || appCheckTokenResult === void 0 ? void 0 : appCheckTokenResult.error) {
-        _logWarn(`Error while retrieving App Check token: ${appCheckTokenResult.error}`);
-      }
-      return appCheckTokenResult === null || appCheckTokenResult === void 0 ? void 0 : appCheckTokenResult.token;
-    }
-  };
-  function _castAuth(auth2) {
-    return getModularInstance(auth2);
   }
-  var Subscription = class {
-    constructor(auth2) {
-      this.auth = auth2;
-      this.observer = null;
-      this.addObserver = createSubscribe((observer) => this.observer = observer);
+  async function _initializeRecaptchaConfig(auth2) {
+    const authInternal = _castAuth(auth2);
+    const response = await getRecaptchaConfig(authInternal, {
+      clientType: "CLIENT_TYPE_WEB",
+      version: "RECAPTCHA_ENTERPRISE"
+      /* RecaptchaVersion.ENTERPRISE */
+    });
+    const config3 = new RecaptchaConfig(response);
+    if (authInternal.tenantId == null) {
+      authInternal._agentRecaptchaConfig = config3;
+    } else {
+      authInternal._tenantRecaptchaConfigs[authInternal.tenantId] = config3;
     }
-    get next() {
-      _assert(
-        this.observer,
-        this.auth,
-        "internal-error"
-        /* AuthErrorCode.INTERNAL_ERROR */
-      );
-      return this.observer.next.bind(this.observer);
+    if (config3.isAnyProviderEnabled()) {
+      const verifier = new RecaptchaEnterpriseVerifier(authInternal);
+      void verifier.verify();
     }
-  };
+  }
   function initializeAuth(app, deps) {
     const provider = _getProvider(app, "auth");
     if (provider.isInitialized()) {
       const auth3 = provider.getImmediate();
       const initialOptions = provider.getOptions();
-      if (deepEqual(initialOptions, deps !== null && deps !== void 0 ? deps : {})) {
+      if (deepEqual(initialOptions, deps ?? {})) {
         return auth3;
       } else {
         _fail(
@@ -8868,40 +9812,53 @@
     return auth2;
   }
   function _initializeAuthInstance(auth2, deps) {
-    const persistence = (deps === null || deps === void 0 ? void 0 : deps.persistence) || [];
+    const persistence = deps?.persistence || [];
     const hierarchy = (Array.isArray(persistence) ? persistence : [persistence]).map(_getInstance);
-    if (deps === null || deps === void 0 ? void 0 : deps.errorMap) {
+    if (deps?.errorMap) {
       auth2._updateErrorMap(deps.errorMap);
     }
-    auth2._initializeWithPersistence(hierarchy, deps === null || deps === void 0 ? void 0 : deps.popupRedirectResolver);
+    auth2._initializeWithPersistence(hierarchy, deps?.popupRedirectResolver);
   }
   function connectAuthEmulator(auth2, url, options) {
     const authInternal = _castAuth(auth2);
-    _assert(
-      authInternal._canInitEmulator,
-      authInternal,
-      "emulator-config-failed"
-      /* AuthErrorCode.EMULATOR_CONFIG_FAILED */
-    );
     _assert(
       /^https?:\/\//.test(url),
       authInternal,
       "invalid-emulator-scheme"
       /* AuthErrorCode.INVALID_EMULATOR_SCHEME */
     );
-    const disableWarnings = !!(options === null || options === void 0 ? void 0 : options.disableWarnings);
+    const disableWarnings = !!options?.disableWarnings;
     const protocol = extractProtocol(url);
     const { host, port } = extractHostAndPort(url);
     const portStr = port === null ? "" : `:${port}`;
-    authInternal.config.emulator = { url: `${protocol}//${host}${portStr}/` };
-    authInternal.settings.appVerificationDisabledForTesting = true;
-    authInternal.emulatorConfig = Object.freeze({
+    const emulator = { url: `${protocol}//${host}${portStr}/` };
+    const emulatorConfig = Object.freeze({
       host,
       port,
       protocol: protocol.replace(":", ""),
       options: Object.freeze({ disableWarnings })
     });
-    if (!disableWarnings) {
+    if (!authInternal._canInitEmulator) {
+      _assert(
+        authInternal.config.emulator && authInternal.emulatorConfig,
+        authInternal,
+        "emulator-config-failed"
+        /* AuthErrorCode.EMULATOR_CONFIG_FAILED */
+      );
+      _assert(
+        deepEqual(emulator, authInternal.config.emulator) && deepEqual(emulatorConfig, authInternal.emulatorConfig),
+        authInternal,
+        "emulator-config-failed"
+        /* AuthErrorCode.EMULATOR_CONFIG_FAILED */
+      );
+      return;
+    }
+    authInternal.config.emulator = emulator;
+    authInternal.emulatorConfig = emulatorConfig;
+    authInternal.settings.appVerificationDisabledForTesting = true;
+    if (isCloudWorkstation(host)) {
+      void pingServer(`${protocol}//${host}${portStr}`);
+    } else if (!disableWarnings) {
       emitEmulatorWarning();
     }
   }
@@ -8997,6 +9954,9 @@
   async function updateEmailPassword(auth2, request) {
     return _performApiRequest(auth2, "POST", "/v1/accounts:update", request);
   }
+  async function linkEmailPassword(auth2, request) {
+    return _performApiRequest(auth2, "POST", "/v1/accounts:signUp", request);
+  }
   async function applyActionCode$1(auth2, request) {
     return _performApiRequest(auth2, "POST", "/v1/accounts:update", _addTidIfNecessary(auth2, request));
   }
@@ -9064,7 +10024,7 @@
      */
     static fromJSON(json) {
       const obj = typeof json === "string" ? JSON.parse(json) : json;
-      if ((obj === null || obj === void 0 ? void 0 : obj.email) && (obj === null || obj === void 0 ? void 0 : obj.password)) {
+      if (obj?.email && obj?.password) {
         if (obj.signInMethod === "password") {
           return this._fromEmailAndPassword(obj.email, obj.password);
         } else if (obj.signInMethod === "emailLink") {
@@ -9075,7 +10035,6 @@
     }
     /** @internal */
     async _getIdTokenResponse(auth2) {
-      var _a;
       switch (this.signInMethod) {
         case "password":
           const request = {
@@ -9085,30 +10044,14 @@
             clientType: "CLIENT_TYPE_WEB"
             /* RecaptchaClientType.WEB */
           };
-          if ((_a = auth2._getRecaptchaConfig()) === null || _a === void 0 ? void 0 : _a.emailPasswordEnabled) {
-            const requestWithRecaptcha = await injectRecaptchaFields(
-              auth2,
-              request,
-              "signInWithPassword"
-              /* RecaptchaActionName.SIGN_IN_WITH_PASSWORD */
-            );
-            return signInWithPassword(auth2, requestWithRecaptcha);
-          } else {
-            return signInWithPassword(auth2, request).catch(async (error2) => {
-              if (error2.code === `auth/${"missing-recaptcha-token"}`) {
-                console.log("Sign-in with email address and password is protected by reCAPTCHA for this project. Automatically triggering the reCAPTCHA flow and restarting the sign-in flow.");
-                const requestWithRecaptcha = await injectRecaptchaFields(
-                  auth2,
-                  request,
-                  "signInWithPassword"
-                  /* RecaptchaActionName.SIGN_IN_WITH_PASSWORD */
-                );
-                return signInWithPassword(auth2, requestWithRecaptcha);
-              } else {
-                return Promise.reject(error2);
-              }
-            });
-          }
+          return handleRecaptchaFlow(
+            auth2,
+            request,
+            "signInWithPassword",
+            signInWithPassword,
+            "EMAIL_PASSWORD_PROVIDER"
+            /* RecaptchaAuthProvider.EMAIL_PASSWORD_PROVIDER */
+          );
         case "emailLink":
           return signInWithEmailLink$1(auth2, {
             email: this._email,
@@ -9126,12 +10069,22 @@
     async _linkToIdToken(auth2, idToken) {
       switch (this.signInMethod) {
         case "password":
-          return updateEmailPassword(auth2, {
+          const request = {
             idToken,
             returnSecureToken: true,
             email: this._email,
-            password: this._password
-          });
+            password: this._password,
+            clientType: "CLIENT_TYPE_WEB"
+            /* RecaptchaClientType.WEB */
+          };
+          return handleRecaptchaFlow(
+            auth2,
+            request,
+            "signUpPassword",
+            linkEmailPassword,
+            "EMAIL_PASSWORD_PROVIDER"
+            /* RecaptchaAuthProvider.EMAIL_PASSWORD_PROVIDER */
+          );
         case "emailLink":
           return signInWithEmailLinkForLinking(auth2, {
             idToken,
@@ -9210,7 +10163,7 @@
      */
     static fromJSON(json) {
       const obj = typeof json === "string" ? JSON.parse(json) : json;
-      const { providerId, signInMethod } = obj, rest = __rest(obj, ["providerId", "signInMethod"]);
+      const { providerId, signInMethod, ...rest } = obj;
       if (!providerId || !signInMethod) {
         return null;
       }
@@ -9287,7 +10240,10 @@
     /* AuthErrorCode.USER_DELETED */
   };
   async function verifyPhoneNumberForExisting(auth2, request) {
-    const apiRequest = Object.assign(Object.assign({}, request), { operation: "REAUTH" });
+    const apiRequest = {
+      ...request,
+      operation: "REAUTH"
+    };
     return _performSignInRequest(auth2, "POST", "/v1/accounts:signInWithPhoneNumber", _addTidIfNecessary(auth2, apiRequest), VERIFY_PHONE_NUMBER_FOR_EXISTING_ERROR_MAP_);
   }
   var PhoneAuthCredential = class _PhoneAuthCredential extends AuthCredential {
@@ -9313,7 +10269,10 @@
     }
     /** @internal */
     _linkToIdToken(auth2, idToken) {
-      return linkWithPhoneNumber$1(auth2, Object.assign({ idToken }, this._makeVerificationRequest()));
+      return linkWithPhoneNumber$1(auth2, {
+        idToken,
+        ...this._makeVerificationRequest()
+      });
     }
     /** @internal */
     _getReauthenticationResolver(auth2) {
@@ -9399,20 +10358,19 @@
      * @internal
      */
     constructor(actionLink) {
-      var _a, _b, _c, _d, _e, _f;
       const searchParams = querystringDecode(extractQuerystring(actionLink));
-      const apiKey = (_a = searchParams[
+      const apiKey = searchParams[
         "apiKey"
         /* QueryField.API_KEY */
-      ]) !== null && _a !== void 0 ? _a : null;
-      const code = (_b = searchParams[
+      ] ?? null;
+      const code = searchParams[
         "oobCode"
         /* QueryField.CODE */
-      ]) !== null && _b !== void 0 ? _b : null;
-      const operation = parseMode((_c = searchParams[
+      ] ?? null;
+      const operation = parseMode(searchParams[
         "mode"
         /* QueryField.MODE */
-      ]) !== null && _c !== void 0 ? _c : null);
+      ] ?? null);
       _assert(
         apiKey && code && operation,
         "argument-error"
@@ -9421,18 +10379,18 @@
       this.apiKey = apiKey;
       this.operation = operation;
       this.code = code;
-      this.continueUrl = (_d = searchParams[
+      this.continueUrl = searchParams[
         "continueUrl"
         /* QueryField.CONTINUE_URL */
-      ]) !== null && _d !== void 0 ? _d : null;
-      this.languageCode = (_e = searchParams[
-        "languageCode"
+      ] ?? null;
+      this.languageCode = searchParams[
+        "lang"
         /* QueryField.LANGUAGE_CODE */
-      ]) !== null && _e !== void 0 ? _e : null;
-      this.tenantId = (_f = searchParams[
+      ] ?? null;
+      this.tenantId = searchParams[
         "tenantId"
         /* QueryField.TENANT_ID */
-      ]) !== null && _f !== void 0 ? _f : null;
+      ] ?? null;
     }
     /**
      * Parses the email action link string and returns an {@link ActionCodeURL} if the link is valid,
@@ -9447,7 +10405,7 @@
       const actionLink = parseDeepLink(link);
       try {
         return new _ActionCodeURL(actionLink);
-      } catch (_a) {
+      } catch {
         return null;
       }
     }
@@ -9611,7 +10569,7 @@
      * or the ID token string.
      */
     credential(params) {
-      return this._credential(Object.assign(Object.assign({}, params), { nonce: params.rawNonce }));
+      return this._credential({ ...params, nonce: params.rawNonce });
     }
     /** An internal credential method that accepts more permissive options */
     _credential(params) {
@@ -9620,7 +10578,11 @@
         "argument-error"
         /* AuthErrorCode.ARGUMENT_ERROR */
       );
-      return OAuthCredential._fromParams(Object.assign(Object.assign({}, params), { providerId: this.providerId, signInMethod: this.providerId }));
+      return OAuthCredential._fromParams({
+        ...params,
+        providerId: this.providerId,
+        signInMethod: this.providerId
+      });
     }
     /**
      * Used to extract the underlying {@link OAuthCredential} from a {@link UserCredential}.
@@ -9714,7 +10676,7 @@
       }
       try {
         return _FacebookAuthProvider.credential(tokenResponse.oauthAccessToken);
-      } catch (_a) {
+      } catch {
         return null;
       }
     }
@@ -9777,7 +10739,7 @@
       }
       try {
         return _GoogleAuthProvider.credential(oauthIdToken, oauthAccessToken);
-      } catch (_a) {
+      } catch {
         return null;
       }
     }
@@ -9792,9 +10754,9 @@
       );
     }
     /**
-     * Creates a credential for Github.
+     * Creates a credential for GitHub.
      *
-     * @param accessToken - Github access token.
+     * @param accessToken - GitHub access token.
      */
     static credential(accessToken) {
       return OAuthCredential._fromParams({
@@ -9829,7 +10791,7 @@
       }
       try {
         return _GithubAuthProvider.credential(tokenResponse.oauthAccessToken);
-      } catch (_a) {
+      } catch {
         return null;
       }
     }
@@ -10019,7 +10981,7 @@
       }
       try {
         return _TwitterAuthProvider.credential(oauthAccessToken, oauthTokenSecret);
-      } catch (_a) {
+      } catch {
         return null;
       }
     }
@@ -10072,10 +11034,12 @@
     return null;
   }
   async function signInAnonymously(auth2) {
-    var _a;
+    if (_isFirebaseServerApp(auth2.app)) {
+      return Promise.reject(_serverAppCurrentUserOperationNotSupportedError(auth2));
+    }
     const authInternal = _castAuth(auth2);
     await authInternal._initializationPromise;
-    if ((_a = authInternal.currentUser) === null || _a === void 0 ? void 0 : _a.isAnonymous) {
+    if (authInternal.currentUser?.isAnonymous) {
       return new UserCredentialImpl({
         user: authInternal.currentUser,
         providerId: null,
@@ -10092,14 +11056,13 @@
   }
   var MultiFactorError = class _MultiFactorError extends FirebaseError {
     constructor(auth2, error2, operationType, user) {
-      var _a;
       super(error2.code, error2.message);
       this.operationType = operationType;
       this.user = user;
       Object.setPrototypeOf(this, _MultiFactorError.prototype);
       this.customData = {
         appName: auth2.name,
-        tenantId: (_a = auth2.tenantId) !== null && _a !== void 0 ? _a : void 0,
+        tenantId: auth2.tenantId ?? void 0,
         _serverResponse: error2.customData._serverResponse,
         operationType
       };
@@ -10150,6 +11113,9 @@
   }
   async function _reauthenticate(user, credential, bypassAuthState = false) {
     const { auth: auth2 } = user;
+    if (_isFirebaseServerApp(auth2.app)) {
+      return Promise.reject(_serverAppCurrentUserOperationNotSupportedError(auth2));
+    }
     const operationType = "reauthenticate";
     try {
       const response = await _logoutIfInvalidated(user, _processCredentialSavingMfaContextIfNecessary(auth2, operationType, credential, user), bypassAuthState);
@@ -10175,7 +11141,7 @@
       );
       return UserCredentialImpl._forOperation(user, operationType, response);
     } catch (e) {
-      if ((e === null || e === void 0 ? void 0 : e.code) === `auth/${"user-not-found"}`) {
+      if (e?.code === `auth/${"user-not-found"}`) {
         _fail(
           auth2,
           "user-mismatch"
@@ -10186,6 +11152,9 @@
     }
   }
   async function _signInWithCredential(auth2, credential, bypassAuthState = false) {
+    if (_isFirebaseServerApp(auth2.app)) {
+      return Promise.reject(_serverAppCurrentUserOperationNotSupportedError(auth2));
+    }
     const operationType = "signIn";
     const response = await _processCredentialSavingMfaContextIfNecessary(auth2, operationType, credential);
     const userCredential = await UserCredentialImpl._fromIdTokenResponse(auth2, operationType, response);
@@ -10209,6 +11178,9 @@
     return _performSignInRequest(auth2, "POST", "/v1/accounts:signInWithCustomToken", _addTidIfNecessary(auth2, request));
   }
   async function signInWithCustomToken(auth2, customToken) {
+    if (_isFirebaseServerApp(auth2.app)) {
+      return Promise.reject(_serverAppCurrentUserOperationNotSupportedError(auth2));
+    }
     const authInternal = _castAuth(auth2);
     const response = await signInWithCustomToken$1(authInternal, {
       token: customToken,
@@ -10256,9 +11228,8 @@
     }
   };
   function _setActionCodeSettingsOnRequest(auth2, request, actionCodeSettings) {
-    var _a;
     _assert(
-      ((_a = actionCodeSettings.url) === null || _a === void 0 ? void 0 : _a.length) > 0,
+      actionCodeSettings.url?.length > 0,
       auth2,
       "invalid-continue-uri"
       /* AuthErrorCode.INVALID_CONTINUE_URI */
@@ -10269,8 +11240,15 @@
       "invalid-dynamic-link-domain"
       /* AuthErrorCode.INVALID_DYNAMIC_LINK_DOMAIN */
     );
+    _assert(
+      typeof actionCodeSettings.linkDomain === "undefined" || actionCodeSettings.linkDomain.length > 0,
+      auth2,
+      "invalid-hosting-link-domain"
+      /* AuthErrorCode.INVALID_HOSTING_LINK_DOMAIN */
+    );
     request.continueUrl = actionCodeSettings.url;
     request.dynamicLinkDomain = actionCodeSettings.dynamicLinkDomain;
+    request.linkDomain = actionCodeSettings.linkDomain;
     request.canHandleCodeInApp = actionCodeSettings.handleCodeInApp;
     if (actionCodeSettings.iOS) {
       _assert(
@@ -10293,8 +11271,13 @@
       request.androidPackageName = actionCodeSettings.android.packageName;
     }
   }
+  async function recachePasswordPolicy(auth2) {
+    const authInternal = _castAuth(auth2);
+    if (authInternal._getPasswordPolicyInternal()) {
+      await authInternal._updatePasswordPolicy();
+    }
+  }
   async function sendPasswordResetEmail(auth2, email, actionCodeSettings) {
-    var _a;
     const authInternal = _castAuth(auth2);
     const request = {
       requestType: "PASSWORD_RESET",
@@ -10302,34 +11285,27 @@
       clientType: "CLIENT_TYPE_WEB"
       /* RecaptchaClientType.WEB */
     };
-    if ((_a = authInternal._getRecaptchaConfig()) === null || _a === void 0 ? void 0 : _a.emailPasswordEnabled) {
-      const requestWithRecaptcha = await injectRecaptchaFields(authInternal, request, "getOobCode", true);
-      if (actionCodeSettings) {
-        _setActionCodeSettingsOnRequest(authInternal, requestWithRecaptcha, actionCodeSettings);
-      }
-      await sendPasswordResetEmail$1(authInternal, requestWithRecaptcha);
-    } else {
-      if (actionCodeSettings) {
-        _setActionCodeSettingsOnRequest(authInternal, request, actionCodeSettings);
-      }
-      await sendPasswordResetEmail$1(authInternal, request).catch(async (error2) => {
-        if (error2.code === `auth/${"missing-recaptcha-token"}`) {
-          console.log("Password resets are protected by reCAPTCHA for this project. Automatically triggering the reCAPTCHA flow and restarting the password reset flow.");
-          const requestWithRecaptcha = await injectRecaptchaFields(authInternal, request, "getOobCode", true);
-          if (actionCodeSettings) {
-            _setActionCodeSettingsOnRequest(authInternal, requestWithRecaptcha, actionCodeSettings);
-          }
-          await sendPasswordResetEmail$1(authInternal, requestWithRecaptcha);
-        } else {
-          return Promise.reject(error2);
-        }
-      });
+    if (actionCodeSettings) {
+      _setActionCodeSettingsOnRequest(authInternal, request, actionCodeSettings);
     }
+    await handleRecaptchaFlow(
+      authInternal,
+      request,
+      "getOobCode",
+      sendPasswordResetEmail$1,
+      "EMAIL_PASSWORD_PROVIDER"
+      /* RecaptchaAuthProvider.EMAIL_PASSWORD_PROVIDER */
+    );
   }
   async function confirmPasswordReset(auth2, oobCode, newPassword) {
     await resetPassword(getModularInstance(auth2), {
       oobCode,
       newPassword
+    }).catch(async (error2) => {
+      if (error2.code === `auth/${"password-does-not-meet-requirements"}`) {
+        void recachePasswordPolicy(auth2);
+      }
+      throw error2;
     });
   }
   async function applyActionCode(auth2, oobCode) {
@@ -10390,7 +11366,9 @@
     return data.email;
   }
   async function createUserWithEmailAndPassword(auth2, email, password) {
-    var _a;
+    if (_isFirebaseServerApp(auth2.app)) {
+      return Promise.reject(_serverAppCurrentUserOperationNotSupportedError(auth2));
+    }
     const authInternal = _castAuth(auth2);
     const request = {
       returnSecureToken: true,
@@ -10399,43 +11377,36 @@
       clientType: "CLIENT_TYPE_WEB"
       /* RecaptchaClientType.WEB */
     };
-    let signUpResponse;
-    if ((_a = authInternal._getRecaptchaConfig()) === null || _a === void 0 ? void 0 : _a.emailPasswordEnabled) {
-      const requestWithRecaptcha = await injectRecaptchaFields(
-        authInternal,
-        request,
-        "signUpPassword"
-        /* RecaptchaActionName.SIGN_UP_PASSWORD */
-      );
-      signUpResponse = signUp(authInternal, requestWithRecaptcha);
-    } else {
-      signUpResponse = signUp(authInternal, request).catch(async (error2) => {
-        if (error2.code === `auth/${"missing-recaptcha-token"}`) {
-          console.log("Sign-up is protected by reCAPTCHA for this project. Automatically triggering the reCAPTCHA flow and restarting the sign-up flow.");
-          const requestWithRecaptcha = await injectRecaptchaFields(
-            authInternal,
-            request,
-            "signUpPassword"
-            /* RecaptchaActionName.SIGN_UP_PASSWORD */
-          );
-          return signUp(authInternal, requestWithRecaptcha);
-        } else {
-          return Promise.reject(error2);
-        }
-      });
-    }
+    const signUpResponse = handleRecaptchaFlow(
+      authInternal,
+      request,
+      "signUpPassword",
+      signUp,
+      "EMAIL_PASSWORD_PROVIDER"
+      /* RecaptchaAuthProvider.EMAIL_PASSWORD_PROVIDER */
+    );
     const response = await signUpResponse.catch((error2) => {
-      return Promise.reject(error2);
+      if (error2.code === `auth/${"password-does-not-meet-requirements"}`) {
+        void recachePasswordPolicy(auth2);
+      }
+      throw error2;
     });
     const userCredential = await UserCredentialImpl._fromIdTokenResponse(authInternal, "signIn", response);
     await authInternal._updateCurrentUser(userCredential.user);
     return userCredential;
   }
   function signInWithEmailAndPassword(auth2, email, password) {
-    return signInWithCredential(getModularInstance(auth2), EmailAuthProvider.credential(email, password));
+    if (_isFirebaseServerApp(auth2.app)) {
+      return Promise.reject(_serverAppCurrentUserOperationNotSupportedError(auth2));
+    }
+    return signInWithCredential(getModularInstance(auth2), EmailAuthProvider.credential(email, password)).catch(async (error2) => {
+      if (error2.code === `auth/${"password-does-not-meet-requirements"}`) {
+        void recachePasswordPolicy(auth2);
+      }
+      throw error2;
+    });
   }
   async function sendSignInLinkToEmail(auth2, email, actionCodeSettings) {
-    var _a;
     const authInternal = _castAuth(auth2);
     const request = {
       requestType: "EMAIL_SIGNIN",
@@ -10454,29 +11425,24 @@
         _setActionCodeSettingsOnRequest(authInternal, request2, actionCodeSettings2);
       }
     }
-    if ((_a = authInternal._getRecaptchaConfig()) === null || _a === void 0 ? void 0 : _a.emailPasswordEnabled) {
-      const requestWithRecaptcha = await injectRecaptchaFields(authInternal, request, "getOobCode", true);
-      setActionCodeSettings(requestWithRecaptcha, actionCodeSettings);
-      await sendSignInLinkToEmail$1(authInternal, requestWithRecaptcha);
-    } else {
-      setActionCodeSettings(request, actionCodeSettings);
-      await sendSignInLinkToEmail$1(authInternal, request).catch(async (error2) => {
-        if (error2.code === `auth/${"missing-recaptcha-token"}`) {
-          console.log("Email link sign-in is protected by reCAPTCHA for this project. Automatically triggering the reCAPTCHA flow and restarting the sign-in flow.");
-          const requestWithRecaptcha = await injectRecaptchaFields(authInternal, request, "getOobCode", true);
-          setActionCodeSettings(requestWithRecaptcha, actionCodeSettings);
-          await sendSignInLinkToEmail$1(authInternal, requestWithRecaptcha);
-        } else {
-          return Promise.reject(error2);
-        }
-      });
-    }
+    setActionCodeSettings(request, actionCodeSettings);
+    await handleRecaptchaFlow(
+      authInternal,
+      request,
+      "getOobCode",
+      sendSignInLinkToEmail$1,
+      "EMAIL_PASSWORD_PROVIDER"
+      /* RecaptchaAuthProvider.EMAIL_PASSWORD_PROVIDER */
+    );
   }
   function isSignInWithEmailLink(auth2, emailLink) {
     const actionCodeUrl = ActionCodeURL.parseLink(emailLink);
-    return (actionCodeUrl === null || actionCodeUrl === void 0 ? void 0 : actionCodeUrl.operation) === "EMAIL_SIGNIN";
+    return actionCodeUrl?.operation === "EMAIL_SIGNIN";
   }
   async function signInWithEmailLink(auth2, email, emailLink) {
+    if (_isFirebaseServerApp(auth2.app)) {
+      return Promise.reject(_serverAppCurrentUserOperationNotSupportedError(auth2));
+    }
     const authModular = getModularInstance(auth2);
     const credential = EmailAuthProvider.credentialWithLink(email, emailLink || _getCurrentUrl());
     _assert(
@@ -10559,7 +11525,11 @@
     await userInternal._updateTokensIfNecessary(response);
   }
   function updateEmail(user, newEmail) {
-    return updateEmailOrPassword(getModularInstance(user), newEmail, null);
+    const userInternal = getModularInstance(user);
+    if (_isFirebaseServerApp(userInternal.auth.app)) {
+      return Promise.reject(_serverAppCurrentUserOperationNotSupportedError(userInternal.auth));
+    }
+    return updateEmailOrPassword(userInternal, newEmail, null);
   }
   function updatePassword(user, newPassword) {
     return updateEmailOrPassword(getModularInstance(user), null, newPassword);
@@ -10585,15 +11555,14 @@
     );
   }
   function _fromIdTokenResponse(idTokenResponse) {
-    var _a, _b;
     if (!idTokenResponse) {
       return null;
     }
     const { providerId } = idTokenResponse;
     const profile = idTokenResponse.rawUserInfo ? JSON.parse(idTokenResponse.rawUserInfo) : {};
     const isNewUser = idTokenResponse.isNewUser || idTokenResponse.kind === "identitytoolkit#SignupNewUserResponse";
-    if (!providerId && (idTokenResponse === null || idTokenResponse === void 0 ? void 0 : idTokenResponse.idToken)) {
-      const signInProvider = (_b = (_a = _parseToken(idTokenResponse.idToken)) === null || _a === void 0 ? void 0 : _a.firebase) === null || _b === void 0 ? void 0 : _b["sign_in_provider"];
+    if (!providerId && idTokenResponse?.idToken) {
+      const signInProvider = _parseToken(idTokenResponse.idToken)?.firebase?.["sign_in_provider"];
       if (signInProvider) {
         const filteredProviderId = signInProvider !== "anonymous" && signInProvider !== "custom" ? signInProvider : null;
         return new GenericAdditionalUserInfo(isNewUser, filteredProviderId);
@@ -10638,7 +11607,7 @@
   };
   var GithubAdditionalUserInfo = class extends FederatedAdditionalUserInfoWithUsername {
     constructor(isNewUser, profile) {
-      super(isNewUser, "github.com", profile, typeof (profile === null || profile === void 0 ? void 0 : profile.login) === "string" ? profile === null || profile === void 0 ? void 0 : profile.login : null);
+      super(isNewUser, "github.com", profile, typeof profile?.login === "string" ? profile?.login : null);
     }
   };
   var GoogleAdditionalUserInfo = class extends GenericAdditionalUserInfo {
@@ -10669,13 +11638,13 @@
     return getModularInstance(auth2).beforeAuthStateChanged(callback, onAbort);
   }
   var MultiFactorSessionImpl = class _MultiFactorSessionImpl {
-    constructor(type, credential, auth2) {
+    constructor(type, credential, user) {
       this.type = type;
       this.credential = credential;
-      this.auth = auth2;
+      this.user = user;
     }
-    static _fromIdtoken(idToken, auth2) {
-      return new _MultiFactorSessionImpl("enroll", idToken, auth2);
+    static _fromIdtoken(idToken, user) {
+      return new _MultiFactorSessionImpl("enroll", idToken, user);
     }
     static _fromMfaPendingCredential(mfaPendingCredential) {
       return new _MultiFactorSessionImpl("signin", mfaPendingCredential);
@@ -10689,11 +11658,10 @@
       };
     }
     static fromJSON(obj) {
-      var _a, _b;
-      if (obj === null || obj === void 0 ? void 0 : obj.multiFactorSession) {
-        if ((_a = obj.multiFactorSession) === null || _a === void 0 ? void 0 : _a.pendingCredential) {
+      if (obj?.multiFactorSession) {
+        if (obj.multiFactorSession?.pendingCredential) {
           return _MultiFactorSessionImpl._fromMfaPendingCredential(obj.multiFactorSession.pendingCredential);
-        } else if ((_b = obj.multiFactorSession) === null || _b === void 0 ? void 0 : _b.idToken) {
+        } else if (obj.multiFactorSession?.idToken) {
           return _MultiFactorSessionImpl._fromIdtoken(obj.multiFactorSession.idToken);
         }
       }
@@ -10722,7 +11690,11 @@
         const mfaResponse = await assertion._process(auth2, session);
         delete serverResponse.mfaInfo;
         delete serverResponse.mfaPendingCredential;
-        const idTokenResponse = Object.assign(Object.assign({}, serverResponse), { idToken: mfaResponse.idToken, refreshToken: mfaResponse.refreshToken });
+        const idTokenResponse = {
+          ...serverResponse,
+          idToken: mfaResponse.idToken,
+          refreshToken: mfaResponse.refreshToken
+        };
         switch (error2.operationType) {
           case "signIn":
             const userCredential = await UserCredentialImpl._fromIdTokenResponse(auth2, error2.operationType, idTokenResponse);
@@ -10751,7 +11723,6 @@
     }
   };
   function getMultiFactorResolver(auth2, error2) {
-    var _a;
     const authModular = getModularInstance(auth2);
     const errorInternal = error2;
     _assert(
@@ -10761,7 +11732,7 @@
       /* AuthErrorCode.ARGUMENT_ERROR */
     );
     _assert(
-      (_a = errorInternal.customData._serverResponse) === null || _a === void 0 ? void 0 : _a.mfaPendingCredential,
+      errorInternal.customData._serverResponse?.mfaPendingCredential,
       authModular,
       "argument-error"
       /* AuthErrorCode.ARGUMENT_ERROR */
@@ -10797,7 +11768,7 @@
       return new _MultiFactorUserImpl(user);
     }
     async getSession() {
-      return MultiFactorSessionImpl._fromIdtoken(await this.user.getIdToken(), this.user.auth);
+      return MultiFactorSessionImpl._fromIdtoken(await this.user.getIdToken(), this.user);
     }
     async enroll(assertionExtern, displayName) {
       const assertion = assertionExtern;
@@ -10844,7 +11815,7 @@
         this.storage.setItem(STORAGE_AVAILABLE_KEY, "1");
         this.storage.removeItem(STORAGE_AVAILABLE_KEY);
         return Promise.resolve(true);
-      } catch (_a) {
+      } catch {
         return Promise.resolve(false);
       }
     }
@@ -10864,10 +11835,6 @@
       return this.storageRetriever();
     }
   };
-  function _iframeCannotSyncWebStorage() {
-    const ua = getUA();
-    return _isSafari(ua) || _isIOS(ua);
-  }
   var _POLLING_INTERVAL_MS$1 = 1e3;
   var IE10_LOCAL_STORAGE_SYNC_DELAY = 10;
   var BrowserLocalPersistence = class extends BrowserPersistenceClass {
@@ -10881,7 +11848,6 @@
       this.listeners = {};
       this.localCache = {};
       this.pollTimer = null;
-      this.safariLocalStorageNotSynced = _iframeCannotSyncWebStorage() && _isIframe();
       this.fallbackToPolling = _isMobileBrowser();
       this._shouldAllowMigration = true;
     }
@@ -10906,18 +11872,6 @@
         this.detachListener();
       } else {
         this.stopPolling();
-      }
-      if (this.safariLocalStorageNotSynced) {
-        const storedValue2 = this.storage.getItem(key);
-        if (event.newValue !== storedValue2) {
-          if (event.newValue !== null) {
-            this.storage.setItem(key, event.newValue);
-          } else {
-            this.storage.removeItem(key);
-          }
-        } else if (this.localCache[key] === event.newValue && !poll) {
-          return;
-        }
       }
       const triggerListeners = () => {
         const storedValue2 = this.storage.getItem(key);
@@ -11013,6 +11967,113 @@
   };
   BrowserLocalPersistence.type = "LOCAL";
   var browserLocalPersistence = BrowserLocalPersistence;
+  var POLLING_INTERVAL_MS = 1e3;
+  function getDocumentCookie(name10) {
+    const escapedName = name10.replace(/[\\^$.*+?()[\]{}|]/g, "\\$&");
+    const matcher = RegExp(`${escapedName}=([^;]+)`);
+    return document.cookie.match(matcher)?.[1] ?? null;
+  }
+  function getCookieName(key) {
+    const isDevMode = window.location.protocol === "http:";
+    return `${isDevMode ? "__dev_" : "__HOST-"}FIREBASE_${key.split(":")[3]}`;
+  }
+  var CookiePersistence = class {
+    constructor() {
+      this.type = "COOKIE";
+      this.listenerUnsubscribes = /* @__PURE__ */ new Map();
+    }
+    // used to get the URL to the backend to proxy to
+    _getFinalTarget(originalUrl) {
+      if (typeof window === void 0) {
+        return originalUrl;
+      }
+      const url = new URL(`${window.location.origin}/__cookies__`);
+      url.searchParams.set("finalTarget", originalUrl);
+      return url;
+    }
+    // To be a usable persistence method in a chain browserCookiePersistence ensures that
+    // prerequisites have been met, namely that we're in a secureContext, navigator and document are
+    // available and cookies are enabled. Not all UAs support these method, so fallback accordingly.
+    async _isAvailable() {
+      if (typeof isSecureContext === "boolean" && !isSecureContext) {
+        return false;
+      }
+      if (typeof navigator === "undefined" || typeof document === "undefined") {
+        return false;
+      }
+      return navigator.cookieEnabled ?? true;
+    }
+    // Set should be a noop as we expect middleware to handle this
+    async _set(_key, _value) {
+      return;
+    }
+    // Attempt to get the cookie from cookieStore, fallback to document.cookie
+    async _get(key) {
+      if (!this._isAvailable()) {
+        return null;
+      }
+      const name10 = getCookieName(key);
+      if (window.cookieStore) {
+        const cookie = await window.cookieStore.get(name10);
+        return cookie?.value;
+      }
+      return getDocumentCookie(name10);
+    }
+    // Log out by overriding the idToken with a sentinel value of ""
+    async _remove(key) {
+      if (!this._isAvailable()) {
+        return;
+      }
+      const existingValue = await this._get(key);
+      if (!existingValue) {
+        return;
+      }
+      const name10 = getCookieName(key);
+      document.cookie = `${name10}=;Max-Age=34560000;Partitioned;Secure;SameSite=Strict;Path=/;Priority=High`;
+      await fetch(`/__cookies__`, { method: "DELETE" }).catch(() => void 0);
+    }
+    // Listen for cookie changes, both cookieStore and fallback to polling document.cookie
+    _addListener(key, listener) {
+      if (!this._isAvailable()) {
+        return;
+      }
+      const name10 = getCookieName(key);
+      if (window.cookieStore) {
+        const cb = (event) => {
+          const changedCookie = event.changed.find((change) => change.name === name10);
+          if (changedCookie) {
+            listener(changedCookie.value);
+          }
+          const deletedCookie = event.deleted.find((change) => change.name === name10);
+          if (deletedCookie) {
+            listener(null);
+          }
+        };
+        const unsubscribe2 = () => window.cookieStore.removeEventListener("change", cb);
+        this.listenerUnsubscribes.set(listener, unsubscribe2);
+        return window.cookieStore.addEventListener("change", cb);
+      }
+      let lastValue = getDocumentCookie(name10);
+      const interval = setInterval(() => {
+        const currentValue = getDocumentCookie(name10);
+        if (currentValue !== lastValue) {
+          listener(currentValue);
+          lastValue = currentValue;
+        }
+      }, POLLING_INTERVAL_MS);
+      const unsubscribe = () => clearInterval(interval);
+      this.listenerUnsubscribes.set(listener, unsubscribe);
+    }
+    _removeListener(_key, listener) {
+      const unsubscribe = this.listenerUnsubscribes.get(listener);
+      if (!unsubscribe) {
+        return;
+      }
+      unsubscribe();
+      this.listenerUnsubscribes.delete(listener);
+    }
+  };
+  CookiePersistence.type = "COOKIE";
   var BrowserSessionPersistence = class extends BrowserPersistenceClass {
     constructor() {
       super(
@@ -11084,7 +12145,7 @@
       const messageEvent = event;
       const { eventId, eventType, data } = messageEvent.data;
       const handlers = this.handlersMap[eventType];
-      if (!(handlers === null || handlers === void 0 ? void 0 : handlers.size)) {
+      if (!handlers?.size) {
         return;
       }
       messageEvent.ports[0].postMessage({
@@ -11121,7 +12182,7 @@
      * Unsubscribe an event handler from a particular event.
      *
      * @param eventType - Event name to unsubscribe from.
-     * @param eventHandler - Optinoal event handler, if none provided, unsubscribe all handlers on this event.
+     * @param eventHandler - Optional event handler, if none provided, unsubscribe all handlers on this event.
      *
      */
     _unsubscribe(eventType, eventHandler) {
@@ -11253,19 +12314,18 @@
     return typeof _window()["WorkerGlobalScope"] !== "undefined" && typeof _window()["importScripts"] === "function";
   }
   async function _getActiveServiceWorker() {
-    if (!(navigator === null || navigator === void 0 ? void 0 : navigator.serviceWorker)) {
+    if (!navigator?.serviceWorker) {
       return null;
     }
     try {
       const registration = await navigator.serviceWorker.ready;
       return registration.active;
-    } catch (_a) {
+    } catch {
       return null;
     }
   }
   function _getServiceWorkerController() {
-    var _a;
-    return ((_a = navigator === null || navigator === void 0 ? void 0 : navigator.serviceWorker) === null || _a === void 0 ? void 0 : _a.controller) || null;
+    return navigator?.serviceWorker?.controller || null;
   }
   function _getWorkerGlobalScope() {
     return _isWorker() ? self : null;
@@ -11413,7 +12473,6 @@
      * may not resolve.
      */
     async initializeSender() {
-      var _a, _b;
       this.activeServiceWorker = await _getActiveServiceWorker();
       if (!this.activeServiceWorker) {
         return;
@@ -11428,10 +12487,10 @@
       if (!results) {
         return;
       }
-      if (((_a = results[0]) === null || _a === void 0 ? void 0 : _a.fulfilled) && ((_b = results[0]) === null || _b === void 0 ? void 0 : _b.value.includes(
+      if (results[0]?.fulfilled && results[0]?.value.includes(
         "keyChanged"
         /* _EventType.KEY_CHANGED */
-      ))) {
+      )) {
         this.serviceWorkerReceiverAvailable = true;
       }
     }
@@ -11456,7 +12515,7 @@
           this.serviceWorkerReceiverAvailable ? 800 : 50
           /* _TimeoutDuration.ACK */
         );
-      } catch (_a) {
+      } catch {
       }
     }
     async _isAvailable() {
@@ -11468,7 +12527,7 @@
         await _putObject(db, STORAGE_AVAILABLE_KEY, "1");
         await _deleteObject(db, STORAGE_AVAILABLE_KEY);
         return true;
-      } catch (_a) {
+      } catch {
       }
       return false;
     }
@@ -11512,11 +12571,13 @@
       }
       const keys = [];
       const keysInResult = /* @__PURE__ */ new Set();
-      for (const { fbase_key: key, value } of result) {
-        keysInResult.add(key);
-        if (JSON.stringify(this.localCache[key]) !== JSON.stringify(value)) {
-          this.notifyListeners(key, value);
-          keys.push(key);
+      if (result.length !== 0) {
+        for (const { fbase_key: key, value } of result) {
+          keysInResult.add(key);
+          if (JSON.stringify(this.localCache[key]) !== JSON.stringify(value)) {
+            this.notifyListeners(key, value);
+            keys.push(key);
+          }
         }
       }
       for (const localKey of Object.keys(this.localCache)) {
@@ -11579,123 +12640,13 @@
   function finalizeSignInTotpMfa(auth2, request) {
     return _performApiRequest(auth2, "POST", "/v2/accounts/mfaSignIn:finalize", _addTidIfNecessary(auth2, request));
   }
-  var _SOLVE_TIME_MS = 500;
-  var _EXPIRATION_TIME_MS = 6e4;
-  var _WIDGET_ID_START = 1e12;
-  var MockReCaptcha = class {
-    constructor(auth2) {
-      this.auth = auth2;
-      this.counter = _WIDGET_ID_START;
-      this._widgets = /* @__PURE__ */ new Map();
-    }
-    render(container, parameters) {
-      const id = this.counter;
-      this._widgets.set(id, new MockWidget(container, this.auth.name, parameters || {}));
-      this.counter++;
-      return id;
-    }
-    reset(optWidgetId) {
-      var _a;
-      const id = optWidgetId || _WIDGET_ID_START;
-      void ((_a = this._widgets.get(id)) === null || _a === void 0 ? void 0 : _a.delete());
-      this._widgets.delete(id);
-    }
-    getResponse(optWidgetId) {
-      var _a;
-      const id = optWidgetId || _WIDGET_ID_START;
-      return ((_a = this._widgets.get(id)) === null || _a === void 0 ? void 0 : _a.getResponse()) || "";
-    }
-    async execute(optWidgetId) {
-      var _a;
-      const id = optWidgetId || _WIDGET_ID_START;
-      void ((_a = this._widgets.get(id)) === null || _a === void 0 ? void 0 : _a.execute());
-      return "";
-    }
-  };
-  var MockWidget = class {
-    constructor(containerOrId, appName, params) {
-      this.params = params;
-      this.timerId = null;
-      this.deleted = false;
-      this.responseToken = null;
-      this.clickHandler = () => {
-        this.execute();
-      };
-      const container = typeof containerOrId === "string" ? document.getElementById(containerOrId) : containerOrId;
-      _assert(container, "argument-error", { appName });
-      this.container = container;
-      this.isVisible = this.params.size !== "invisible";
-      if (this.isVisible) {
-        this.execute();
-      } else {
-        this.container.addEventListener("click", this.clickHandler);
-      }
-    }
-    getResponse() {
-      this.checkIfDeleted();
-      return this.responseToken;
-    }
-    delete() {
-      this.checkIfDeleted();
-      this.deleted = true;
-      if (this.timerId) {
-        clearTimeout(this.timerId);
-        this.timerId = null;
-      }
-      this.container.removeEventListener("click", this.clickHandler);
-    }
-    execute() {
-      this.checkIfDeleted();
-      if (this.timerId) {
-        return;
-      }
-      this.timerId = window.setTimeout(() => {
-        this.responseToken = generateRandomAlphaNumericString(50);
-        const { callback, "expired-callback": expiredCallback } = this.params;
-        if (callback) {
-          try {
-            callback(this.responseToken);
-          } catch (e) {
-          }
-        }
-        this.timerId = window.setTimeout(() => {
-          this.timerId = null;
-          this.responseToken = null;
-          if (expiredCallback) {
-            try {
-              expiredCallback();
-            } catch (e) {
-            }
-          }
-          if (this.isVisible) {
-            this.execute();
-          }
-        }, _EXPIRATION_TIME_MS);
-      }, _SOLVE_TIME_MS);
-    }
-    checkIfDeleted() {
-      if (this.deleted) {
-        throw new Error("reCAPTCHA mock was already deleted!");
-      }
-    }
-  };
-  function generateRandomAlphaNumericString(len) {
-    const chars = [];
-    const allowedChars = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    for (let i = 0; i < len; i++) {
-      chars.push(allowedChars.charAt(Math.floor(Math.random() * allowedChars.length)));
-    }
-    return chars.join("");
-  }
   var _JSLOAD_CALLBACK = _generateCallbackName("rcb");
   var NETWORK_TIMEOUT_DELAY = new Delay(3e4, 6e4);
-  var RECAPTCHA_BASE = "https://www.google.com/recaptcha/api.js?";
   var ReCaptchaLoaderImpl = class {
     constructor() {
-      var _a;
       this.hostLanguage = "";
       this.counter = 0;
-      this.librarySeparatelyLoaded = !!((_a = _window().grecaptcha) === null || _a === void 0 ? void 0 : _a.render);
+      this.librarySeparatelyLoaded = !!_window().grecaptcha?.render;
     }
     load(auth2, hl = "") {
       _assert(
@@ -11736,7 +12687,7 @@
           this.hostLanguage = hl;
           resolve(recaptcha);
         };
-        const url = `${RECAPTCHA_BASE}?${querystring({
+        const url = `${_recaptchaV2ScriptUrl()}?${querystring({
           onload: _JSLOAD_CALLBACK,
           render: "explicit",
           hl
@@ -11755,8 +12706,7 @@
       this.counter--;
     }
     shouldResolveImmediately(hl) {
-      var _a;
-      return !!((_a = _window().grecaptcha) === null || _a === void 0 ? void 0 : _a.render) && (hl === this.hostLanguage || this.counter > 0 || this.librarySeparatelyLoaded);
+      return !!_window().grecaptcha?.render && (hl === this.hostLanguage || this.counter > 0 || this.librarySeparatelyLoaded);
     }
   };
   function isHostLanguageValid(hl) {
@@ -11776,6 +12726,7 @@
   };
   var RecaptchaVerifier = class {
     /**
+     * @param authExtern - The corresponding Firebase {@link Auth} instance.
      *
      * @param containerOrId - The reCAPTCHA container parameter.
      *
@@ -11792,10 +12743,10 @@
      * the sitekey. Firebase Auth backend provisions a reCAPTCHA for each project and will
      * configure this upon rendering. For an invisible reCAPTCHA, a size key must have the value
      * 'invisible'.
-     *
-     * @param authExtern - The corresponding Firebase {@link Auth} instance.
      */
-    constructor(containerOrId, parameters = Object.assign({}, DEFAULT_PARAMS), authExtern) {
+    constructor(authExtern, containerOrId, parameters = {
+      ...DEFAULT_PARAMS
+    }) {
       this.parameters = parameters;
       this.type = RECAPTCHA_VERIFIER_TYPE;
       this.destroyed = false;
@@ -11999,6 +12950,9 @@
     }
   };
   async function signInWithPhoneNumber(auth2, phoneNumber, appVerifier) {
+    if (_isFirebaseServerApp(auth2.app)) {
+      return Promise.reject(_serverAppCurrentUserOperationNotSupportedError(auth2));
+    }
     const authInternal = _castAuth(auth2);
     const verificationId = await _verifyPhoneNumber(authInternal, phoneNumber, getModularInstance(appVerifier));
     return new ConfirmationResultImpl(verificationId, (cred) => signInWithCredential(authInternal, cred));
@@ -12016,25 +12970,21 @@
   }
   async function reauthenticateWithPhoneNumber(user, phoneNumber, appVerifier) {
     const userInternal = getModularInstance(user);
+    if (_isFirebaseServerApp(userInternal.auth.app)) {
+      return Promise.reject(_serverAppCurrentUserOperationNotSupportedError(userInternal.auth));
+    }
     const verificationId = await _verifyPhoneNumber(userInternal.auth, phoneNumber, getModularInstance(appVerifier));
     return new ConfirmationResultImpl(verificationId, (cred) => reauthenticateWithCredential(userInternal, cred));
   }
   async function _verifyPhoneNumber(auth2, options, verifier) {
-    var _a;
-    const recaptchaToken = await verifier.verify();
+    if (!auth2._getRecaptchaConfig()) {
+      try {
+        await _initializeRecaptchaConfig(auth2);
+      } catch (error2) {
+        console.log("Failed to initialize reCAPTCHA Enterprise config. Triggering the reCAPTCHA v2 verification.");
+      }
+    }
     try {
-      _assert(
-        typeof recaptchaToken === "string",
-        auth2,
-        "argument-error"
-        /* AuthErrorCode.ARGUMENT_ERROR */
-      );
-      _assert(
-        verifier.type === RECAPTCHA_VERIFIER_TYPE,
-        auth2,
-        "argument-error"
-        /* AuthErrorCode.ARGUMENT_ERROR */
-      );
       let phoneInfoOptions;
       if (typeof options === "string") {
         phoneInfoOptions = {
@@ -12052,12 +13002,37 @@
             "internal-error"
             /* AuthErrorCode.INTERNAL_ERROR */
           );
-          const response = await startEnrollPhoneMfa(auth2, {
+          const startPhoneMfaEnrollmentRequest = {
             idToken: session.credential,
             phoneEnrollmentInfo: {
               phoneNumber: phoneInfoOptions.phoneNumber,
-              recaptchaToken
+              clientType: "CLIENT_TYPE_WEB"
+              /* RecaptchaClientType.WEB */
             }
+          };
+          const startEnrollPhoneMfaActionCallback = async (authInstance, request) => {
+            if (request.phoneEnrollmentInfo.captchaResponse === FAKE_TOKEN) {
+              _assert(
+                verifier?.type === RECAPTCHA_VERIFIER_TYPE,
+                authInstance,
+                "argument-error"
+                /* AuthErrorCode.ARGUMENT_ERROR */
+              );
+              const requestWithRecaptchaV2 = await injectRecaptchaV2Token(authInstance, request, verifier);
+              return startEnrollPhoneMfa(authInstance, requestWithRecaptchaV2);
+            }
+            return startEnrollPhoneMfa(authInstance, request);
+          };
+          const startPhoneMfaEnrollmentResponse = handleRecaptchaFlow(
+            auth2,
+            startPhoneMfaEnrollmentRequest,
+            "mfaSmsEnrollment",
+            startEnrollPhoneMfaActionCallback,
+            "PHONE_PROVIDER"
+            /* RecaptchaAuthProvider.PHONE_PROVIDER */
+          );
+          const response = await startPhoneMfaEnrollmentResponse.catch((error2) => {
+            return Promise.reject(error2);
           });
           return response.phoneSessionInfo.sessionInfo;
         } else {
@@ -12067,35 +13042,137 @@
             "internal-error"
             /* AuthErrorCode.INTERNAL_ERROR */
           );
-          const mfaEnrollmentId = ((_a = phoneInfoOptions.multiFactorHint) === null || _a === void 0 ? void 0 : _a.uid) || phoneInfoOptions.multiFactorUid;
+          const mfaEnrollmentId = phoneInfoOptions.multiFactorHint?.uid || phoneInfoOptions.multiFactorUid;
           _assert(
             mfaEnrollmentId,
             auth2,
             "missing-multi-factor-info"
             /* AuthErrorCode.MISSING_MFA_INFO */
           );
-          const response = await startSignInPhoneMfa(auth2, {
+          const startPhoneMfaSignInRequest = {
             mfaPendingCredential: session.credential,
             mfaEnrollmentId,
             phoneSignInInfo: {
-              recaptchaToken
+              clientType: "CLIENT_TYPE_WEB"
+              /* RecaptchaClientType.WEB */
             }
+          };
+          const startSignInPhoneMfaActionCallback = async (authInstance, request) => {
+            if (request.phoneSignInInfo.captchaResponse === FAKE_TOKEN) {
+              _assert(
+                verifier?.type === RECAPTCHA_VERIFIER_TYPE,
+                authInstance,
+                "argument-error"
+                /* AuthErrorCode.ARGUMENT_ERROR */
+              );
+              const requestWithRecaptchaV2 = await injectRecaptchaV2Token(authInstance, request, verifier);
+              return startSignInPhoneMfa(authInstance, requestWithRecaptchaV2);
+            }
+            return startSignInPhoneMfa(authInstance, request);
+          };
+          const startPhoneMfaSignInResponse = handleRecaptchaFlow(
+            auth2,
+            startPhoneMfaSignInRequest,
+            "mfaSmsSignIn",
+            startSignInPhoneMfaActionCallback,
+            "PHONE_PROVIDER"
+            /* RecaptchaAuthProvider.PHONE_PROVIDER */
+          );
+          const response = await startPhoneMfaSignInResponse.catch((error2) => {
+            return Promise.reject(error2);
           });
           return response.phoneResponseInfo.sessionInfo;
         }
       } else {
-        const { sessionInfo } = await sendPhoneVerificationCode(auth2, {
+        const sendPhoneVerificationCodeRequest = {
           phoneNumber: phoneInfoOptions.phoneNumber,
-          recaptchaToken
+          clientType: "CLIENT_TYPE_WEB"
+          /* RecaptchaClientType.WEB */
+        };
+        const sendPhoneVerificationCodeActionCallback = async (authInstance, request) => {
+          if (request.captchaResponse === FAKE_TOKEN) {
+            _assert(
+              verifier?.type === RECAPTCHA_VERIFIER_TYPE,
+              authInstance,
+              "argument-error"
+              /* AuthErrorCode.ARGUMENT_ERROR */
+            );
+            const requestWithRecaptchaV2 = await injectRecaptchaV2Token(authInstance, request, verifier);
+            return sendPhoneVerificationCode(authInstance, requestWithRecaptchaV2);
+          }
+          return sendPhoneVerificationCode(authInstance, request);
+        };
+        const sendPhoneVerificationCodeResponse = handleRecaptchaFlow(
+          auth2,
+          sendPhoneVerificationCodeRequest,
+          "sendVerificationCode",
+          sendPhoneVerificationCodeActionCallback,
+          "PHONE_PROVIDER"
+          /* RecaptchaAuthProvider.PHONE_PROVIDER */
+        );
+        const response = await sendPhoneVerificationCodeResponse.catch((error2) => {
+          return Promise.reject(error2);
         });
-        return sessionInfo;
+        return response.sessionInfo;
       }
     } finally {
-      verifier._reset();
+      verifier?._reset();
     }
   }
   async function updatePhoneNumber(user, credential) {
-    await _link$1(getModularInstance(user), credential);
+    const userInternal = getModularInstance(user);
+    if (_isFirebaseServerApp(userInternal.auth.app)) {
+      return Promise.reject(_serverAppCurrentUserOperationNotSupportedError(userInternal.auth));
+    }
+    await _link$1(userInternal, credential);
+  }
+  async function injectRecaptchaV2Token(auth2, request, recaptchaV2Verifier) {
+    _assert(
+      recaptchaV2Verifier.type === RECAPTCHA_VERIFIER_TYPE,
+      auth2,
+      "argument-error"
+      /* AuthErrorCode.ARGUMENT_ERROR */
+    );
+    const recaptchaV2Token = await recaptchaV2Verifier.verify();
+    _assert(
+      typeof recaptchaV2Token === "string",
+      auth2,
+      "argument-error"
+      /* AuthErrorCode.ARGUMENT_ERROR */
+    );
+    const newRequest = { ...request };
+    if ("phoneEnrollmentInfo" in newRequest) {
+      const phoneNumber = newRequest.phoneEnrollmentInfo.phoneNumber;
+      const captchaResponse = newRequest.phoneEnrollmentInfo.captchaResponse;
+      const clientType = newRequest.phoneEnrollmentInfo.clientType;
+      const recaptchaVersion = newRequest.phoneEnrollmentInfo.recaptchaVersion;
+      Object.assign(newRequest, {
+        "phoneEnrollmentInfo": {
+          phoneNumber,
+          recaptchaToken: recaptchaV2Token,
+          captchaResponse,
+          clientType,
+          recaptchaVersion
+        }
+      });
+      return newRequest;
+    } else if ("phoneSignInInfo" in newRequest) {
+      const captchaResponse = newRequest.phoneSignInInfo.captchaResponse;
+      const clientType = newRequest.phoneSignInInfo.clientType;
+      const recaptchaVersion = newRequest.phoneSignInInfo.recaptchaVersion;
+      Object.assign(newRequest, {
+        "phoneSignInInfo": {
+          recaptchaToken: recaptchaV2Token,
+          captchaResponse,
+          clientType,
+          recaptchaVersion
+        }
+      });
+      return newRequest;
+    } else {
+      Object.assign(newRequest, { "recaptchaToken": recaptchaV2Token });
+      return newRequest;
+    }
   }
   var PhoneAuthProvider = class _PhoneAuthProvider {
     /**
@@ -12130,12 +13207,14 @@
      *
      * @param phoneInfoOptions - The user's {@link PhoneInfoOptions}. The phone number should be in
      * E.164 format (e.g. +16505550101).
-     * @param applicationVerifier - For abuse prevention, this method also requires a
-     * {@link ApplicationVerifier}. This SDK includes a reCAPTCHA-based implementation,
-     * {@link RecaptchaVerifier}.
+     * @param applicationVerifier - An {@link ApplicationVerifier}, which prevents
+     * requests from unauthorized clients. This SDK includes an implementation
+     * based on reCAPTCHA v2, {@link RecaptchaVerifier}. If you've enabled
+     * reCAPTCHA Enterprise bot protection in Enforce mode, this parameter is
+     * optional; in all other configurations, the parameter is required.
      *
      * @returns A Promise for a verification ID that can be passed to
-     * {@link PhoneAuthProvider.credential} to identify this flow..
+     * {@link PhoneAuthProvider.credential} to identify this flow.
      */
     verifyPhoneNumber(phoneOptions, applicationVerifier) {
       return _verifyPhoneNumber(this.auth, phoneOptions, getModularInstance(applicationVerifier));
@@ -12380,6 +13459,13 @@
   };
   var _POLL_WINDOW_CLOSE_TIMEOUT = new Delay(2e3, 1e4);
   async function signInWithPopup(auth2, provider, resolver) {
+    if (_isFirebaseServerApp(auth2.app)) {
+      return Promise.reject(_createError(
+        auth2,
+        "operation-not-supported-in-this-environment"
+        /* AuthErrorCode.OPERATION_NOT_SUPPORTED */
+      ));
+    }
     const authInternal = _castAuth(auth2);
     _assertInstanceOf(auth2, provider, FederatedAuthProvider);
     const resolverInternal = _withDefaultResolver(authInternal, resolver);
@@ -12388,6 +13474,13 @@
   }
   async function reauthenticateWithPopup(user, provider, resolver) {
     const userInternal = getModularInstance(user);
+    if (_isFirebaseServerApp(userInternal.auth.app)) {
+      return Promise.reject(_createError(
+        userInternal.auth,
+        "operation-not-supported-in-this-environment"
+        /* AuthErrorCode.OPERATION_NOT_SUPPORTED */
+      ));
+    }
     _assertInstanceOf(userInternal.auth, provider, FederatedAuthProvider);
     const resolverInternal = _withDefaultResolver(userInternal.auth, resolver);
     const action = new PopupOperation(userInternal.auth, "reauthViaPopup", provider, resolverInternal, userInternal);
@@ -12447,8 +13540,7 @@
       this.pollUserCancellation();
     }
     get eventId() {
-      var _a;
-      return ((_a = this.authWindow) === null || _a === void 0 ? void 0 : _a.associatedEvent) || null;
+      return this.authWindow?.associatedEvent || null;
     }
     cancel() {
       this.reject(_createError(
@@ -12470,8 +13562,7 @@
     }
     pollUserCancellation() {
       const poll = () => {
-        var _a, _b;
-        if ((_b = (_a = this.authWindow) === null || _a === void 0 ? void 0 : _a.window) === null || _b === void 0 ? void 0 : _b.closed) {
+        if (this.authWindow?.window?.closed) {
           this.pollId = window.setTimeout(
             () => {
               this.pollId = null;
@@ -12577,6 +13668,9 @@
     return _signInWithRedirect(auth2, provider, resolver);
   }
   async function _signInWithRedirect(auth2, provider, resolver) {
+    if (_isFirebaseServerApp(auth2.app)) {
+      return Promise.reject(_serverAppCurrentUserOperationNotSupportedError(auth2));
+    }
     const authInternal = _castAuth(auth2);
     _assertInstanceOf(auth2, provider, FederatedAuthProvider);
     await authInternal._initializationPromise;
@@ -12595,6 +13689,9 @@
   async function _reauthenticateWithRedirect(user, provider, resolver) {
     const userInternal = getModularInstance(user);
     _assertInstanceOf(userInternal.auth, provider, FederatedAuthProvider);
+    if (_isFirebaseServerApp(userInternal.auth.app)) {
+      return Promise.reject(_serverAppCurrentUserOperationNotSupportedError(userInternal.auth));
+    }
     await userInternal.auth._initializationPromise;
     const resolverInternal = _withDefaultResolver(userInternal.auth, resolver);
     await _setPendingRedirectStatus(resolverInternal, userInternal.auth);
@@ -12619,6 +13716,9 @@
     return _getRedirectResult(auth2, resolver, false);
   }
   async function _getRedirectResult(auth2, resolverExtern, bypassAuthState = false) {
+    if (_isFirebaseServerApp(auth2.app)) {
+      return Promise.reject(_serverAppCurrentUserOperationNotSupportedError(auth2));
+    }
     const authInternal = _castAuth(auth2);
     const resolver = _withDefaultResolver(authInternal, resolverExtern);
     const action = new RedirectAction(authInternal, resolver, bypassAuthState);
@@ -12681,9 +13781,8 @@
       return handled;
     }
     sendToConsumer(event, consumer) {
-      var _a;
       if (event.error && !isNullRedirectEvent(event)) {
-        const code = ((_a = event.error.code) === null || _a === void 0 ? void 0 : _a.split("auth/")[1]) || "internal-error";
+        const code = event.error.code?.split("auth/")[1] || "internal-error";
         consumer.onError(_createError(this.auth, code));
       } else {
         consumer.onAuthEvent(event);
@@ -12708,7 +13807,7 @@
     return [e.type, e.eventId, e.sessionId, e.tenantId].filter((v) => v).join("-");
   }
   function isNullRedirectEvent({ type, error: error2 }) {
-    return type === "unknown" && (error2 === null || error2 === void 0 ? void 0 : error2.code) === `auth/${"no-auth-event"}`;
+    return type === "unknown" && error2?.code === `auth/${"no-auth-event"}`;
   }
   function isRedirectEvent(event) {
     switch (event.type) {
@@ -12737,7 +13836,7 @@
         if (matchDomain(domain)) {
           return;
         }
-      } catch (_a) {
+      } catch {
       }
     }
     _fail(
@@ -12769,7 +13868,7 @@
   var NETWORK_TIMEOUT = new Delay(3e4, 6e4);
   function resetUnloadedGapiModules() {
     const beacon = _window().___jsl;
-    if (beacon === null || beacon === void 0 ? void 0 : beacon.H) {
+    if (beacon?.H) {
       for (const hint of Object.keys(beacon.H)) {
         beacon.H[hint].r = beacon.H[hint].r || [];
         beacon.H[hint].L = beacon.H[hint].L || [];
@@ -12784,7 +13883,6 @@
   }
   function loadGapi(auth2) {
     return new Promise((resolve, reject) => {
-      var _a, _b, _c;
       function loadGapiIframe() {
         resetUnloadedGapiModules();
         gapi.load("gapi.iframes", {
@@ -12802,9 +13900,9 @@
           timeout: NETWORK_TIMEOUT.get()
         });
       }
-      if ((_b = (_a = _window().gapi) === null || _a === void 0 ? void 0 : _a.iframes) === null || _b === void 0 ? void 0 : _b.Iframe) {
+      if (_window().gapi?.iframes?.Iframe) {
         resolve(gapi.iframes.getContext());
-      } else if (!!((_c = _window().gapi) === null || _c === void 0 ? void 0 : _c.load)) {
+      } else if (!!_window().gapi?.load) {
         loadGapiIframe();
       } else {
         const cbName = _generateCallbackName("iframefcb");
@@ -12819,7 +13917,7 @@
             ));
           }
         };
-        return _loadJS(`https://apis.google.com/js/api.js?onload=${cbName}`).catch((e) => reject(e));
+        return _loadJS(`${_gapiScriptUrl()}?onload=${cbName}`).catch((e) => reject(e));
       }
     }).catch((error2) => {
       cachedGApiLoader = null;
@@ -12846,7 +13944,9 @@
   };
   var EID_FROM_APIHOST = /* @__PURE__ */ new Map([
     ["identitytoolkit.googleapis.com", "p"],
+    // production
     ["staging-identitytoolkit.sandbox.googleapis.com", "s"],
+    // staging
     ["test-identitytoolkit.sandbox.googleapis.com", "t"]
     // test
   ]);
@@ -12939,12 +14039,13 @@
     const top = Math.max((window.screen.availHeight - height) / 2, 0).toString();
     const left = Math.max((window.screen.availWidth - width) / 2, 0).toString();
     let target = "";
-    const options = Object.assign(Object.assign({}, BASE_POPUP_OPTIONS), {
+    const options = {
+      ...BASE_POPUP_OPTIONS,
       width: width.toString(),
       height: height.toString(),
       top,
       left
-    });
+    };
     const ua = getUA().toLowerCase();
     if (name10) {
       target = _isChromeIOS(ua) ? TARGET_BLANK : name10;
@@ -13051,8 +14152,7 @@
     // Wrapping in async even though we don't await anywhere in order
     // to make sure errors are raised as promise rejections
     async _openPopup(auth2, provider, authType, eventId) {
-      var _a;
-      debugAssert((_a = this.eventManagers[auth2._key()]) === null || _a === void 0 ? void 0 : _a.manager, "_initialize() not called before _openPopup()");
+      debugAssert(this.eventManagers[auth2._key()]?.manager, "_initialize() not called before _openPopup()");
       const url = await _getRedirectUrl(auth2, provider, authType, _getCurrentUrl(), eventId);
       return _open(auth2, url, _generateEventId());
     }
@@ -13086,7 +14186,7 @@
       const manager = new AuthEventManager(auth2);
       iframe.register("authEvent", (iframeEvent) => {
         _assert(
-          iframeEvent === null || iframeEvent === void 0 ? void 0 : iframeEvent.authEvent,
+          iframeEvent?.authEvent,
           auth2,
           "invalid-auth-event"
           /* AuthErrorCode.INVALID_AUTH_EVENT */
@@ -13104,8 +14204,7 @@
     _isIframeWebStorageSupported(auth2, cb) {
       const iframe = this.iframes[auth2._key()];
       iframe.send(WEB_STORAGE_SUPPORT_KEY, { type: WEB_STORAGE_SUPPORT_KEY }, (result) => {
-        var _a;
-        const isSupported2 = (_a = result === null || result === void 0 ? void 0 : result[0]) === null || _a === void 0 ? void 0 : _a[WEB_STORAGE_SUPPORT_KEY];
+        const isSupported2 = result?.[0]?.[WEB_STORAGE_SUPPORT_KEY];
         if (isSupported2 !== void 0) {
           cb(!!isSupported2);
         }
@@ -13177,6 +14276,9 @@
     /**
      * Provides a {@link PhoneMultiFactorAssertion} to confirm ownership of the phone second factor.
      *
+     * @remarks
+     * This method does not work in a Node.js environment.
+     *
      * @param phoneAuthCredential - A credential provided by {@link PhoneAuthProvider.credential}.
      * @returns A {@link PhoneMultiFactorAssertion} which can be used with
      * {@link MultiFactorResolver.resolveSignIn}
@@ -13224,15 +14326,15 @@
     static async generateSecret(session) {
       const mfaSession = session;
       _assert(
-        typeof mfaSession.auth !== "undefined",
+        typeof mfaSession.user?.auth !== "undefined",
         "internal-error"
         /* AuthErrorCode.INTERNAL_ERROR */
       );
-      const response = await startEnrollTotpMfa(mfaSession.auth, {
+      const response = await startEnrollTotpMfa(mfaSession.user.auth, {
         idToken: mfaSession.credential,
         totpEnrollmentInfo: {}
       });
-      return TotpSecret._fromStartTotpMfaEnrollmentResponse(response, mfaSession.auth);
+      return TotpSecret._fromStartTotpMfaEnrollmentResponse(response, mfaSession.user.auth);
     }
   };
   TotpMultiFactorGenerator.FACTOR_ID = "totp";
@@ -13314,14 +14416,13 @@
      * @returns A QR code URL string.
      */
     generateQrCodeUrl(accountName, issuer) {
-      var _a;
       let useDefaults = false;
       if (_isEmptyString(accountName) || _isEmptyString(issuer)) {
         useDefaults = true;
       }
       if (useDefaults) {
         if (_isEmptyString(accountName)) {
-          accountName = ((_a = this.auth.currentUser) === null || _a === void 0 ? void 0 : _a.email) || "unknownuser";
+          accountName = this.auth.currentUser?.email || "unknownuser";
         }
         if (_isEmptyString(issuer)) {
           issuer = this.auth.name;
@@ -13331,19 +14432,18 @@
     }
   };
   function _isEmptyString(input) {
-    return typeof input === "undefined" || (input === null || input === void 0 ? void 0 : input.length) === 0;
+    return typeof input === "undefined" || input?.length === 0;
   }
   var name5 = "@firebase/auth";
-  var version6 = "0.23.2";
+  var version6 = "1.13.1";
   var AuthInterop = class {
     constructor(auth2) {
       this.auth = auth2;
       this.internalListeners = /* @__PURE__ */ new Map();
     }
     getUid() {
-      var _a;
       this.assertAuthConfigured();
-      return ((_a = this.auth.currentUser) === null || _a === void 0 ? void 0 : _a.uid) || null;
+      return this.auth.currentUser?.uid || null;
     }
     async getToken(forceRefresh) {
       this.assertAuthConfigured();
@@ -13360,7 +14460,7 @@
         return;
       }
       const unsubscribe = this.auth.onIdTokenChanged((user) => {
-        listener((user === null || user === void 0 ? void 0 : user.stsTokenManager.accessToken) || null);
+        listener(user?.stsTokenManager.accessToken || null);
       });
       this.internalListeners.set(listener, unsubscribe);
       this.updateProactiveRefresh();
@@ -13400,6 +14500,8 @@
         return "webworker";
       case "Cordova":
         return "cordova";
+      case "WebExtension":
+        return "web-extension";
       default:
         return void 0;
     }
@@ -13454,7 +14556,7 @@
       /* InstantiationMode.EXPLICIT */
     ));
     registerVersion(name5, version6, getVersionForPlatform(clientPlatform));
-    registerVersion(name5, version6, "esm2017");
+    registerVersion(name5, version6, "esm2020");
   }
   var DEFAULT_ID_TOKEN_MAX_AGE = 5 * 60;
   var authIdTokenMaxAge = getExperimentalSetting("authIdTokenMaxAge") || DEFAULT_ID_TOKEN_MAX_AGE;
@@ -13465,7 +14567,7 @@
     if (idTokenAge && idTokenAge > authIdTokenMaxAge) {
       return;
     }
-    const idToken = idTokenResult === null || idTokenResult === void 0 ? void 0 : idTokenResult.token;
+    const idToken = idTokenResult?.token;
     if (lastPostedIdToken === idToken) {
       return;
     }
@@ -13490,11 +14592,14 @@
         browserSessionPersistence
       ]
     });
-    const authTokenSyncUrl = getExperimentalSetting("authTokenSyncURL");
-    if (authTokenSyncUrl) {
-      const mintCookie = mintCookieFactory(authTokenSyncUrl);
-      beforeAuthStateChanged(auth2, mintCookie, () => mintCookie(auth2.currentUser));
-      onIdTokenChanged(auth2, (user) => mintCookie(user));
+    const authTokenSyncPath = getExperimentalSetting("authTokenSyncURL");
+    if (authTokenSyncPath && typeof isSecureContext === "boolean" && isSecureContext) {
+      const authTokenSyncUrl = new URL(authTokenSyncPath, location.origin);
+      if (location.origin === authTokenSyncUrl.origin) {
+        const mintCookie = mintCookieFactory(authTokenSyncUrl.toString());
+        beforeAuthStateChanged(auth2, mintCookie, () => mintCookie(auth2.currentUser));
+        onIdTokenChanged(auth2, (user) => mintCookie(user));
+      }
     }
     const authEmulatorHost = getDefaultEmulatorHost("auth");
     if (authEmulatorHost) {
@@ -13502,12 +14607,38 @@
     }
     return auth2;
   }
+  function getScriptParentElement() {
+    return document.getElementsByTagName("head")?.[0] ?? document;
+  }
+  _setExternalJSProvider({
+    loadJS(url) {
+      return new Promise((resolve, reject) => {
+        const el = document.createElement("script");
+        el.setAttribute("src", url);
+        el.onload = resolve;
+        el.onerror = (e) => {
+          const error2 = _createError(
+            "internal-error"
+            /* AuthErrorCode.INTERNAL_ERROR */
+          );
+          error2.customData = e;
+          reject(error2);
+        };
+        el.type = "text/javascript";
+        el.charset = "UTF-8";
+        getScriptParentElement().appendChild(el);
+      });
+    },
+    gapiScript: "https://apis.google.com/js/api.js",
+    recaptchaV2Script: "https://www.google.com/recaptcha/api.js",
+    recaptchaEnterpriseScript: "https://www.google.com/recaptcha/enterprise.js?render="
+  });
   registerAuth(
     "Browser"
     /* ClientPlatform.BROWSER */
   );
 
-  // node_modules/@firebase/app-compat/dist/esm/index.esm2017.js
+  // node_modules/@firebase/app-compat/dist/esm/index.esm.js
   var FirebaseAppImpl2 = class {
     constructor(_delegate, firebase2) {
       this._delegate = _delegate;
@@ -13556,10 +14687,9 @@
      * @internal
      */
     _getService(name10, instanceIdentifier = DEFAULT_ENTRY_NAME2) {
-      var _a;
       this._delegate.checkDestroyed();
       const provider = this._delegate.container.getProvider(name10);
-      if (!provider.isInitialized() && ((_a = provider.getComponent()) === null || _a === void 0 ? void 0 : _a.instantiationMode) === "EXPLICIT") {
+      if (!provider.isInitialized() && provider.getComponent()?.instantiationMode === "EXPLICIT") {
         provider.initialize();
       }
       return provider.getImmediate({
@@ -13628,7 +14758,7 @@
         registerComponent: registerComponentCompat,
         removeApp,
         useAsService,
-        modularAPIs: index_esm2017_exports
+        modularAPIs: index_esm_exports
       }
     };
     namespace["default"] = namespace;
@@ -13698,13 +14828,14 @@
   }
   function createFirebaseNamespace() {
     const namespace = createFirebaseNamespaceCore(FirebaseAppImpl2);
-    namespace.INTERNAL = Object.assign(Object.assign({}, namespace.INTERNAL), {
+    namespace.INTERNAL = {
+      ...namespace.INTERNAL,
       createFirebaseNamespace,
       extendNamespace,
       createSubscribe,
       ErrorFactory,
       deepExtend
-    });
+    };
     function extendNamespace(props) {
       deepExtend(namespace, props);
     }
@@ -13713,38 +14844,41 @@
   var firebase$1 = createFirebaseNamespace();
   var logger3 = new Logger("@firebase/app-compat");
   var name6 = "@firebase/app-compat";
-  var version7 = "0.2.13";
+  var version7 = "0.5.12";
   function registerCoreComponents2(variant) {
     registerVersion(name6, version7, variant);
   }
-  if (isBrowser() && self.firebase !== void 0) {
-    logger3.warn(`
-    Warning: Firebase is already defined in the global scope. Please make sure
-    Firebase library is only loaded once.
-  `);
-    const sdkVersion = self.firebase.SDK_VERSION;
-    if (sdkVersion && sdkVersion.indexOf("LITE") >= 0) {
+  try {
+    const globals = getGlobal();
+    if (globals.firebase !== void 0) {
       logger3.warn(`
-    Warning: You are trying to load Firebase while using Firebase Performance standalone script.
-    You should load Firebase Performance with this instance of Firebase to avoid loading duplicate code.
+      Warning: Firebase is already defined in the global scope. Please make sure
+      Firebase library is only loaded once.
     `);
+      const sdkVersion = globals.firebase.SDK_VERSION;
+      if (sdkVersion && sdkVersion.indexOf("LITE") >= 0) {
+        logger3.warn(`
+        Warning: You are trying to load Firebase while using Firebase Performance standalone script.
+        You should load Firebase Performance with this instance of Firebase to avoid loading duplicate code.
+        `);
+      }
     }
+  } catch {
   }
   var firebase = firebase$1;
   registerCoreComponents2();
 
   // node_modules/firebase/compat/app/dist/esm/index.esm.js
   var name7 = "firebase";
-  var version8 = "9.23.0";
+  var version8 = "12.13.0";
   firebase.registerVersion(name7, version8, "app-compat");
 
-  // node_modules/@firebase/auth/dist/esm2017/internal.js
+  // node_modules/@firebase/auth/dist/esm/internal.js
   function _cordovaWindow() {
     return window;
   }
   var REDIRECT_TIMEOUT_MS = 2e3;
   async function _generateHandlerUrl(auth2, event, provider) {
-    var _a;
     const { BuildInfo } = _cordovaWindow();
     debugAssert(event.sessionId, "AuthEvent did not contain a session ID");
     const sessionDigest = await computeSha256(event.sessionId);
@@ -13764,7 +14898,7 @@
       additionalParams["appDisplayName"] = BuildInfo.displayName;
     }
     additionalParams["sessionId"] = sessionDigest;
-    return _getRedirectUrl(auth2, provider, event.type, void 0, (_a = event.eventId) !== null && _a !== void 0 ? _a : void 0, additionalParams);
+    return _getRedirectUrl(auth2, provider, event.type, void 0, event.eventId ?? void 0, additionalParams);
   }
   async function _validateOrigin2(auth2) {
     const { BuildInfo } = _cordovaWindow();
@@ -13804,13 +14938,12 @@
       await new Promise((resolve, reject) => {
         let onCloseTimer = null;
         function authEventSeen() {
-          var _a;
           resolve();
-          const closeBrowserTab = (_a = cordova.plugins.browsertab) === null || _a === void 0 ? void 0 : _a.close;
+          const closeBrowserTab = cordova.plugins.browsertab?.close;
           if (typeof closeBrowserTab === "function") {
             closeBrowserTab();
           }
-          if (typeof (iabRef === null || iabRef === void 0 ? void 0 : iabRef.close) === "function") {
+          if (typeof iabRef?.close === "function") {
             iabRef.close();
           }
         }
@@ -13827,7 +14960,7 @@
           }, REDIRECT_TIMEOUT_MS);
         }
         function visibilityChanged() {
-          if ((document === null || document === void 0 ? void 0 : document.visibilityState) === "visible") {
+          if (document?.visibilityState === "visible") {
             resumed();
           }
         }
@@ -13850,21 +14983,20 @@
     }
   }
   function _checkCordovaConfiguration(auth2) {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
     const win = _cordovaWindow();
-    _assert(typeof ((_a = win === null || win === void 0 ? void 0 : win.universalLinks) === null || _a === void 0 ? void 0 : _a.subscribe) === "function", auth2, "invalid-cordova-configuration", {
+    _assert(typeof win?.universalLinks?.subscribe === "function", auth2, "invalid-cordova-configuration", {
       missingPlugin: "cordova-universal-links-plugin-fix"
     });
-    _assert(typeof ((_b = win === null || win === void 0 ? void 0 : win.BuildInfo) === null || _b === void 0 ? void 0 : _b.packageName) !== "undefined", auth2, "invalid-cordova-configuration", {
+    _assert(typeof win?.BuildInfo?.packageName !== "undefined", auth2, "invalid-cordova-configuration", {
       missingPlugin: "cordova-plugin-buildInfo"
     });
-    _assert(typeof ((_e = (_d = (_c = win === null || win === void 0 ? void 0 : win.cordova) === null || _c === void 0 ? void 0 : _c.plugins) === null || _d === void 0 ? void 0 : _d.browsertab) === null || _e === void 0 ? void 0 : _e.openUrl) === "function", auth2, "invalid-cordova-configuration", {
+    _assert(typeof win?.cordova?.plugins?.browsertab?.openUrl === "function", auth2, "invalid-cordova-configuration", {
       missingPlugin: "cordova-plugin-browsertab"
     });
-    _assert(typeof ((_h = (_g = (_f = win === null || win === void 0 ? void 0 : win.cordova) === null || _f === void 0 ? void 0 : _f.plugins) === null || _g === void 0 ? void 0 : _g.browsertab) === null || _h === void 0 ? void 0 : _h.isAvailable) === "function", auth2, "invalid-cordova-configuration", {
+    _assert(typeof win?.cordova?.plugins?.browsertab?.isAvailable === "function", auth2, "invalid-cordova-configuration", {
       missingPlugin: "cordova-plugin-browsertab"
     });
-    _assert(typeof ((_k = (_j = win === null || win === void 0 ? void 0 : win.cordova) === null || _j === void 0 ? void 0 : _j.InAppBrowser) === null || _k === void 0 ? void 0 : _k.open) === "function", auth2, "invalid-cordova-configuration", {
+    _assert(typeof win?.cordova?.InAppBrowser?.open === "function", auth2, "invalid-cordova-configuration", {
       missingPlugin: "cordova-plugin-inappbrowser"
     });
   }
@@ -13892,7 +15024,7 @@
       super(...arguments);
       this.passiveListeners = /* @__PURE__ */ new Set();
       this.initPromise = new Promise((resolve) => {
-        this.resolveInialized = resolve;
+        this.resolveInitialized = resolve;
       });
     }
     addPassiveListener(cb) {
@@ -13909,7 +15041,7 @@
     }
     /** Override the onEvent method */
     onEvent(event) {
-      this.resolveInialized();
+      this.resolveInitialized();
       this.passiveListeners.forEach((cb) => cb(event));
       return super.onEvent(event);
     }
@@ -13943,12 +15075,11 @@
     return event;
   }
   function _eventFromPartialAndUrl(partialEvent, url) {
-    var _a, _b;
     const callbackUrl = _getDeepLinkFromCallback(url);
     if (callbackUrl.includes("/__/auth/callback")) {
       const params = searchParamsOrEmpty(callbackUrl);
       const errorObject = params["firebaseError"] ? parseJsonOrNull(decodeURIComponent(params["firebaseError"])) : null;
-      const code = (_b = (_a = errorObject === null || errorObject === void 0 ? void 0 : errorObject["code"]) === null || _a === void 0 ? void 0 : _a.split("auth/")) === null || _b === void 0 ? void 0 : _b[1];
+      const code = errorObject?.["code"]?.split("auth/")?.[1];
       const error2 = code ? _createError(code) : null;
       if (error2) {
         return {
@@ -14004,7 +15135,7 @@
     return iOSDoubleDeepLink || iOSDeepLink || doubleDeepLink || link || url;
   }
   function searchParamsOrEmpty(url) {
-    if (!(url === null || url === void 0 ? void 0 : url.includes("?"))) {
+    if (!url?.includes("?")) {
       return {};
     }
     const [_, ...rest] = url.split("?");
@@ -14070,7 +15201,7 @@
         clearTimeout(noEventTimeout);
         const partialEvent = await _getAndRemoveEvent(auth2);
         let finalEvent = null;
-        if (partialEvent && (eventData === null || eventData === void 0 ? void 0 : eventData["url"])) {
+        if (partialEvent && eventData?.["url"]) {
           finalEvent = _eventFromPartialAndUrl(partialEvent, eventData["url"]);
         }
         manager.onEvent(finalEvent || generateNoEvent());
@@ -14113,13 +15244,12 @@
     _castAuth(auth2)._logFramework(framework);
   }
 
-  // node_modules/@firebase/auth-compat/dist/index.esm2017.js
+  // node_modules/@firebase/auth-compat/dist/index.esm.js
   var name8 = "@firebase/auth-compat";
-  var version9 = "0.4.2";
+  var version9 = "0.6.6";
   var CORDOVA_ONDEVICEREADY_TIMEOUT_MS = 1e3;
   function _getCurrentScheme2() {
-    var _a;
-    return ((_a = self === null || self === void 0 ? void 0 : self.location) === null || _a === void 0 ? void 0 : _a.protocol) || null;
+    return self?.location?.protocol || null;
   }
   function _isHttpOrHttps2() {
     return _getCurrentScheme2() === "http:" || _getCurrentScheme2() === "https:";
@@ -14131,7 +15261,7 @@
     return isReactNative() || isNode();
   }
   function _isIe11() {
-    return isIE() && (document === null || document === void 0 ? void 0 : document.documentMode) === 11;
+    return isIE() && document?.documentMode === 11;
   }
   function _isEdge(ua = getUA()) {
     return /Edge\/\d+/.test(ua);
@@ -14240,7 +15370,7 @@
     const session = getSessionStorageIfAvailable();
     const key = _persistenceKeyName(PERSISTENCE_KEY, auth2.config.apiKey, auth2.name);
     if (session) {
-      session.setItem(key, auth2._getPersistence());
+      session.setItem(key, auth2._getPersistenceType());
     }
   }
   function _getPersistencesFromRedirect(apiKey, appName) {
@@ -14262,9 +15392,8 @@
     }
   }
   function getSessionStorageIfAvailable() {
-    var _a;
     try {
-      return ((_a = _getSelfWindow()) === null || _a === void 0 ? void 0 : _a.sessionStorage) || null;
+      return _getSelfWindow()?.sessionStorage || null;
     } catch (e) {
       return null;
     }
@@ -14316,7 +15445,7 @@
       this.underlyingResolver = isCordova ? this.cordovaResolver : this.browserResolver;
     }
   };
-  function unwrap3(object) {
+  function unwrap2(object) {
     return object.unwrap();
   }
   function wrapped(object) {
@@ -14326,9 +15455,8 @@
     return credentialFromObject(userCredential);
   }
   function attachExtraErrorFields(auth2, e) {
-    var _a;
-    const response = (_a = e.customData) === null || _a === void 0 ? void 0 : _a._tokenResponse;
-    if ((e === null || e === void 0 ? void 0 : e.code) === "auth/multi-factor-auth-required") {
+    const response = e.customData?._tokenResponse;
+    if (e?.code === "auth/multi-factor-auth-required") {
       const mfaErr = e;
       mfaErr.resolver = new MultiFactorResolver(auth2, getMultiFactorResolver(auth2, e));
     } else if (response) {
@@ -14432,7 +15560,7 @@
       return this.resolver.hints;
     }
     resolveSignIn(assertion) {
-      return convertCredential(unwrap3(this.auth), this.resolver.resolveSignIn(assertion));
+      return convertCredential(unwrap2(this.auth), this.resolver.resolveSignIn(assertion));
     }
   };
   var User = class _User {
@@ -14784,12 +15912,12 @@
     return persistences;
   }
   var PhoneAuthProvider2 = class {
-    constructor() {
-      this.providerId = "phone";
-      this._delegate = new PhoneAuthProvider(unwrap3(firebase.auth()));
-    }
     static credential(verificationId, verificationCode) {
       return PhoneAuthProvider.credential(verificationId, verificationCode);
+    }
+    constructor() {
+      this.providerId = "phone";
+      this._delegate = new PhoneAuthProvider(unwrap2(firebase.auth()));
     }
     verifyPhoneNumber(phoneInfoOptions, applicationVerifier) {
       return this._delegate.verifyPhoneNumber(
@@ -14808,17 +15936,16 @@
   var _assert2 = _assert;
   var RecaptchaVerifier2 = class {
     constructor(container, parameters, app = firebase.app()) {
-      var _a;
-      _assert2((_a = app.options) === null || _a === void 0 ? void 0 : _a.apiKey, "invalid-api-key", {
+      _assert2(app.options?.apiKey, "invalid-api-key", {
         appName: app.name
       });
       this._delegate = new RecaptchaVerifier(
-        container,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        parameters,
         // TODO: remove ts-ignore when moving types from auth-types to auth-compat
         // @ts-ignore
-        app.auth()
+        app.auth(),
+        container,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        parameters
       );
       this.type = this._delegate.type;
     }
@@ -25352,6 +26479,26 @@
   }
   var auth = firebaseui.auth;
 
+  // ns-hugo-imp:/home/runner/work/slides/slides/assets/scripts/utils/toast.ts
+  var getTypeClass = (type) => {
+    switch (type) {
+      case 2 /* Error */:
+        return "text-blue-500";
+      case 1 /* Warn */:
+        return "text-yellow-500";
+      default:
+        return "text-blue-500";
+    }
+  };
+  var toast = (message, type = 0 /* Info */) => {
+    const p = document.createElement("P");
+    p.setAttribute("role", "alert");
+    p.classList.add(getTypeClass(type), "text-center", "p-4");
+    const text = document.createTextNode(message);
+    p.appendChild(text);
+    document.body.prepend(p);
+  };
+
   // ns-hugo-imp:/home/runner/work/slides/slides/assets/scripts/utils/dom.ts
   var stopPropagation = (ev) => {
     ev.stopPropagation();
@@ -25500,13 +26647,18 @@
     const auth2 = getAuth(app);
     const ui = new auth.AuthUI(auth2);
     ui.start("#firebase-ui", config);
-    auth2.onAuthStateChanged((user) => {
-      if (user) {
-        handleSignedIn(user);
-      } else {
-        handleSignOut();
+    auth2.onAuthStateChanged(
+      (user) => {
+        if (user) {
+          handleSignedIn(user);
+        } else {
+          handleSignOut();
+        }
+      },
+      (error2) => {
+        toast(error2.message, 2 /* Error */);
       }
-    }, console.error);
+    );
     const signOut2 = document.getElementById("sign-out");
     if (signOut2) {
       signOut2.onclick = () => {
@@ -25618,9 +26770,9 @@
     styles_default(reveal);
   };
 
-  // node_modules/@firebase/database/dist/index.esm2017.js
+  // node_modules/@firebase/database/dist/index.esm.js
   var name9 = "@firebase/database";
-  var version10 = "0.14.4";
+  var version10 = "1.1.3";
   var SDK_VERSION2 = "";
   function setSDKVersion(version11) {
     SDK_VERSION2 = version11;
@@ -25999,15 +27151,24 @@
     return timeout;
   };
   var AppCheckTokenProvider = class {
-    constructor(appName_, appCheckProvider) {
-      this.appName_ = appName_;
+    constructor(app, appCheckProvider) {
       this.appCheckProvider = appCheckProvider;
-      this.appCheck = appCheckProvider === null || appCheckProvider === void 0 ? void 0 : appCheckProvider.getImmediate({ optional: true });
+      this.appName = app.name;
+      if (_isFirebaseServerApp(app) && app.settings.appCheckToken) {
+        this.serverAppAppCheckToken = app.settings.appCheckToken;
+      }
+      this.appCheck = appCheckProvider?.getImmediate({ optional: true });
       if (!this.appCheck) {
-        appCheckProvider === null || appCheckProvider === void 0 ? void 0 : appCheckProvider.get().then((appCheck) => this.appCheck = appCheck);
+        appCheckProvider?.get().then((appCheck) => this.appCheck = appCheck);
       }
     }
     getToken(forceRefresh) {
+      if (this.serverAppAppCheckToken) {
+        if (forceRefresh) {
+          throw new Error("Attempted reuse of `FirebaseServerApp.appCheckToken` after previous usage failed.");
+        }
+        return Promise.resolve({ token: this.serverAppAppCheckToken });
+      }
       if (!this.appCheck) {
         return new Promise((resolve, reject) => {
           setTimeout(() => {
@@ -26022,11 +27183,10 @@
       return this.appCheck.getToken(forceRefresh);
     }
     addTokenChangeListener(listener) {
-      var _a;
-      (_a = this.appCheckProvider) === null || _a === void 0 ? void 0 : _a.get().then((appCheck) => appCheck.addTokenListener(listener));
+      this.appCheckProvider?.get().then((appCheck) => appCheck.addTokenListener(listener));
     }
     notifyForInvalidToken() {
-      warn(`Provided AppCheck credentials for the app named "${this.appName_}" are invalid. This usually indicates your app was not initialized correctly.`);
+      warn(`Provided AppCheck credentials for the app named "${this.appName}" are invalid. This usually indicates your app was not initialized correctly.`);
     }
   };
   var FirebaseAuthTokenProvider = class {
@@ -26121,7 +27281,7 @@
      * @param nodeAdmin - Whether this instance uses Admin SDK credentials
      * @param persistenceKey - Override the default session persistence storage key
      */
-    constructor(host, secure, namespace, webSocketOnly, nodeAdmin = false, persistenceKey2 = "", includeNamespaceInQueryParams = false, isUsingEmulator = false) {
+    constructor(host, secure, namespace, webSocketOnly, nodeAdmin = false, persistenceKey2 = "", includeNamespaceInQueryParams = false, isUsingEmulator = false, emulatorOptions = null) {
       this.secure = secure;
       this.namespace = namespace;
       this.webSocketOnly = webSocketOnly;
@@ -26129,6 +27289,7 @@
       this.persistenceKey = persistenceKey2;
       this.includeNamespaceInQueryParams = includeNamespaceInQueryParams;
       this.isUsingEmulator = isUsingEmulator;
+      this.emulatorOptions = emulatorOptions;
       this._host = host.toLowerCase();
       this._domain = this._host.substr(this._host.indexOf(".") + 1);
       this.internalHost = PersistentStorage.get("host:" + host) || this._host;
@@ -26511,7 +27672,7 @@
   };
   var FirebaseIFrameScriptHolder = class _FirebaseIFrameScriptHolder {
     /**
-     * @param commandCB - The callback to be called when control commands are recevied from the server.
+     * @param commandCB - The callback to be called when control commands are received from the server.
      * @param onMessageCB - The callback to be triggered when responses arrive from the server.
      * @param onDisconnect - The callback to be triggered when this tag holder is closed
      * @param urlFn - A function that provides the URL of the endpoint to send data to.
@@ -27002,12 +28163,6 @@
   WebSocketConnection.responsesRequiredToBeHealthy = 2;
   WebSocketConnection.healthyTimeout = 3e4;
   var TransportManager = class _TransportManager {
-    /**
-     * @param repoInfo - Metadata around the namespace we're connecting to
-     */
-    constructor(repoInfo) {
-      this.initTransports_(repoInfo);
-    }
     static get ALL_TRANSPORTS() {
       return [BrowserPollConnection, WebSocketConnection];
     }
@@ -27017,6 +28172,12 @@
      */
     static get IS_TRANSPORT_INITIALIZED() {
       return this.globalTransportInitialized_;
+    }
+    /**
+     * @param repoInfo - Metadata around the namespace we're connecting to
+     */
+    constructor(repoInfo) {
+      this.initTransports_(repoInfo);
     }
     initTransports_(repoInfo) {
       const isWebSocketsAvailable = WebSocketConnection && WebSocketConnection["isAvailable"]();
@@ -27261,7 +28422,9 @@
       if (MESSAGE_DATA in controlData) {
         const payload = controlData[MESSAGE_DATA];
         if (cmd === SERVER_HELLO) {
-          const handshakePayload = Object.assign({}, payload);
+          const handshakePayload = {
+            ...payload
+          };
           if (this.repoInfo_.isUsingEmulator) {
             handshakePayload.h = this.repoInfo_.host;
           }
@@ -27498,6 +28661,9 @@
     }
   };
   var OnlineMonitor = class _OnlineMonitor extends EventEmitter {
+    static getInstance() {
+      return new _OnlineMonitor();
+    }
     constructor() {
       super(["online"]);
       this.online_ = true;
@@ -27515,9 +28681,6 @@
           }
         }, false);
       }
-    }
-    static getInstance() {
-      return new _OnlineMonitor();
     }
     getInitialEvent(eventType) {
       assert(eventType === "online", "Unknown event type: " + eventType);
@@ -27711,6 +28874,9 @@
     return "in property '" + validationPath.parts_.join(".") + "'";
   }
   var VisibilityMonitor = class _VisibilityMonitor extends EventEmitter {
+    static getInstance() {
+      return new _VisibilityMonitor();
+    }
     constructor() {
       super(["visible"]);
       let hidden;
@@ -27740,9 +28906,6 @@
           }
         }, false);
       }
-    }
-    static getInstance() {
-      return new _VisibilityMonitor();
     }
     getInitialEvent(eventType) {
       assert(eventType === "visible", "Unknown event type: " + eventType);
@@ -28335,7 +29498,7 @@
           }
           this.lastConnectionEstablishedTime_ = null;
         }
-        const timeSinceLastConnectAttempt = (/* @__PURE__ */ new Date()).getTime() - this.lastConnectionAttemptTime_;
+        const timeSinceLastConnectAttempt = Math.max(0, (/* @__PURE__ */ new Date()).getTime() - this.lastConnectionAttemptTime_);
         let reconnectDelay = Math.max(0, this.reconnectDelay_ - timeSinceLastConnectAttempt);
         reconnectDelay = Math.random() * reconnectDelay;
         this.log_("Trying to reconnect in " + reconnectDelay + "ms");
@@ -29217,6 +30380,12 @@
   };
   var __childrenNodeConstructor;
   var LeafNode = class _LeafNode {
+    static set __childrenNodeConstructor(val) {
+      __childrenNodeConstructor = val;
+    }
+    static get __childrenNodeConstructor() {
+      return __childrenNodeConstructor;
+    }
     /**
      * @param value_ - The value to store in this leaf node. The object type is
      * possible in the event of a deferred value
@@ -29228,12 +30397,6 @@
       this.lazyHash_ = null;
       assert(this.value_ !== void 0 && this.value_ !== null, "LeafNode shouldn't be created with null/undefined value.");
       validatePriorityNode(this.priorityNode_);
-    }
-    static set __childrenNodeConstructor(val) {
-      __childrenNodeConstructor = val;
-    }
-    static get __childrenNodeConstructor() {
-      return __childrenNodeConstructor;
     }
     /** @inheritDoc */
     isLeafNode() {
@@ -29519,10 +30682,6 @@
   var _defaultIndexMap;
   var fallbackObject = {};
   var IndexMap = class _IndexMap {
-    constructor(indexes_, indexSet_) {
-      this.indexes_ = indexes_;
-      this.indexSet_ = indexSet_;
-    }
     /**
      * The default IndexMap for nodes without a priority
      */
@@ -29530,6 +30689,10 @@
       assert(fallbackObject && PRIORITY_INDEX, "ChildrenNode.ts has not been loaded");
       _defaultIndexMap = _defaultIndexMap || new _IndexMap({ ".priority": fallbackObject }, { ".priority": PRIORITY_INDEX });
       return _defaultIndexMap;
+    }
+    constructor(indexes_, indexSet_) {
+      this.indexes_ = indexes_;
+      this.indexSet_ = indexSet_;
     }
     get(indexKey) {
       const sortedMap = safeGet(this.indexes_, indexKey);
@@ -29563,9 +30726,9 @@
         newIndex = fallbackObject;
       }
       const indexName = indexDefinition.toString();
-      const newIndexSet = Object.assign({}, this.indexSet_);
+      const newIndexSet = { ...this.indexSet_ };
       newIndexSet[indexName] = indexDefinition;
-      const newIndexes = Object.assign({}, this.indexes_);
+      const newIndexes = { ...this.indexes_ };
       newIndexes[indexName] = newIndex;
       return new _IndexMap(newIndexes, newIndexSet);
     }
@@ -29624,6 +30787,9 @@
   };
   var EMPTY_NODE;
   var ChildrenNode = class _ChildrenNode {
+    static get EMPTY_NODE() {
+      return EMPTY_NODE || (EMPTY_NODE = new _ChildrenNode(new SortedMap(NAME_COMPARATOR), null, IndexMap.Default));
+    }
     /**
      * @param children_ - List of children of this node..
      * @param priorityNode_ - The priority of this node (as a snapshot node).
@@ -29639,9 +30805,6 @@
       if (this.children_.isEmpty()) {
         assert(!this.priorityNode_ || this.priorityNode_.isEmpty(), "An empty node cannot have a priority");
       }
-    }
-    static get EMPTY_NODE() {
-      return EMPTY_NODE || (EMPTY_NODE = new _ChildrenNode(new SortedMap(NAME_COMPARATOR), null, IndexMap.Default));
     }
     /** @inheritDoc */
     isLeafNode() {
@@ -30628,6 +31791,17 @@
     return obj;
   }
   var ReadonlyRestClient = class _ReadonlyRestClient extends ServerActions {
+    reportStats(stats) {
+      throw new Error("Method not implemented.");
+    }
+    static getListenId_(query, tag) {
+      if (tag !== void 0) {
+        return "tag$" + tag;
+      } else {
+        assert(query._queryParams.isDefault(), "should have a tag if it's not a default query.");
+        return query._path.toString();
+      }
+    }
     /**
      * @param repoInfo_ - Data about the namespace we are connecting to
      * @param onDataUpdate_ - A callback for new data from the server
@@ -30640,17 +31814,6 @@
       this.appCheckTokenProvider_ = appCheckTokenProvider_;
       this.log_ = logWrapper("p:rest:");
       this.listens_ = {};
-    }
-    reportStats(stats) {
-      throw new Error("Method not implemented.");
-    }
-    static getListenId_(query, tag) {
-      if (tag !== void 0) {
-        return "tag$" + tag;
-      } else {
-        assert(query._queryParams.isDefault(), "should have a tag if it's not a default query.");
-        return query._path.toString();
-      }
     }
     /** @inheritDoc */
     listen(query, currentHashFn, tag, onComplete) {
@@ -30832,7 +31995,7 @@
     }
     get() {
       const newStats = this.collection_.get();
-      const delta = Object.assign({}, newStats);
+      const delta = { ...newStats };
       if (this.last_) {
         each(this.last_, (stat, value) => {
           delta[stat] = delta[stat] - value;
@@ -31083,16 +32246,16 @@
     return emptyChildrenSingleton;
   };
   var ImmutableTree = class _ImmutableTree {
-    constructor(value, children = EmptyChildren()) {
-      this.value = value;
-      this.children = children;
-    }
     static fromObject(obj) {
       let tree = new _ImmutableTree(null);
       each(obj, (childPath, childSnap) => {
         tree = tree.set(new Path(childPath), childSnap);
       });
       return tree;
+    }
+    constructor(value, children = EmptyChildren()) {
+      this.value = value;
+      this.children = children;
     }
     /**
      * True if the value is empty and there are no children
@@ -33853,7 +35016,7 @@
       return this._node.val(true);
     }
     /**
-     * Enumerates the top-level children in the `DataSnapshot`.
+     * Enumerates the top-level children in the `IteratedDataSnapshot`.
      *
      * Because of the way JavaScript objects work, the ordering of data in the
      * JavaScript object returned by `val()` is not guaranteed to match the
@@ -34075,18 +35238,22 @@
   var FIREBASE_DATABASE_EMULATOR_HOST_VAR = "FIREBASE_DATABASE_EMULATOR_HOST";
   var repos = {};
   var useRestClient = false;
-  function repoManagerApplyEmulatorSettings(repo, host, port, tokenProvider) {
+  function repoManagerApplyEmulatorSettings(repo, hostAndPort, emulatorOptions, tokenProvider) {
+    const portIndex = hostAndPort.lastIndexOf(":");
+    const host = hostAndPort.substring(0, portIndex);
+    const useSsl = isCloudWorkstation(host);
     repo.repoInfo_ = new RepoInfo(
-      `${host}:${port}`,
+      hostAndPort,
       /* secure= */
-      false,
+      useSsl,
       repo.repoInfo_.namespace,
       repo.repoInfo_.webSocketOnly,
       repo.repoInfo_.nodeAdmin,
       repo.repoInfo_.persistenceKey,
       repo.repoInfo_.includeNamespaceInQueryParams,
       /*isUsingEmulator=*/
-      true
+      true,
+      emulatorOptions
     );
     if (tokenProvider) {
       repo.authTokenProvider_ = tokenProvider;
@@ -34121,7 +35288,7 @@
     if (!pathIsEmpty(parsedUrl.path)) {
       fatal("Database URL must point to the root of a Firebase Database (not including a child path).");
     }
-    const repo = repoManagerCreateRepo(repoInfo, app, authTokenProvider, new AppCheckTokenProvider(app.name, appCheckProvider));
+    const repo = repoManagerCreateRepo(repoInfo, app, authTokenProvider, new AppCheckTokenProvider(app, appCheckProvider));
     return new Database(repo, app);
   }
   function repoManagerDeleteRepo(repo, appName) {
@@ -34196,10 +35363,14 @@
   function connectDatabaseEmulator(db, host, port, options = {}) {
     db = getModularInstance(db);
     db._checkNotDeleted("useEmulator");
-    if (db._instanceStarted) {
-      fatal("Cannot call useEmulator() after instance has already been initialized.");
-    }
+    const hostAndPort = `${host}:${port}`;
     const repo = db._repoInternal;
+    if (db._instanceStarted) {
+      if (hostAndPort === db._repoInternal.repoInfo_.host && deepEqual(options, repo.repoInfo_.emulatorOptions)) {
+        return;
+      }
+      fatal("connectDatabaseEmulator() cannot initialize or alter the emulator configuration after the database instance has started.");
+    }
     let tokenProvider = void 0;
     if (repo.repoInfo_.nodeAdmin) {
       if (options.mockUserToken) {
@@ -34210,7 +35381,10 @@
       const token = typeof options.mockUserToken === "string" ? options.mockUserToken : createMockUserToken(options.mockUserToken, db.app.options.projectId);
       tokenProvider = new EmulatorTokenProvider(token);
     }
-    repoManagerApplyEmulatorSettings(repo, host, port, tokenProvider);
+    if (isCloudWorkstation(host)) {
+      void pingServer(host);
+    }
+    repoManagerApplyEmulatorSettings(repo, hostAndPort, options, tokenProvider);
   }
   function registerDatabase(variant) {
     setSDKVersion(SDK_VERSION);
@@ -34226,7 +35400,7 @@
       /* ComponentType.PUBLIC */
     ).setMultipleInstances(true));
     registerVersion(name9, version10, variant);
-    registerVersion(name9, version10, "esm2017");
+    registerVersion(name9, version10, "esm2020");
   }
   PersistentConnection.prototype.simpleListen = function(pathString, onComplete) {
     this.sendRequest("q", { p: pathString }, onComplete);
@@ -34572,7 +35746,10 @@
       tc(reveal_default, hasFirebaseAPIKey)?.(reveal);
       const { app, clientId, dbPaths } = await tc(firebase_default, hasFirebaseAPIKey)?.(reveal, config2) || {};
       if (app && clientId && dbPaths) {
-        tc(sync_default2, hasFirebaseAPIKey)?.({
+        tc(
+          sync_default2,
+          hasFirebaseAPIKey
+        )?.({
           reveal,
           app,
           dbPaths,
@@ -34586,7 +35763,25 @@
 })();
 /*! Bundled license information:
 
-@firebase/util/dist/index.esm2017.js:
+@firebase/util/dist/postinstall.mjs:
+  (**
+   * @license
+   * Copyright 2025 Google LLC
+   *
+   * Licensed under the Apache License, Version 2.0 (the "License");
+   * you may not use this file except in compliance with the License.
+   * You may obtain a copy of the License at
+   *
+   *   http://www.apache.org/licenses/LICENSE-2.0
+   *
+   * Unless required by applicable law or agreed to in writing, software
+   * distributed under the License is distributed on an "AS IS" BASIS,
+   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   * See the License for the specific language governing permissions and
+   * limitations under the License.
+   *)
+
+@firebase/util/dist/index.esm.js:
   (**
    * @license
    * Copyright 2017 Google LLC
@@ -34636,19 +35831,19 @@
    * limitations under the License.
    *)
 
-@firebase/util/dist/index.esm2017.js:
-@firebase/util/dist/index.esm2017.js:
-@firebase/util/dist/index.esm2017.js:
-@firebase/logger/dist/esm/index.esm2017.js:
-@firebase/database/dist/index.esm2017.js:
-@firebase/database/dist/index.esm2017.js:
-@firebase/database/dist/index.esm2017.js:
-@firebase/database/dist/index.esm2017.js:
-@firebase/database/dist/index.esm2017.js:
-@firebase/database/dist/index.esm2017.js:
-@firebase/database/dist/index.esm2017.js:
-@firebase/database/dist/index.esm2017.js:
-@firebase/database/dist/index.esm2017.js:
+@firebase/util/dist/index.esm.js:
+@firebase/util/dist/index.esm.js:
+@firebase/util/dist/index.esm.js:
+@firebase/logger/dist/esm/index.esm.js:
+@firebase/database/dist/index.esm.js:
+@firebase/database/dist/index.esm.js:
+@firebase/database/dist/index.esm.js:
+@firebase/database/dist/index.esm.js:
+@firebase/database/dist/index.esm.js:
+@firebase/database/dist/index.esm.js:
+@firebase/database/dist/index.esm.js:
+@firebase/database/dist/index.esm.js:
+@firebase/database/dist/index.esm.js:
   (**
    * @license
    * Copyright 2017 Google LLC
@@ -34666,8 +35861,7 @@
    * limitations under the License.
    *)
 
-@firebase/util/dist/index.esm2017.js:
-@firebase/util/dist/index.esm2017.js:
+@firebase/util/dist/index.esm.js:
   (**
    * @license
    * Copyright 2017 Google LLC
@@ -34701,9 +35895,23 @@
    * limitations under the License.
    *)
 
-@firebase/util/dist/index.esm2017.js:
-@firebase/installations/dist/esm/index.esm2017.js:
-@firebase/analytics/dist/esm/index.esm2017.js:
+@firebase/util/dist/index.esm.js:
+  (**
+   * @license
+   * Copyright 2017 Google LLC
+   *
+   * Licensed under the Apache License, Version 2.0 (the "License");
+   * you may not use this file except in compliance with the License.
+   * You may obtain a copy of the License at
+   *
+   *   http://www.apache.org/licenses/LICENSE-2.0
+   *
+   * Unless required by applicable law or agreed to in writing, software
+   * distributed under the License is distributed on an "AS IS" BASIS,
+   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   * See the License for the specific language governing permissions and
+   * limitations under the License.
+   *)
   (**
    * @license
    * Copyright 2019 Google LLC
@@ -34737,8 +35945,7 @@
    * limitations under the License.
    *)
 
-@firebase/util/dist/index.esm2017.js:
-@firebase/auth/dist/esm2017/index-e3d5d3f4.js:
+@firebase/util/dist/index.esm.js:
   (**
    * @license
    * Copyright 2021 Google LLC
@@ -34755,12 +35962,28 @@
    * See the License for the specific language governing permissions and
    * limitations under the License.
    *)
+  (**
+   * @license
+   * Copyright 2025 Google LLC
+   *
+   * Licensed under the Apache License, Version 2.0 (the "License");
+   * you may not use this file except in compliance with the License.
+   * You may obtain a copy of the License at
+   *
+   *   http://www.apache.org/licenses/LICENSE-2.0
+   *
+   * Unless required by applicable law or agreed to in writing, software
+   * distributed under the License is distributed on an "AS IS" BASIS,
+   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   * See the License for the specific language governing permissions and
+   * limitations under the License.
+   *)
 
-@firebase/component/dist/esm/index.esm2017.js:
-@firebase/installations/dist/esm/index.esm2017.js:
-@firebase/installations/dist/esm/index.esm2017.js:
-@firebase/installations/dist/esm/index.esm2017.js:
-@firebase/installations/dist/esm/index.esm2017.js:
+@firebase/component/dist/esm/index.esm.js:
+@firebase/installations/dist/esm/index.esm.js:
+@firebase/installations/dist/esm/index.esm.js:
+@firebase/installations/dist/esm/index.esm.js:
+@firebase/installations/dist/esm/index.esm.js:
   (**
    * @license
    * Copyright 2019 Google LLC
@@ -34778,10 +36001,26 @@
    * limitations under the License.
    *)
 
-@firebase/app/dist/esm/index.esm2017.js:
+@firebase/app/dist/esm/index.esm.js:
   (**
    * @license
    * Copyright 2019 Google LLC
+   *
+   * Licensed under the Apache License, Version 2.0 (the "License");
+   * you may not use this file except in compliance with the License.
+   * You may obtain a copy of the License at
+   *
+   *   http://www.apache.org/licenses/LICENSE-2.0
+   *
+   * Unless required by applicable law or agreed to in writing, software
+   * distributed under the License is distributed on an "AS IS" BASIS,
+   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   * See the License for the specific language governing permissions and
+   * limitations under the License.
+   *)
+  (**
+   * @license
+   * Copyright 2023 Google LLC
    *
    * Licensed under the Apache License, Version 2.0 (the "License");
    * you may not use this file except in compliance with the License.
@@ -34812,15 +36051,15 @@
    * limitations under the License.
    *)
 
-@firebase/installations/dist/esm/index.esm2017.js:
+@firebase/installations/dist/esm/index.esm.js:
 firebase/app/dist/esm/index.esm.js:
-@firebase/auth/dist/esm2017/index-e3d5d3f4.js:
-@firebase/auth/dist/esm2017/index-e3d5d3f4.js:
+@firebase/auth/dist/esm/index-907e9a1a.js:
+@firebase/auth/dist/esm/index-907e9a1a.js:
 firebase/compat/app/dist/esm/index.esm.js:
-@firebase/auth-compat/dist/index.esm2017.js:
-@firebase/database/dist/index.esm2017.js:
-@firebase/database/dist/index.esm2017.js:
-@firebase/database/dist/index.esm2017.js:
+@firebase/auth-compat/dist/index.esm.js:
+@firebase/database/dist/index.esm.js:
+@firebase/database/dist/index.esm.js:
+@firebase/database/dist/index.esm.js:
   (**
    * @license
    * Copyright 2020 Google LLC
@@ -34838,9 +36077,44 @@ firebase/compat/app/dist/esm/index.esm.js:
    * limitations under the License.
    *)
 
-@firebase/analytics/dist/esm/index.esm2017.js:
-@firebase/auth/dist/esm2017/index-e3d5d3f4.js:
-@firebase/app-compat/dist/esm/index.esm2017.js:
+@firebase/installations/dist/esm/index.esm.js:
+@firebase/analytics/dist/esm/index.esm.js:
+  (**
+   * @license
+   * Copyright 2019 Google LLC
+   *
+   * Licensed under the Apache License, Version 2.0 (the "License");
+   * you may not use this file except in compliance with the License.
+   * You may obtain a copy of the License at
+   *
+   *   http://www.apache.org/licenses/LICENSE-2.0
+   *
+   * Unless required by applicable law or agreed to in writing, software
+   * distributed under the License is distributed on an "AS IS" BASIS,
+   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   * See the License for the specific language governing permissions and
+   * limitations under the License.
+   *)
+  (**
+   * @license
+   * Copyright 2020 Google LLC
+   *
+   * Licensed under the Apache License, Version 2.0 (the "License");
+   * you may not use this file except in compliance with the License.
+   * You may obtain a copy of the License at
+   *
+   *   http://www.apache.org/licenses/LICENSE-2.0
+   *
+   * Unless required by applicable law or agreed to in writing, software
+   * distributed under the License is distributed on an "AS IS" BASIS,
+   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   * See the License for the specific language governing permissions and
+   * limitations under the License.
+   *)
+
+@firebase/analytics/dist/esm/index.esm.js:
+@firebase/auth/dist/esm/index-907e9a1a.js:
+@firebase/app-compat/dist/esm/index.esm.js:
   (**
    * @license
    * Copyright 2020 Google LLC
@@ -34874,7 +36148,25 @@ firebase/compat/app/dist/esm/index.esm.js:
    * limitations under the License.
    *)
 
-@firebase/auth/dist/esm2017/index-e3d5d3f4.js:
+@firebase/auth/dist/esm/index-907e9a1a.js:
+  (**
+   * @license
+   * Copyright 2021 Google LLC
+   *
+   * Licensed under the Apache License, Version 2.0 (the "License");
+   * you may not use this file except in compliance with the License.
+   * You may obtain a copy of the License at
+   *
+   *   http://www.apache.org/licenses/LICENSE-2.0
+   *
+   * Unless required by applicable law or agreed to in writing, software
+   * distributed under the License is distributed on an "AS IS" BASIS,
+   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   * See the License for the specific language governing permissions and
+   * limitations under the License.
+   *)
+
+@firebase/auth/dist/esm/index-907e9a1a.js:
   (**
    * @license
    * Copyright 2020 Google LLC
@@ -34923,8 +36215,74 @@ firebase/compat/app/dist/esm/index.esm.js:
    * See the License for the specific language governing permissions and
    * limitations under the License.
    *)
+  (**
+   * @license
+   * Copyright 2023 Google LLC
+   *
+   * Licensed under the Apache License, Version 2.0 (the "License");
+   * you may not use this file except in compliance with the License.
+   * You may obtain a copy of the License at
+   *
+   *   http://www.apache.org/licenses/LICENSE-2.0
+   *
+   * Unless required by applicable law or agreed to in writing, software
+   * distributed under the License is distributed on an "AS IS" BASIS,
+   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   * See the License for the specific language governing permissions and
+   * limitations under the License.
+   *)
 
-@firebase/auth/dist/esm2017/index-e3d5d3f4.js:
+@firebase/auth/dist/esm/index-907e9a1a.js:
+  (**
+   * @license
+   * Copyright 2020 Google LLC
+   *
+   * Licensed under the Apache License, Version 2.0 (the "License");
+   * you may not use this file except in compliance with the License.
+   * You may obtain a copy of the License at
+   *
+   *   http://www.apache.org/licenses/LICENSE-2.0
+   *
+   * Unless required by applicable law or agreed to in writing, software
+   * distributed under the License is distributed on an "AS IS" BASIS,
+   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   * See the License for the specific language governing permissions and
+   * limitations under the License.
+   *)
+  (**
+   * @license
+   * Copyright 2019 Google LLC
+   *
+   * Licensed under the Apache License, Version 2.0 (the "License");
+   * you may not use this file except in compliance with the License.
+   * You may obtain a copy of the License at
+   *
+   *   http://www.apache.org/licenses/LICENSE-2.0
+   *
+   * Unless required by applicable law or agreed to in writing, software
+   * distributed under the License is distributed on an "AS IS" BASIS,
+   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   * See the License for the specific language governing permissions and
+   * limitations under the License.
+   *)
+  (**
+   * @license
+   * Copyright 2025 Google LLC
+   *
+   * Licensed under the Apache License, Version 2.0 (the "License");
+   * you may not use this file except in compliance with the License.
+   * You may obtain a copy of the License at
+   *
+   *   http://www.apache.org/licenses/LICENSE-2.0
+   *
+   * Unless required by applicable law or agreed to in writing, software
+   * distributed under the License is distributed on an "AS IS" BASIS,
+   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   * See the License for the specific language governing permissions and
+   * limitations under the License.
+   *)
+
+@firebase/auth/dist/esm/index-907e9a1a.js:
   (**
    * @license
    * Copyright 2020 Google LLC
@@ -34990,7 +36348,7 @@ firebase/compat/app/dist/esm/index.esm.js:
    * limitations under the License.
    *)
 
-@firebase/auth/dist/esm2017/internal.js:
+@firebase/auth/dist/esm/internal.js:
   (**
    * @license
    * Copyright 2021 Google LLC
@@ -35062,7 +36420,7 @@ material-design-lite/src/textfield/textfield.js:
    * limitations under the License.
    *)
 
-@firebase/database/dist/index.esm2017.js:
+@firebase/database/dist/index.esm.js:
   (**
    * @license
    * Copyright 2019 Google LLC
@@ -35112,7 +36470,7 @@ material-design-lite/src/textfield/textfield.js:
    * limitations under the License.
    *)
 
-@firebase/database/dist/index.esm2017.js:
+@firebase/database/dist/index.esm.js:
   (**
    * @license
    * Copyright 2017 Google LLC
@@ -35146,7 +36504,7 @@ material-design-lite/src/textfield/textfield.js:
    * limitations under the License.
    *)
 
-@firebase/database/dist/index.esm2017.js:
+@firebase/database/dist/index.esm.js:
   (**
    * @license
    * Copyright 2021 Google LLC
@@ -35166,6 +36524,24 @@ material-design-lite/src/textfield/textfield.js:
   (**
    * @license
    * Copyright 2020 Google LLC
+   *
+   * Licensed under the Apache License, Version 2.0 (the "License");
+   * you may not use this file except in compliance with the License.
+   * You may obtain a copy of the License at
+   *
+   *   http://www.apache.org/licenses/LICENSE-2.0
+   *
+   * Unless required by applicable law or agreed to in writing, software
+   * distributed under the License is distributed on an "AS IS" BASIS,
+   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   * See the License for the specific language governing permissions and
+   * limitations under the License.
+   *)
+
+@firebase/database/dist/index.esm.js:
+  (**
+   * @license
+   * Copyright 2023 Google LLC
    *
    * Licensed under the Apache License, Version 2.0 (the "License");
    * you may not use this file except in compliance with the License.
