@@ -1,25 +1,26 @@
 {
-    "name": "slides",
-    "scripts": {
-        "check": "biome check && tsc --noEmit",
-        "fix": "biome check --write"
-    },
-    "dependencies": {
-        "@fingerprintjs/fingerprintjs": "^5.2.0",
-        "firebase": "^12.13.0",
-        "firebaseui": "^6.1.0",
-        "reveal.js": "^6.0.1",
-        "reveal.js-plugins": "^4.6.0",
-        "uuid": "^14.0.0"
-    },
-    "devDependencies": {
-        "@types/uuid": "^11.0.0",
-        "autoprefixer": "^10.5.0",
-        "postcss": "^8.5.14",
-        "postcss-cli": "^11.0.1",
-        "postcss-import": "^16.1.1",
-        "prettier": "^3.8.3",
-        "prettier-plugin-go-template": "^0.0.15",
-        "typescript": "^6.0.3"
-    }
+  "name": "slides",
+  "scripts": {
+    "check": "biome check && tsc --noEmit",
+    "fix": "biome check --write"
+  },
+  "dependencies": {
+    "@fingerprintjs/fingerprintjs": "^5.2.0",
+    "firebase": "^12.13.0",
+    "firebaseui": "^6.1.0",
+    "reveal.js": "^6.0.1",
+    "reveal.js-plugins": "^4.6.0",
+    "uuid": "^14.0.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.15",
+    "@types/uuid": "^11.0.0",
+    "autoprefixer": "^10.5.0",
+    "postcss": "^8.5.14",
+    "postcss-cli": "^11.0.1",
+    "postcss-import": "^16.1.1",
+    "prettier": "^3.8.3",
+    "prettier-plugin-go-template": "^0.0.15",
+    "typescript": "^6.0.3"
+  }
 }

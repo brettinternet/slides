@@ -11,6 +11,8 @@
     "includes": [
       "**/*.ts",
       "**/*.js",
+      "**/*.json",
+      "**/*.jsonc",
       "**/*.css",
       "!public",
       "!resources",
