@@ -40,6 +40,8 @@ theme = "night"
 Our industry is changing quite a bit.
 
 Who is nervous about the future?
+
+Maybe you don't like all this talk about AI. I personally believe that my short talk applies both to AI engineering as well as handcrafted, bespoke, vegan, artisanal code.
 {{% /note %}}
 
 ---
@@ -53,7 +55,7 @@ Raise your hand if you've observed someone say, "Oops, that was Claude's fault."
 
 What are some other issues you've ran into with AI generated code?
 
-For me it's seeing AI generated PR comments.
+For me it's anything like, "My agent will talk to your agent." Like AI text pasted from humans in PRs, or large walls of text in engineering channels.
 {{% /note %}}
 
 ---
@@ -80,10 +82,14 @@ So how do we fix the goblins? How do we improve the quality of AI augmented code
 
 ## Harness engineering
 
+Agent = Model + Harness
+
 {{% note %}}
 What is harness engineering?
 
-Well, I'm not going to tell you.
+The harness is everything in an AI agent except the model itself.
+
+So harness engineering is the system architecture and environments around AI agents to make them reliable and effective.
 {{% /note %}}
 
 ---
@@ -112,7 +118,8 @@ outsourcing real work
 {{% note %}}
 The phrase was coined by Mitchell Hashimoto.
 
-Evolution working with AI. Eventually worked on improving agent output.
+His process evolution working with AI might be similar to yours.
+Eventually worked on improving agent output.
 
 It becomes very exciting once you get a taste of the productivity that AI can offer.
 {{% /note %}}
@@ -128,13 +135,14 @@ It becomes very exciting once you get a taste of the productivity that AI can of
 ```
 
 {{% note %}}
-Martin Fowler later picked up this idea, too: "Harness Engineering"
+Martin Fowler later picked up this idea, too: "Harness Engineering". He points out "guides" and "sensors" help steer the agent.
 
 - Guides (feedforward) = AGENTS.md, architecture docs, examples, scripts, skills.
   - Martin Fowler: "anticipate the agent's behaviour and aim to steer it before it acts."
 - Sensors (feedback) = tests, linters, type checks, coverage, review agents, logs.
   - observe after the agent acts and help it self-correct.
-- Key point: a harness is not just prompting, nor is it just the agent. It is guidance plus feedback.
+
+Key point: a harness is not just prompting, nor is it just the agent. It is guidance plus feedback.
 
 So that is the "harness"!
 
@@ -173,22 +181,25 @@ Notice that these tools are both good for AI agents _and_ humans.
 
 ### Guides
 
+AGENTS.md, architecture docs, examples, scripts, skills
+
 ---
 
 #### Instructions
 
 - `AGENTS.md`
-- Coding standards
+- `AGENTS.local.md`
 - Split up context, increasing specificity
 - `architecture.md`
-- `AGENTS.local.md`
+- Coding standards
 
 {{% note %}}
 
-- Code standards: Unlintable
+- AGENTS are project instructions
+- local, personalized instructions
 - context on-demand
 - separate architecture which agents can refer to
-- local, personalized instructions
+- Code standards (unlintable)
 
 {{% /note %}}
 
@@ -199,7 +210,7 @@ Notice that these tools are both good for AI agents _and_ humans.
 #### System designers
 
 {{% note %}}
-Future holds, likely become system designers.
+How will our jobs change? Maybe we'll all become system designers.
 
 Working on GraphQL subscriptions, agent lacked specific pattern to follow, implemented 3 or 4 different patterns
 
@@ -226,14 +237,16 @@ I believe that a lot of the harnesses outside of the agent itself are effective 
 
 ### Sensors
 
+tests, linters, type checks, coverage, review agents, logs
+
 ---
 
 #### Fast feedback
 
 ```diff
-  fix:
+  test:
     cmd:
--     - mix format
+-     - mix test
 +     - lefthook run pre-commit
 ```
 
@@ -242,7 +255,7 @@ task fix
 ```
 
 {{% note %}}
-Fast feedback is becoming very important.
+Quick sensors or fast feedback is becoming very important.
 Fast everything has always been important, but my personal belief is that it'll change how we prioritize certain things.
 {{% /note %}}
 
@@ -255,16 +268,13 @@ Fast everything has always been important, but my personal belief is that it'll 
 <img src="what-harness.png" alt="what is a harness" height="250px" />
 
 {{% note %}}
-Does any of this matter?
+I really liked this take from Steven. Do you ever get exhausted trying to keep up with the tooling?
 
-idk man. But I think probably. It's certainly not going away.
+I'm only suggesting we fine-tune the "guides" and "sensors" for both humans and AI agents.
 
-It's fun to be productive and effective. That will look different for everyone.
+This AI thing is not going away. And it's fun to be productive and effective. That will look different for everyone.
 
-The golden path will look different for everyone with the agent.
-
-However, there are lots more harnesses that might be right for our products, or your team, or you.
-Maybe you'll collect some new ones this week.
+So maybe there are more harnesses that might be right for our products, or your team, or you.
 {{% /note %}}
 
 ---
@@ -272,9 +282,11 @@ Maybe you'll collect some new ones this week.
 <img src="boot.png" alt="very tall heel in boot" height="500px" />
 
 {{% note %}}
-Who's shoe is this?
+This is Gaia's shoe from a couple years ago.
 
 Good harnesses can lift up our code quality and make both **humans and AI agents** work more effectively.
+
+I invite you to think about how you want to "boost" your AI agent.
 {{% /note %}}
 
 {{% /section %}}
