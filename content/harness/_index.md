@@ -41,7 +41,7 @@ Our industry is changing quite a bit.
 
 Who is nervous about the future?
 
-Maybe you don't like all this talk about AI. I personally believe that my short talk applies both to AI engineering as well as handcrafted, bespoke, vegan, artisanal code.
+Maybe you don't like all this talk about AI. I personally believe that my short talk applies both to AI engineering as well as bespoke, artisanal, vegan, handcrafted code.
 {{% /note %}}
 
 ---
@@ -54,6 +54,7 @@ Maybe you don't like all this talk about AI. I personally believe that my short 
 Raise your hand if you've observed someone say, "Oops, that was Claude's fault."
 
 What are some other issues you've ran into with AI generated code?
+Shout them out.
 
 For me it's anything like, "My agent will talk to your agent." Like AI text pasted from humans in PRs, or large walls of text in engineering channels.
 {{% /note %}}
@@ -69,7 +70,9 @@ Never talk about goblins, gremlins, raccoons, trolls, ogres, pigeons, or other a
 <sup>https://openai.com/index/where-the-goblins-came-from/</sup>
 
 {{% note %}}
-OpenAI found that the model’s overuse of “goblins” came from reinforcement-learning rewards for a playful “Nerdy” personality, where creature metaphors were accidentally favored, then leaked into broader model behavior through training feedback loops.
+Did anyone see this?
+
+OpenAI discovered an overuse of “goblins” in outputs, which came from a “Nerdy” model ersonality which favored creatures, then leaked into broader model behavior through training feedback loops.
 
 So how do we fix the goblins? How do we improve the quality of AI augmented code?
 {{% /note %}}
@@ -89,7 +92,7 @@ What is harness engineering?
 
 The harness is everything in an AI agent except the model itself.
 
-So harness engineering is the system architecture and environments around AI agents to make them reliable and effective.
+So harness engineering is all the fine-tuning to make AI agents reliable and effective.
 {{% /note %}}
 
 ---
@@ -116,9 +119,9 @@ outsourcing real work
 {{% /f %}}
 
 {{% note %}}
-The phrase was coined by Mitchell Hashimoto.
+I think the phrase was coined by Mitchell Hashimoto.
 
-His process evolution working with AI might be similar to yours.
+He describes personal evolution working with AI, which might be similar to yours.
 Eventually worked on improving agent output.
 
 It becomes very exciting once you get a taste of the productivity that AI can offer.
@@ -183,23 +186,33 @@ Notice that these tools are both good for AI agents _and_ humans.
 
 AGENTS.md, architecture docs, examples, scripts, skills
 
+{{% note %}}
+First, "guides"
+{{% /note %}}
+
 ---
 
 #### Instructions
 
-- `AGENTS.md`
-- `AGENTS.local.md`
-- Split up context, increasing specificity
-- `architecture.md`
-- Coding standards
+```ascii
+my-app/
+├── AGENTS.md
+├── AGENTS.local.md
+├── docs/
+│   └── architecture.md
+└── lib/
+    ├── domain/
+    │   └── AGENTS.md
+    └── not-my-domain/
+        └── AGENTS.md
+```
 
 {{% note %}}
 
-- AGENTS are project instructions
-- local, personalized instructions
-- context on-demand
+- AGENTS: team coding standards
+- local, personalized instructions: which tools to use on my system
 - separate architecture which agents can refer to
-- Code standards (unlintable)
+- context on-demand in each domain
 
 {{% /note %}}
 
@@ -239,6 +252,10 @@ I believe that a lot of the harnesses outside of the agent itself are effective 
 
 tests, linters, type checks, coverage, review agents, logs
 
+{{% note %}}
+Lastly, "sensors"
+{{% /note %}}
+
 ---
 
 #### Fast feedback
@@ -255,8 +272,13 @@ task fix
 ```
 
 {{% note %}}
-Quick sensors or fast feedback is becoming very important.
-Fast everything has always been important, but my personal belief is that it'll change how we prioritize certain things.
+We want sensors to be very quick for both the _human_ and the agentic loop.
+
+Locally we might have some sensors that run only on staged files.
+
+Others run everything.
+
+Fast is very important.
 {{% /note %}}
 
 {{% /section %}}
@@ -285,8 +307,18 @@ So maybe there are more harnesses that might be right for our products, or your 
 This is Gaia's shoe from a couple years ago.
 
 Good harnesses can lift up our code quality and make both **humans and AI agents** work more effectively.
+{{% /note %}}
 
-I invite you to think about how you want to "boost" your AI agent.
+---
+
+# 🏇
+
+{{% note %}}
+Takeaway?
+
+I invite you to think about how you want to steer your AI agent.
+
+What will you take home to be more effective?
 {{% /note %}}
 
 {{% /section %}}
