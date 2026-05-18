@@ -7,8 +7,6 @@ center = true
 theme = "night"
 +++
 
-{{% section %}}
-
 # The Harness 🏇
 
 {{% note %}}
@@ -16,17 +14,6 @@ theme = "night"
 - Use spacebar!
 - Keep fast pace!
   {{% /note %}}
-
----
-
-{{< slide background-iframe="https://www.srenity.online/" >}}
-
----
-
-{{< slide background-image="servers.mov" >}}
-<video data-autoplay src="servers.mov" height="600px"></video>
-
-{{% /section %}}
 
 ---
 
