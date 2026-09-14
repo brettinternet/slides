@@ -217,9 +217,7 @@ export class Sync {
             this.presenterValues &&
             this.presenterValues.state === State.OVERVIEW_HIDDEN &&
             position &&
-            position.h === this.presenterValues.indices.h &&
-            position.v === this.presenterValues.indices.v &&
-            position.f === this.presenterValues.indices.f
+            this.isSameSlideLocation(position, this.presenterValues.indices)
           ) {
             this.startSync()
           }
@@ -227,9 +225,7 @@ export class Sync {
       } else if (
         (this.isSynced &&
           position &&
-          (position.h !== this.presenterValues.indices.h ||
-            position.v !== this.presenterValues.indices.v ||
-            position.f !== this.presenterValues.indices.f)) ||
+          !this.isSameSlideLocation(position, this.presenterValues.indices)) ||
         autoSlide !== this.presenterValues.autoSlide ||
         paused !== this.presenterValues.paused
       ) {
@@ -237,6 +233,9 @@ export class Sync {
       }
     }
   }
+
+  private isSameSlideLocation = (left: Indices, right: Indices): boolean =>
+    left.h === right.h && left.v === right.v && left.f === right.f
 
   private setSlideState = (state?: State) => {
     switch (state) {
