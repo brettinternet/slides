@@ -35619,15 +35619,16 @@ components: ${componentsToDebugString(components)}
       if (!this.explicitUnfollow && this.presenterValues && !this.isAuthorizedPresenter()) {
         if (!this.isSynced) {
           this.magneticTimeout = window.setTimeout(() => {
-            if (this.presenterValues && this.presenterValues.state === "overviewhidden" /* OVERVIEW_HIDDEN */ && position && position.h === this.presenterValues.indices.h && position.v === this.presenterValues.indices.v && position.f === this.presenterValues.indices.f) {
+            if (this.presenterValues && this.presenterValues.state === "overviewhidden" /* OVERVIEW_HIDDEN */ && position && this.isSameSlideLocation(position, this.presenterValues.indices)) {
               this.startSync();
             }
           }, this.magneticTimeoutTime);
-        } else if (this.isSynced && position && (position.h !== this.presenterValues.indices.h || position.v !== this.presenterValues.indices.v || position.f !== this.presenterValues.indices.f) || autoSlide !== this.presenterValues.autoSlide || paused !== this.presenterValues.paused) {
+        } else if (this.isSynced && position && !this.isSameSlideLocation(position, this.presenterValues.indices) || autoSlide !== this.presenterValues.autoSlide || paused !== this.presenterValues.paused) {
           this.stopSync();
         }
       }
     };
+    isSameSlideLocation = (left, right) => left.h === right.h && left.v === right.v && left.f === right.f;
     setSlideState = (state) => {
       switch (state) {
         case "overviewshown" /* OVERVIEW_SHOWN */:
