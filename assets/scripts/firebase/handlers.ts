@@ -2,6 +2,20 @@ import { type User, updateProfile } from 'firebase/auth'
 
 import { stopPropagation } from '../utils/dom'
 
+const withElement = (id: string, callback: (element: HTMLElement) => void) => {
+  const element = document.getElementById(id)
+  if (element) {
+    callback(element)
+  }
+}
+
+const setVisible = (id: string, visible: boolean, ariaHidden: boolean) => {
+  withElement(id, (element) => {
+    element.style.display = visible ? '' : 'none'
+    element.setAttribute('aria-hidden', String(ariaHidden))
+  })
+}
+
 /**
  * Header
  */
@@ -15,32 +29,24 @@ export const showHeader = () => {
 
 export const showUserMenu = (ev: MouseEvent) => {
   stopPropagation(ev)
-  const userDropdown = document.getElementById('user-dropdown')
-  if (userDropdown) {
+  withElement('user-dropdown', (userDropdown) => {
     userDropdown.onclick = stopPropagation
-    userDropdown.style.display = ''
-    userDropdown.setAttribute('aria-hidden', 'false')
+    setVisible('user-dropdown', true, false)
     document.addEventListener('click', handleDocumentDropdownClick)
-  }
-  const userMenu = document.getElementById('user-menu')
-  if (userMenu) {
+  })
+  withElement('user-menu', (userMenu) => {
     userMenu.classList.add('opaque')
     userMenu.onclick = hideUserMenu
-  }
+  })
 }
 
 export const hideUserMenu = () => {
-  const userDropdown = document.getElementById('user-dropdown')
-  if (userDropdown) {
-    userDropdown.style.display = 'none'
-    userDropdown.setAttribute('aria-hidden', 'true')
-    document.removeEventListener('click', handleDocumentDropdownClick)
-  }
-  const userMenu = document.getElementById('user-menu')
-  if (userMenu) {
+  setVisible('user-dropdown', false, true)
+  document.removeEventListener('click', handleDocumentDropdownClick)
+  withElement('user-menu', (userMenu) => {
     userMenu.classList.remove('opaque')
     userMenu.onclick = showUserMenu
-  }
+  })
 }
 
 function handleDocumentDropdownClick() {
@@ -52,12 +58,8 @@ function handleDocumentDropdownClick() {
  */
 
 export const hideAuthUI = () => {
-  const uiRoot = document.getElementById('firebase-ui')
-  if (uiRoot) {
-    uiRoot.style.display = 'none'
-    uiRoot.setAttribute('aria-hidden', 'true')
-    document.removeEventListener('click', handleDocumentAuthClick)
-  }
+  setVisible('firebase-ui', false, true)
+  document.removeEventListener('click', handleDocumentAuthClick)
 }
 
 function handleDocumentAuthClick() {
@@ -66,14 +68,12 @@ function handleDocumentAuthClick() {
 
 export const handleSignInClick = (ev: MouseEvent) => {
   stopPropagation(ev)
-  const uiRoot = document.getElementById('firebase-ui')
-  if (uiRoot) {
-    uiRoot.style.display = ''
-    uiRoot.setAttribute('aria-hidden', 'false')
+  withElement('firebase-ui', (uiRoot) => {
+    setVisible('firebase-ui', true, false)
     document.body.appendChild(uiRoot)
     uiRoot.onclick = stopPropagation
     uiRoot.focus()
-  }
+  })
   document.addEventListener('click', handleDocumentAuthClick)
 }
 
