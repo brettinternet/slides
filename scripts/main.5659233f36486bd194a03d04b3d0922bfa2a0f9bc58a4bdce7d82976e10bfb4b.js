@@ -26512,6 +26512,18 @@ components: ${componentsToDebugString(components)}
   };
 
   // ns-hugo-imp:/home/runner/work/slides/slides/assets/scripts/firebase/handlers.ts
+  var withElement = (id, callback) => {
+    const element = document.getElementById(id);
+    if (element) {
+      callback(element);
+    }
+  };
+  var setVisible = (id, visible, ariaHidden) => {
+    withElement(id, (element) => {
+      element.style.display = visible ? "" : "none";
+      element.setAttribute("aria-hidden", String(ariaHidden));
+    });
+  };
   var showHeader = () => {
     const header = document.getElementById("header");
     if (header) {
@@ -26520,56 +26532,42 @@ components: ${componentsToDebugString(components)}
   };
   var showUserMenu = (ev) => {
     stopPropagation(ev);
-    const userDropdown = document.getElementById("user-dropdown");
-    if (userDropdown) {
+    withElement("user-dropdown", (userDropdown) => {
       userDropdown.onclick = stopPropagation;
-      userDropdown.style.display = "";
-      userDropdown.setAttribute("aria-hidden", "false");
+      setVisible("user-dropdown", true, false);
       document.addEventListener("click", handleDocumentDropdownClick);
-    }
-    const userMenu = document.getElementById("user-menu");
-    if (userMenu) {
+    });
+    withElement("user-menu", (userMenu) => {
       userMenu.classList.add("opaque");
       userMenu.onclick = hideUserMenu;
-    }
+    });
   };
   var hideUserMenu = () => {
-    const userDropdown = document.getElementById("user-dropdown");
-    if (userDropdown) {
-      userDropdown.style.display = "none";
-      userDropdown.setAttribute("aria-hidden", "true");
-      document.removeEventListener("click", handleDocumentDropdownClick);
-    }
-    const userMenu = document.getElementById("user-menu");
-    if (userMenu) {
+    setVisible("user-dropdown", false, true);
+    document.removeEventListener("click", handleDocumentDropdownClick);
+    withElement("user-menu", (userMenu) => {
       userMenu.classList.remove("opaque");
       userMenu.onclick = showUserMenu;
-    }
+    });
   };
   function handleDocumentDropdownClick() {
     hideUserMenu();
   }
   var hideAuthUI = () => {
-    const uiRoot = document.getElementById("firebase-ui");
-    if (uiRoot) {
-      uiRoot.style.display = "none";
-      uiRoot.setAttribute("aria-hidden", "true");
-      document.removeEventListener("click", handleDocumentAuthClick);
-    }
+    setVisible("firebase-ui", false, true);
+    document.removeEventListener("click", handleDocumentAuthClick);
   };
   function handleDocumentAuthClick() {
     hideAuthUI();
   }
   var handleSignInClick = (ev) => {
     stopPropagation(ev);
-    const uiRoot = document.getElementById("firebase-ui");
-    if (uiRoot) {
-      uiRoot.style.display = "";
-      uiRoot.setAttribute("aria-hidden", "false");
+    withElement("firebase-ui", (uiRoot) => {
+      setVisible("firebase-ui", true, false);
       document.body.appendChild(uiRoot);
       uiRoot.onclick = stopPropagation;
       uiRoot.focus();
-    }
+    });
     document.addEventListener("click", handleDocumentAuthClick);
   };
   var handleSignOut = () => {
