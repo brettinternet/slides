@@ -89,13 +89,17 @@ export const handleSignOut = () => {
 }
 
 export const showSignInButton = () => {
+  setAuthControlsVisibility(true)
+}
+
+const setAuthControlsVisibility = (showSignIn: boolean) => {
   const signIn = document.getElementById('sign-in')
   const userMenu = document.getElementById('user-menu')
   if (signIn) {
-    signIn.style.display = ''
+    signIn.style.display = showSignIn ? '' : 'none'
   }
   if (userMenu) {
-    userMenu.style.display = 'none'
+    userMenu.style.display = showSignIn ? 'none' : ''
   }
 }
 
@@ -104,14 +108,7 @@ export const showSignInButton = () => {
  */
 
 const hideSignIn = () => {
-  const signIn = document.getElementById('sign-in')
-  const userMenu = document.getElementById('user-menu')
-  if (signIn) {
-    signIn.style.display = 'none'
-  }
-  if (userMenu) {
-    userMenu.style.display = ''
-  }
+  setAuthControlsVisibility(false)
 }
 
 const setDisplayName = (user: User) => {
