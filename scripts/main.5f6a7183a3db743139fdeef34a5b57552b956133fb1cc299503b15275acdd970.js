@@ -26581,24 +26581,20 @@ components: ${componentsToDebugString(components)}
     }
   };
   var showSignInButton = () => {
+    setAuthControlsVisibility(true);
+  };
+  var setAuthControlsVisibility = (showSignIn) => {
     const signIn = document.getElementById("sign-in");
     const userMenu = document.getElementById("user-menu");
     if (signIn) {
-      signIn.style.display = "";
+      signIn.style.display = showSignIn ? "" : "none";
     }
     if (userMenu) {
-      userMenu.style.display = "none";
+      userMenu.style.display = showSignIn ? "none" : "";
     }
   };
   var hideSignIn = () => {
-    const signIn = document.getElementById("sign-in");
-    const userMenu = document.getElementById("user-menu");
-    if (signIn) {
-      signIn.style.display = "none";
-    }
-    if (userMenu) {
-      userMenu.style.display = "";
-    }
+    setAuthControlsVisibility(false);
   };
   var setDisplayName = (user) => {
     let displayName = user.displayName;
