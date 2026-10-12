@@ -35422,7 +35422,7 @@ components: ${componentsToDebugString(components)}
       }
     });
   };
-  var handleEnableSync = () => {
+  var setSyncStatus = (enabled) => {
     const sync = document.getElementById("sync");
     const syncStatusIconActive = document.getElementById(
       "sync-status-icon-active"
@@ -35432,42 +35432,21 @@ components: ${componentsToDebugString(components)}
     );
     const syncStatusText = document.getElementById("sync-status-text");
     if (sync) {
-      sync.classList.add("active");
-      sync.title = "Unfollow";
+      sync.classList.toggle("active", enabled);
+      sync.title = enabled ? "Unfollow" : "Follow";
     }
     if (syncStatusIconInactive) {
-      syncStatusIconInactive.style.display = "none";
+      syncStatusIconInactive.style.display = enabled ? "none" : "";
     }
     if (syncStatusIconActive) {
-      syncStatusIconActive.style.display = "";
+      syncStatusIconActive.style.display = enabled ? "" : "none";
     }
     if (syncStatusText) {
-      syncStatusText.innerText = "Following";
+      syncStatusText.innerText = enabled ? "Following" : "Not following";
     }
   };
-  var handleDisableSync = () => {
-    const sync = document.getElementById("sync");
-    const syncStatusIconActive = document.getElementById(
-      "sync-status-icon-active"
-    );
-    const syncStatusIconInactive = document.getElementById(
-      "sync-status-icon-inactive"
-    );
-    const syncStatusText = document.getElementById("sync-status-text");
-    if (sync) {
-      sync.classList.remove("active");
-      sync.title = "Follow";
-    }
-    if (syncStatusIconActive) {
-      syncStatusIconActive.style.display = "none";
-    }
-    if (syncStatusIconInactive) {
-      syncStatusIconInactive.style.display = "";
-    }
-    if (syncStatusText) {
-      syncStatusText.innerText = "Not following";
-    }
-  };
+  var handleEnableSync = () => setSyncStatus(true);
+  var handleDisableSync = () => setSyncStatus(false);
   var showSyncButton = () => {
     const syncButton = document.getElementById("sync");
     if (syncButton) {
