@@ -41,7 +41,7 @@ export const setupViewer = (_reveal: Reveal) => {
   })
 }
 
-export const handleEnableSync = () => {
+const setSyncStatus = (enabled: boolean) => {
   const sync = document.getElementById('sync')
   const syncStatusIconActive = document.getElementById(
     'sync-status-icon-active',
@@ -51,43 +51,23 @@ export const handleEnableSync = () => {
   )
   const syncStatusText = document.getElementById('sync-status-text')
   if (sync) {
-    sync.classList.add('active')
-    sync.title = 'Unfollow'
+    sync.classList.toggle('active', enabled)
+    sync.title = enabled ? 'Unfollow' : 'Follow'
   }
   if (syncStatusIconInactive) {
-    syncStatusIconInactive.style.display = 'none'
+    syncStatusIconInactive.style.display = enabled ? 'none' : ''
   }
   if (syncStatusIconActive) {
-    syncStatusIconActive.style.display = ''
+    syncStatusIconActive.style.display = enabled ? '' : 'none'
   }
   if (syncStatusText) {
-    syncStatusText.innerText = 'Following'
+    syncStatusText.innerText = enabled ? 'Following' : 'Not following'
   }
 }
 
-export const handleDisableSync = () => {
-  const sync = document.getElementById('sync')
-  const syncStatusIconActive = document.getElementById(
-    'sync-status-icon-active',
-  )
-  const syncStatusIconInactive = document.getElementById(
-    'sync-status-icon-inactive',
-  )
-  const syncStatusText = document.getElementById('sync-status-text')
-  if (sync) {
-    sync.classList.remove('active')
-    sync.title = 'Follow'
-  }
-  if (syncStatusIconActive) {
-    syncStatusIconActive.style.display = 'none'
-  }
-  if (syncStatusIconInactive) {
-    syncStatusIconInactive.style.display = ''
-  }
-  if (syncStatusText) {
-    syncStatusText.innerText = 'Not following'
-  }
-}
+export const handleEnableSync = () => setSyncStatus(true)
+
+export const handleDisableSync = () => setSyncStatus(false)
 
 export const showSyncButton = () => {
   const syncButton = document.getElementById('sync')
