@@ -35601,7 +35601,7 @@ components: ${componentsToDebugString(components)}
         }
       }
     };
-    isSameSlideLocation = (left, right) => left.h === right.h && left.v === right.v && left.f === right.f;
+    isSameSlideLocation = (left, right) => left.h === right.h && left.v === right.v && (left.f ?? null) === (right.f ?? null);
     setSlideState = (state) => {
       switch (state) {
         case "overviewshown" /* OVERVIEW_SHOWN */:
