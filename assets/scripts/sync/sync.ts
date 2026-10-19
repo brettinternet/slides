@@ -235,7 +235,9 @@ export class Sync {
   }
 
   private isSameSlideLocation = (left: Indices, right: Indices): boolean =>
-    left.h === right.h && left.v === right.v && left.f === right.f
+    left.h === right.h &&
+    left.v === right.v &&
+    (left.f ?? null) === (right.f ?? null)
 
   private setSlideState = (state?: State) => {
     switch (state) {
