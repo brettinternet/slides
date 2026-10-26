@@ -9,10 +9,10 @@ const withElement = (id: string, callback: (element: HTMLElement) => void) => {
   }
 }
 
-const setVisible = (id: string, visible: boolean, ariaHidden: boolean) => {
+const setVisible = (id: string, visible: boolean) => {
   withElement(id, (element) => {
     element.style.display = visible ? '' : 'none'
-    element.setAttribute('aria-hidden', String(ariaHidden))
+    element.setAttribute('aria-hidden', String(!visible))
   })
 }
 
@@ -31,7 +31,7 @@ export const showUserMenu = (ev: MouseEvent) => {
   stopPropagation(ev)
   withElement('user-dropdown', (userDropdown) => {
     userDropdown.onclick = stopPropagation
-    setVisible('user-dropdown', true, false)
+    setVisible('user-dropdown', true)
     document.addEventListener('click', handleDocumentDropdownClick)
   })
   withElement('user-menu', (userMenu) => {
@@ -41,7 +41,7 @@ export const showUserMenu = (ev: MouseEvent) => {
 }
 
 export const hideUserMenu = () => {
-  setVisible('user-dropdown', false, true)
+  setVisible('user-dropdown', false)
   document.removeEventListener('click', handleDocumentDropdownClick)
   withElement('user-menu', (userMenu) => {
     userMenu.classList.remove('opaque')
@@ -58,7 +58,7 @@ function handleDocumentDropdownClick() {
  */
 
 export const hideAuthUI = () => {
-  setVisible('firebase-ui', false, true)
+  setVisible('firebase-ui', false)
   document.removeEventListener('click', handleDocumentAuthClick)
 }
 
@@ -69,7 +69,7 @@ function handleDocumentAuthClick() {
 export const handleSignInClick = (ev: MouseEvent) => {
   stopPropagation(ev)
   withElement('firebase-ui', (uiRoot) => {
-    setVisible('firebase-ui', true, false)
+    setVisible('firebase-ui', true)
     document.body.appendChild(uiRoot)
     uiRoot.onclick = stopPropagation
     uiRoot.focus()
