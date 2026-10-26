@@ -26518,10 +26518,10 @@ components: ${componentsToDebugString(components)}
       callback(element);
     }
   };
-  var setVisible = (id, visible, ariaHidden) => {
+  var setVisible = (id, visible) => {
     withElement(id, (element) => {
       element.style.display = visible ? "" : "none";
-      element.setAttribute("aria-hidden", String(ariaHidden));
+      element.setAttribute("aria-hidden", String(!visible));
     });
   };
   var showHeader = () => {
@@ -26534,7 +26534,7 @@ components: ${componentsToDebugString(components)}
     stopPropagation(ev);
     withElement("user-dropdown", (userDropdown) => {
       userDropdown.onclick = stopPropagation;
-      setVisible("user-dropdown", true, false);
+      setVisible("user-dropdown", true);
       document.addEventListener("click", handleDocumentDropdownClick);
     });
     withElement("user-menu", (userMenu) => {
@@ -26543,7 +26543,7 @@ components: ${componentsToDebugString(components)}
     });
   };
   var hideUserMenu = () => {
-    setVisible("user-dropdown", false, true);
+    setVisible("user-dropdown", false);
     document.removeEventListener("click", handleDocumentDropdownClick);
     withElement("user-menu", (userMenu) => {
       userMenu.classList.remove("opaque");
@@ -26554,7 +26554,7 @@ components: ${componentsToDebugString(components)}
     hideUserMenu();
   }
   var hideAuthUI = () => {
-    setVisible("firebase-ui", false, true);
+    setVisible("firebase-ui", false);
     document.removeEventListener("click", handleDocumentAuthClick);
   };
   function handleDocumentAuthClick() {
@@ -26563,7 +26563,7 @@ components: ${componentsToDebugString(components)}
   var handleSignInClick = (ev) => {
     stopPropagation(ev);
     withElement("firebase-ui", (uiRoot) => {
-      setVisible("firebase-ui", true, false);
+      setVisible("firebase-ui", true);
       document.body.appendChild(uiRoot);
       uiRoot.onclick = stopPropagation;
       uiRoot.focus();
