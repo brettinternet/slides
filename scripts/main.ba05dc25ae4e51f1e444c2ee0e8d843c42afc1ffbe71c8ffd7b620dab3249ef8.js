@@ -26612,6 +26612,7 @@ components: ${componentsToDebugString(components)}
     const userIcon = document.getElementById("user-icon");
     if (userIcon) {
       userIcon.classList.add("with-image");
+      userIcon.querySelector("img")?.remove();
       const image = document.createElement("img");
       image.src = user.photoURL || "";
       image.alt = user.displayName || "";
