@@ -26480,20 +26480,15 @@ components: ${componentsToDebugString(components)}
   var auth = firebaseui.auth;
 
   // ns-hugo-imp:/home/runner/work/slides/slides/assets/scripts/utils/toast.ts
-  var getTypeClass = (type) => {
-    switch (type) {
-      case 2 /* Error */:
-        return "text-blue-500";
-      case 1 /* Warn */:
-        return "text-yellow-500";
-      default:
-        return "text-blue-500";
-    }
+  var typeClasses = {
+    [0 /* Info */]: "toast-info",
+    [1 /* Warn */]: "toast-warn",
+    [2 /* Error */]: "toast-error"
   };
   var toast = (message, type = 0 /* Info */) => {
     const p = document.createElement("P");
     p.setAttribute("role", "alert");
-    p.classList.add(getTypeClass(type), "text-center", "p-4");
+    p.classList.add("toast", typeClasses[type]);
     const text = document.createTextNode(message);
     p.appendChild(text);
     document.body.prepend(p);
