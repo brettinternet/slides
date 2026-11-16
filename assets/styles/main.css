@@ -90,3 +90,22 @@ img {
   width: 60%;
   margin: 0 auto;
 }
+
+/* Toasts */
+
+.toast {
+  padding: 1rem;
+  text-align: center;
+}
+
+.toast-info {
+  color: #3b82f6;
+}
+
+.toast-warn {
+  color: #eab308;
+}
+
+.toast-error {
+  color: #ef4444;
+}
