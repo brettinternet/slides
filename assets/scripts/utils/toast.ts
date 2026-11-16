@@ -4,16 +4,8 @@ export enum ToastType {
   Error = 2,
 }
 
-const getTypeClass = (type: ToastType) => {
-  switch (type) {
-    case ToastType.Error:
-      return 'text-blue-500'
-    case ToastType.Warn:
-      return 'text-yellow-500'
-    default:
-      return 'text-blue-500'
-  }
-}
+const getTypeClass = (type: ToastType) =>
+  type === ToastType.Warn ? 'text-yellow-500' : 'text-blue-500'
 
 /**
  * App-wide toast
