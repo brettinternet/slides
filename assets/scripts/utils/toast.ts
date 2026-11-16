@@ -4,15 +4,10 @@ export enum ToastType {
   Error = 2,
 }
 
-const getTypeClass = (type: ToastType) => {
-  switch (type) {
-    case ToastType.Error:
-      return 'text-blue-500'
-    case ToastType.Warn:
-      return 'text-yellow-500'
-    default:
-      return 'text-blue-500'
-  }
+const typeClasses: Record<ToastType, string> = {
+  [ToastType.Info]: 'toast-info',
+  [ToastType.Warn]: 'toast-warn',
+  [ToastType.Error]: 'toast-error',
 }
 
 /**
@@ -21,7 +16,7 @@ const getTypeClass = (type: ToastType) => {
 export const toast = (message: string, type: ToastType = ToastType.Info) => {
   const p = document.createElement('P')
   p.setAttribute('role', 'alert')
-  p.classList.add(getTypeClass(type), 'text-center', 'p-4')
+  p.classList.add('toast', typeClasses[type])
   const text = document.createTextNode(message)
   p.appendChild(text)
   document.body.prepend(p)
