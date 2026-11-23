@@ -93,14 +93,8 @@ export const showSignInButton = () => {
 }
 
 const setAuthControlsVisibility = (showSignIn: boolean) => {
-  const signIn = document.getElementById('sign-in')
-  const userMenu = document.getElementById('user-menu')
-  if (signIn) {
-    signIn.style.display = showSignIn ? '' : 'none'
-  }
-  if (userMenu) {
-    userMenu.style.display = showSignIn ? 'none' : ''
-  }
+  setVisible('sign-in', showSignIn)
+  setVisible('user-menu', !showSignIn)
 }
 
 /**
